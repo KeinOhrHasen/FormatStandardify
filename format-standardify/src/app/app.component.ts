@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit, OnChanges } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
 
@@ -7,7 +7,7 @@ import * as XLSX from 'xlsx';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnChanges {
+export class AppComponent  {
 
   formGroup = this.fb.group({
     file: [null, Validators.required]
@@ -70,18 +70,5 @@ XLSX.writeFile(wb, 'SheetJS.xlsx');
 
 //--------------------------------------------
 
-name = "Ivan"
-
-
-ngOnInit(){
-}
-
-ngOnChanges(){
-}
-
-showName(){
-  console.log(this.name)
-
-}
 
 }
