@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
+import { LeicaGsiService } from './services/leica/leica-gsi.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,10 @@ export class AppComponent  {
     file: [null, Validators.required]
   });
 
-  constructor( private fb: FormBuilder, private cd: ChangeDetectorRef ) {}
+  constructor( 
+    private fb: FormBuilder, 
+    private cd: ChangeDetectorRef, 
+    private leicaGsiService: LeicaGsiService ) {}
   
   onFileChange(event) {
     const reader = new FileReader();
@@ -34,7 +38,11 @@ export class AppComponent  {
   }
 
   onSubmit(){
-    console.log(this.formGroup.value)
+    // console.log(this.formGroup.value);
+    let resultArray = this.leicaGsiService.getParsedData(this.formGroup.value.file);
+    // console.log(resultArray);
+    resultArray.forEach((row)=> console.log(row))
+
   }
 
   saveFile(){
