@@ -9,6 +9,8 @@ import { LeicaGsiService } from './services/leica/leica-gsi.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
+  public points;
+  public data;
 
   formGroup = this.fb.group({
     file: [null, Validators.required]
@@ -37,15 +39,15 @@ export class AppComponent  {
     }
   }
 
-  onSubmit(){
+  public onSubmit(){
     // console.log(this.formGroup.value);
-    let resultArray = this.leicaGsiService.getParsedData(this.formGroup.value.file);
+    this.points = this.leicaGsiService.getParsedData(this.formGroup.value.file);
     // console.log(resultArray);
-    resultArray.forEach((row)=> console.log(row))
+    this.points.forEach((row)=> console.log(row))
 
   }
 
-  saveFile(){
+  public saveFile(){
     let text = this.formGroup.value.file;
     let textToSaveAsBlob = new Blob([text], {type:"text/plain"});
     let textToSaveAsURL  = window.URL.createObjectURL(textToSaveAsBlob);
@@ -62,21 +64,33 @@ export class AppComponent  {
   }
 
 // xlsx part ------------------------------------------------
-data = [[1, 2], ["A", "B"]];
+public insertDataToExel(pointsArray){
+  this.data = [["Point Number", "HZ", "VR", "S", "X", "Y", "H"]];
+  pointsArray.forEach((point) => {
+    let exelArray = [
+      point.Pointnumber,
+      point.Hz,
+      point.Vr,
+      point["Sloping distance"],
+      point.X,
+      point.Y,
+      point.H
+    ];
+    this.data.push(exelArray)
+  })
 
-creeteXLSX(){
-/* generate worksheet */
-let ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.data);
-
-/* generate workbook and add the worksheet */
-let wb: XLSX.WorkBook = XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-/* save to file */
-XLSX.writeFile(wb, 'SheetJS.xlsx');
+  return this.data
 }
 
-//--------------------------------------------
+public creeteXLSX(){
+  /* generate worksheet */
+  let ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.insertDataToExel(this.points));
 
+  /* generate workbook and add the worksheet */
+  let wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
+  /* save to file */
+  XLSX.writeFile(wb, 'SheetJS.xlsx');
+  }
 }
