@@ -1,16 +1,30 @@
 <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()">
-  <input type="file" (change)="onFileChange($event)" />
-  <button type="submit" [disabled]="formGroup.invalid || formGroup.prestine">Submit</button>
-  <button type="button" [disabled]="formGroup.invalid || formGroup.prestine" (click)="saveFile()">Save file</button>
-  <button type="button" (click)="creeteXLSX()">Save EXEL file</button>
+  <input type="file" (change)="onFileChange($event)" /> <br>
+  <button mat-button color="primary" type="submit" [disabled]="formGroup.invalid || formGroup.pristine">Submit</button>
+  <button mat-button color="primary" type="button" [disabled]="formGroup.invalid || formGroup.pristine" (click)="saveFile()">Save file</button>
+  <button mat-button color="primary" type="button" (click)="creeteXLSX()">Save EXEL file</button>
 </form>
 
+<div class="pick-format">
+  <label id="example-radio-group-label">Pick your favorite format</label>
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    [(ngModel)]="choosenFormat">
+    <mat-radio-button class="example-radio-button" *ngFor="let format of all_formats" [value]="format">
+      {{format}}
+    </mat-radio-button>
+  </mat-radio-group>
+  <div>Choosed format is: {{choosenFormat}}</div>
+</div>
+
+
 <table class="sjs-table">
-  <tr *ngFor="let row of data">
+  <!-- <tr *ngFor="let row of points">
     <td *ngFor="let val of row">
       {{val}}
     </td>
-  </tr>
+  </tr> -->
 </table>
 
 <router-outlet></router-outlet>

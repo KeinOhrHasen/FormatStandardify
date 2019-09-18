@@ -1,0 +1,16 @@
+form,
+.pick-format{
+    background-color: aquamarine;
+    padding: 2rem;
+    margin: 2rem auto;
+    width: 50%;
+    border-radius: 10px;
+}
+.example-radio-button{
+    display: block;
+    margin: 1rem;
+}
+
+form input{
+    margin: 1rem;
+}

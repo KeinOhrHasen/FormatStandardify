@@ -2,6 +2,9 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import { LeicaGsiService } from './services/leica/leica-gsi.service';
+import { TopconService } from './services/topcon/topcon.service';
+import { dataToExel_Leica } from './shared/table-constructors/leica'
+import { dataToExel_Topcon } from './shared/table-constructors/topcon'
 
 @Component({
   selector: 'app-root',
@@ -10,7 +13,8 @@ import { LeicaGsiService } from './services/leica/leica-gsi.service';
 })
 export class AppComponent  {
   public points;
-  public data;
+  public choosenFormat: string;
+  public  all_formats: string[] = ['.gsi', 'rts-6'];
 
   formGroup = this.fb.group({
     file: [null, Validators.required]
@@ -19,7 +23,9 @@ export class AppComponent  {
   constructor( 
     private fb: FormBuilder, 
     private cd: ChangeDetectorRef, 
-    private leicaGsiService: LeicaGsiService ) {}
+    private leicaGsiService: LeicaGsiService,
+    private topconService: TopconService,
+    ) {}
   
   onFileChange(event) {
     const reader = new FileReader();
@@ -41,9 +47,14 @@ export class AppComponent  {
 
   public onSubmit(){
     // console.log(this.formGroup.value);
-    this.points = this.leicaGsiService.getParsedData(this.formGroup.value.file);
-    // console.log(resultArray);
+    if (this.choosenFormat === '.gsi'){
+      this.points = this.leicaGsiService.getParsedData(this.formGroup.value.file);
+    }
+    else if (this.choosenFormat === 'rts-6'){
+      this.points = this.topconService.getParsedData(this.formGroup.value.file);
+    }
     this.points.forEach((row)=> console.log(row))
+    // console.log(resultArray);
 
   }
 
@@ -64,27 +75,18 @@ export class AppComponent  {
   }
 
 // xlsx part ------------------------------------------------
-public insertDataToExel(pointsArray){
-  this.data = [["Point Number", "HZ", "VR", "S", "X", "Y", "H"]];
-  pointsArray.forEach((point) => {
-    let exelArray = [
-      point.Pointnumber,
-      point.Hz,
-      point.Vr,
-      point["Sloping distance"],
-      point.X,
-      point.Y,
-      point.H
-    ];
-    this.data.push(exelArray)
-  })
-
-  return this.data
+public dataToExel(pointsArray){
+  if (this.choosenFormat === '.gsi'){
+    return dataToExel_Leica(pointsArray);
+  }else if (this.choosenFormat === 'rts-6'){
+    return dataToExel_Topcon(pointsArray);
+  }
 }
+
 
 public creeteXLSX(){
   /* generate worksheet */
-  let ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.insertDataToExel(this.points));
+  let ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.dataToExel(this.points));
 
   /* generate workbook and add the worksheet */
   let wb: XLSX.WorkBook = XLSX.utils.book_new();

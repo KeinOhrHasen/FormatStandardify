@@ -25,12 +25,39 @@ export class LeicaGsiService {
     pointsArr.forEach((point: any ) => {
       let newPoint = {};
       point.forEach((word: string) => {
-        let wordId = word.slice(0, 2)
-        switch(wordId){
+        let format_length: number = 8;
+        word.length === 23 ? format_length = 16 : null;
+        newPoint['Format_name'] = 'GSI' + format_length;
+        let wordCode = word.slice(0, 2);
+
+        switch(wordCode){
 
           case '11':
-            newPoint[CODES[wordId]] = word.slice(2, 6);
+            newPoint[CODES[wordCode]] = this.trimZeros(word.slice(-format_length));
+            newPoint['lineNumber'] = word.slice(2, 6);
             break
+
+          case '12':
+            newPoint[CODES[wordCode]] = word.slice(-format_length);
+            break
+
+          case '13':
+            newPoint[CODES[wordCode]] = word.slice(-format_length);
+            break
+
+          case '16':
+            newPoint[CODES[wordCode]] = this.trimZeros(word.slice(-format_length));
+            break
+
+          case '17':
+            newPoint[CODES[wordCode]] = this.getDate(word, format_length);
+            break
+
+          case '19':
+            newPoint[CODES[wordCode]] = this.getTime(word, format_length);
+            break
+
+          
 
 
           case '21':
@@ -38,13 +65,13 @@ export class LeicaGsiService {
             newPoint['Automatic_index_information_HZ'] = this.getAutomaticIndex(word);
             
             // input mode
-            newPoint[CODES['21'] + '_input_mode'] = this.getInputMode(word);
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
                
             // Units
-            newPoint[CODES['21'] + '_unit'] = this.getUnitName(word);
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
     
             // value information
-            newPoint[CODES['21']] = this.getAngle(word);
+            newPoint[CODES[wordCode]] = this.getAngle(word, format_length);
 
             break;
 
@@ -54,46 +81,46 @@ export class LeicaGsiService {
             newPoint['Automatic_index_information_HZ'] = this.getAutomaticIndex(word);
 
             // Units
-            newPoint[CODES['22'] + '_unit'] = this.getUnitName(word);
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
             
             // input mode
-            newPoint[CODES['22'] + '_input_mode'] = this.getInputMode(word);
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
 
             // value information
-            newPoint[CODES['22']] = this.getAngle(word);
+            newPoint[CODES[wordCode]] = this.getAngle(word, format_length);
             break;
 
           case '31':
             // Units
-            newPoint[CODES['31'] + '_unit'] = this.getUnitName(word);
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
 
             // input mode
-            newPoint[CODES['31'] + '_input_mode'] = this.getInputMode(word);
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
 
             // parse Sloping distance to meter or feets
-            newPoint[CODES['31']] = this.getDistanceInMt_Ft(word);
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
             break;
 
           case '32':
             // Units
-            newPoint[CODES['32'] + '_unit'] = this.getUnitName(word);
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
 
             // input mode
-            newPoint[CODES['32'] + '_input_mode'] = this.getInputMode(word);
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
 
             // parse Sloping distance to meter or feets
-            newPoint[CODES['32']] = this.getDistanceInMt_Ft(word);
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
             break;
             
           case '33':
             // Units
-            newPoint[CODES['33'] + '_unit'] = this.getUnitName(word);
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
 
             // input mode
-            newPoint[CODES['33'] + '_input_mode'] = this.getInputMode(word);
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
 
             // parse Sloping distance to meter or feets
-            newPoint[CODES['33']] = this.getDistanceInMt_Ft(word);
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
             break;
 
           case '51':
@@ -107,37 +134,114 @@ export class LeicaGsiService {
             newPoint[CODES['59']] = ppm;
             break;
 
-          case '81':
+          case '58':
             // Units
-            newPoint[CODES['81'] + '_unit'] = this.getUnitName(word);
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
 
             // input mode
-            newPoint[CODES['81'] + '_input_mode'] = this.getInputMode(word);
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
+
+            // value
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
+            break;
+
+          case '59':
+            // Units
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
+
+            // input mode
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
+
+            // value
+            newPoint[CODES[wordCode]] = +word.slice(-9)/10000;
+            break;
+
+          case '81':
+            // Units
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
+
+            // input mode
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
 
             // parse Sloping distance to meter or feets
-            newPoint[CODES['81']] = this.getDistanceInMt_Ft(word);
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
             break;
 
           case '82':
             // Units
-            newPoint[CODES['82'] + '_unit'] = this.getUnitName(word);
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
 
             // input mode
-            newPoint[CODES['82'] + '_input_mode'] = this.getInputMode(word);
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
 
             // parse Sloping distance to meter or feets
-            newPoint[CODES['82']] = this.getDistanceInMt_Ft(word);
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
             break;
 
           case '83':
             // Units
-            newPoint[CODES['83'] + '_unit'] = this.getUnitName(word);
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
 
             // input mode
-            newPoint[CODES['83'] + '_input_mode'] = this.getInputMode(word);
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
 
             // parse Sloping distance to meter or feets
-            newPoint[CODES['83']] = this.getDistanceInMt_Ft(word);
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
+            break;
+
+          case '84':
+            // Units
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
+
+            // input mode
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
+
+            // parse Sloping distance to meter or feets
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
+            break;
+
+          case '85':
+            // Units
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
+
+            // input mode
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
+
+            // parse Sloping distance to meter or feets
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
+            break;
+
+          case '86':
+            // Units
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
+
+            // input mode
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
+
+            // parse Sloping distance to meter or feets
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
+            break;
+
+          case '87':
+            // Units
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
+
+            // input mode
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
+
+            // parse Sloping distance to meter or feets
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
+            break;
+            
+          case '88':
+            // Units
+            newPoint[CODES[wordCode] + '_unit'] = this.getUnitName(word);
+
+            // input mode
+            newPoint[CODES[wordCode] + '_input_mode'] = this.getInputMode(word);
+
+            // parse Sloping distance to meter or feets
+            newPoint[CODES[wordCode]] = this.getDistanceInMt_Ft(word, format_length);
             break;
       }
 
@@ -156,38 +260,39 @@ export class LeicaGsiService {
     return this.parsePoints(pointArr)
   }
 
-  private getAngle(survey: string){
+  // GSI8
+  private getAngle(survey: string, format_length){
     let unit = this.getUnitCode(survey);
-    let leadingNumber = 3;
-    let divisor = 10000;
+    let divisor = 100000;
 
     if (unit === '5'){
-      leadingNumber = 4;
-      divisor = 1000;
-      return this.getDecimalAngle(survey, leadingNumber, divisor)
+      divisor = 10000;
+      return this.getDecimalAngle(survey, divisor, format_length)
 
     }else if (unit === '4'){
-      return this.getSexagesimalAngle(survey)
+      return this.getSexagesimalAngle(survey, format_length)
 
     } else {
-      return this.getDecimalAngle(survey, leadingNumber, divisor)
+      return this.getDecimalAngle(survey, divisor, format_length)
     }
   }
 
-  private getDecimalAngle(survey: string, leadingNumber :number, divisor:number){
-    let angleArr  = survey.split('').splice(7, 9);
-    let angle = +angleArr.slice(0, leadingNumber).join('') + +angleArr.slice(leadingNumber, -1).join('')/divisor;
+  // GSI8
+  private getDecimalAngle(survey: string, divisor:number, format_length:number){
+    let angleArr  = survey.split('').slice(-format_length-1);
+    let angle = +(angleArr[0] + '1') * ( +angleArr.slice(-8).join('')/divisor );
 
     return angle
   }
 
-  private getSexagesimalAngle(survey: string){
-    let angleArr  = survey.split('').slice(6);
-    let degrees = +angleArr.slice(0, 4).join('');
-    let minutes = +angleArr.slice(4, 6).join('');
-    let seconds = +angleArr.slice(6, 8).join('') + (+angleArr.slice(8).join(''))/10;
+  // GSI8
+  private getSexagesimalAngle(survey: string, format_length:number){
+    let angleArr  = survey.split('').slice(-format_length-1);
+    let degrees = +angleArr.slice(-8, -5).join('');
+    let minutes = +angleArr.slice(-5, -3).join('');
+    let seconds = +angleArr.slice(-3).join('')/10;
 
-    return degrees + minutes/60 + seconds/3600
+    return +(angleArr[0] + '1') * (degrees + minutes/60 + seconds/3600)
   }
 
   private getAutomaticIndex(word){
@@ -201,7 +306,6 @@ export class LeicaGsiService {
   }          
 
   private getUnitCode(survey){
-    // console.log(survey.split('').splice(5, 1)[0])
     return  survey.split('').splice(5, 1)[0];
   }
 
@@ -212,9 +316,10 @@ export class LeicaGsiService {
     return mode
   } 
 
-  private getDistanceInMt_Ft(word){
+  // GSI8, GSI16
+  private getDistanceInMt_Ft(word, format_length: number){
     let unit = this.getUnitCode(word);
-    let numbersArray  = word.trim().split('').splice(6, 9);
+    let numbersArray  = word.trim().split('').slice(-format_length-1);
     let divisor = 1000;
 
     if (unit === "6" || unit === "7"){
@@ -224,7 +329,8 @@ export class LeicaGsiService {
       divisor = 100000;
     }
 
-    let value = +(numbersArray[0] + '1') * ( + +numbersArray.slice(-8).join('')/divisor);
+    let value = +(numbersArray[0] + '1') * ( + +numbersArray.slice(-format_length).join('')/divisor);
+    console.log(numbersArray)
     return value
   }
 
@@ -233,6 +339,31 @@ export class LeicaGsiService {
     let unitName = UNITS[unit];
     
     return unitName
+  }
+
+  // GSI8
+  private getDate(word, length_format){
+   let  dateString = word.slice(-length_format);
+   let day = dateString.slice(-8, -6);
+   let mounth = dateString.slice(-6, -4);
+   let year = dateString.slice(-4);
+
+   return day + '.' + mounth + '.' + year
+  }
+
+   // GSI8
+  private getTime(word, length_format){
+    let  dateString = word.slice(-length_format);
+    let day = dateString.slice(-8, -6);
+    let mounth = dateString.slice(-6, -4);
+    let hours = dateString.slice(-4, -2);
+    let minutes = dateString.slice(-2);
+
+    return day + '.' + mounth + ' ' + hours + ":" + minutes
+  }
+  
+  private trimZeros(value: string){
+    return value.replace(/^0+/, '')
   }
  
 }
