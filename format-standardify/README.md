@@ -31,6 +31,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## unificate units - meter/degrees for leica and topcon
 
 ## Buid commands
-$ ng build --prod --base-href "https://KeinOhrHasen.github.io/FormatStandardify/"
-$ ngh --dir=dist/format-standardify
+*$ ng build --prod --base-href "https://KeinOhrHasen.github.io/FormatStandardify/"
+*$ ngh --dir=dist/format-standardify
 and change branch on GitHub to gh-pages 
