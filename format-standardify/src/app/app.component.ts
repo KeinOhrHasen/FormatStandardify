@@ -15,7 +15,7 @@ import { CarlsonService } from './services/carlson/carlson.service';
 export class AppComponent  {
   public points;
   public choosenFormat: string;
-  public  all_formats: string[] = ['.gsi', 'rts-6',  '.rw-5'];
+  public  all_formats: string[] = ['.gsi', '.rts-6',  '.rw-5'];
 
   formGroup = this.fb.group({
     file: [null, Validators.required]
@@ -52,13 +52,13 @@ export class AppComponent  {
     if (this.choosenFormat === '.gsi'){
       this.points = this.leicaGsiService.getParsedData(this.formGroup.value.file);
     }
-    else if (this.choosenFormat === 'rts-6'){
+    else if (this.choosenFormat === '.rts-6'){
       this.points = this.topconService.getParsedData(this.formGroup.value.file);
     }
-    else if (this.choosenFormat === 'rw-5'){
+    else if (this.choosenFormat === '.rw-5'){
       this.points = this.carlsonService.getParsedData(this.formGroup.value.file);
     }
-    this.points.forEach((row)=> console.log(row))
+    // this.points.forEach((row)=> console.log(row))
     // console.log(resultArray);
 
   }
