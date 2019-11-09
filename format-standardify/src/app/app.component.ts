@@ -5,6 +5,7 @@ import { LeicaGsiService } from './services/leica/leica-gsi.service';
 import { TopconService } from './services/topcon/topcon.service';
 import { dataToExel_Leica } from './shared/table-constructors/leica'
 import { dataToExel_Topcon } from './shared/table-constructors/topcon'
+import { CarlsonService } from './services/carlson/carlson.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ import { dataToExel_Topcon } from './shared/table-constructors/topcon'
 export class AppComponent  {
   public points;
   public choosenFormat: string;
-  public  all_formats: string[] = ['.gsi', 'rts-6'];
+  public  all_formats: string[] = ['.gsi', 'rts-6',  '.rw-5'];
 
   formGroup = this.fb.group({
     file: [null, Validators.required]
@@ -25,6 +26,7 @@ export class AppComponent  {
     private cd: ChangeDetectorRef, 
     private leicaGsiService: LeicaGsiService,
     private topconService: TopconService,
+    private carlsonService: CarlsonService,
     ) {}
   
   onFileChange(event) {
@@ -52,6 +54,9 @@ export class AppComponent  {
     }
     else if (this.choosenFormat === 'rts-6'){
       this.points = this.topconService.getParsedData(this.formGroup.value.file);
+    }
+    else if (this.choosenFormat === 'rw-5'){
+      this.points = this.carlsonService.getParsedData(this.formGroup.value.file);
     }
     this.points.forEach((row)=> console.log(row))
     // console.log(resultArray);
