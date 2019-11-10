@@ -9,9 +9,23 @@ export class CarlsonService {
 
   public getParsedData(stringToParse: string){
     let statoinsArr = this.splitOnStations(stringToParse);
-    let pointsArr =   this.splitOnPoints(statoinsArr);  
-    this.parsePoints(pointsArr); 
-    // return this.parsePoints(pointsArr)
+    let pointsArr =   this.splitOnPoints(statoinsArr);
+    let readyPoints = this.parsePoints(pointsArr);
+
+    return this.rollUpData(readyPoints);
+  }
+
+  private rollUpData(tree) {
+    let pointContainer = [];
+    tree.stations.forEach(element => {
+      // push base point
+      pointContainer.push(element[0]);
+      element[1].forEach(p => {
+        pointContainer.push(p);
+      });
+    });
+
+    return pointContainer
   }
 
   private splitOnStations(stringToParse: string){
@@ -74,7 +88,6 @@ export class CarlsonService {
       });
       stObj.points.push(point);
 
-      
       return stObj;
     })
 
@@ -90,16 +103,16 @@ export class CarlsonService {
 
     let gpsPoints = this.parseSessionPoints(pointsArr.stations);
     pointsArr.stations = gpsPoints;
-    console.log(pointsArr);
+    // console.log(pointsArr);
     
     return pointsArr;
   }
 
-  trimDashes(row: string) {
+  private trimDashes(row: string) {
     return row.replace(/^[- ]*|[-, ]*$/g, "");
   }
 
-  parseSessionInfo(sessionInfo: string[]) {
+  private parseSessionInfo(sessionInfo: string[]) {
     let infoObj = {};
     sessionInfo.forEach(r => {
       this.trimDashes(r).split(',').forEach(h => {
@@ -111,7 +124,7 @@ export class CarlsonService {
     return infoObj;
   }
 
-  parseSessionPoints(stations: any) {
+  private parseSessionPoints(stations: any) {
     let newStations = stations.map(s => {
       let basePoint = this.parseBasePoint(s.genInfo);
       let points = s.points.map(p => this.parsePoint(p));
@@ -122,7 +135,7 @@ export class CarlsonService {
   }
 
 
-  parseBasePoint(genInfo: any) {
+  private parseBasePoint(genInfo: any) {
     let basePointObj= {};
     let enteredHR = genInfo.find(r => this.trimDashes(r).startsWith('LS'));
     
@@ -147,11 +160,35 @@ export class CarlsonService {
     return basePointObj;
   }
 
-  parsePoint(point) {
-    return 'pidar'
+  private parsePoint(point: string[]) {
+    let reduced = point.reduce((acc, f, index) => {
+        this.trimDashes(f).split(/,[ ]*/).forEach(h => {
+
+          let property;
+          if (index === 3) {
+            property = this.keyValComparator(h);
+          } else {
+            property = this.headerComparator(h);
+          }
+
+          if (property) {
+            if (this.trimDashes(f).startsWith('GS') && h.startsWith('EL')) {
+              acc['reducedLocalElevation'] = property.value;
+            } else {
+              acc[property.key] = property.value
+            }
+          }
+
+        });
+      return acc
+      }, {}
+    );
+
+
+    return reduced
   }
 
-  headerComparator(header: string) {   
+  private headerComparator(header: string){   
     switch(header.slice(0, 2)) {
       // session Info
       case 'NM':
@@ -171,7 +208,7 @@ export class CarlsonService {
       case 'AU':
         return {key: 'angleUnit', value: header.slice(2)};
 
-      // point info
+      // Base point info
       case 'PN':
         return {key: 'pointNumber', value: header.slice(2)};
       case 'LA':
@@ -190,8 +227,28 @@ export class CarlsonService {
         return {key: 'type_of_LongLINK_network_connection', value: header.slice(2)};
       case 'HR':
         return {key: 'heightOfRod', value: header.slice(2)};
+      
+        // Point info - Reduced local coordinate from GPS record and localization data
+      case 'N ':
+        return {key: 'northing', value: header.slice(2)};
+      case 'E ':
+        return {key: 'easting', value: header.slice(2)};
+      case 'SW':
+        return {key: 'startGPSweek', value: header.slice(2)};
+      case 'ST':
+        return {key: 'startGPStime', value: header.slice(2)};
+      case 'EW':
+        return {key: 'endGPSweek', value: header.slice(2)};
+      case 'ET':
+        return {key: 'endGPStime', value: header.slice(2)};
+      
       default:
         return null;
     }
+  }
+
+  private keyValComparator(header: string) {
+    let h = header.split(':');
+    return {key: h[0], value: h[1]};
   }
 }

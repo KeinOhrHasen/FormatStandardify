@@ -5,6 +5,7 @@ import { LeicaGsiService } from './services/leica/leica-gsi.service';
 import { TopconService } from './services/topcon/topcon.service';
 import { dataToExel_Leica } from './shared/table-constructors/leica'
 import { dataToExel_Topcon } from './shared/table-constructors/topcon'
+import { dataToExel_Carlson } from './shared/table-constructors/carlson'
 import { CarlsonService } from './services/carlson/carlson.service';
 
 @Component({
@@ -59,7 +60,7 @@ export class AppComponent  {
       this.points = this.carlsonService.getParsedData(this.formGroup.value.file);
     }
     // this.points.forEach((row)=> console.log(row))
-    // console.log(resultArray);
+    console.log(this.points);
 
   }
 
@@ -83,8 +84,10 @@ export class AppComponent  {
 public dataToExel(pointsArray){
   if (this.choosenFormat === '.gsi'){
     return dataToExel_Leica(pointsArray);
-  }else if (this.choosenFormat === 'rts-6'){
+  }else if (this.choosenFormat === '.rts-6'){
     return dataToExel_Topcon(pointsArray);
+  }else if (this.choosenFormat === '.rw-5'){
+    return dataToExel_Carlson(pointsArray);
   }
 }
 
