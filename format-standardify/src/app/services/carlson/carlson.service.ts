@@ -5,18 +5,21 @@ import { Injectable } from '@angular/core';
 })
 export class CarlsonService {
 
+  public headers = ['GP', 'GS', 'GT', 'HS'];
+
   constructor() { }
 
-  public getParsedData(stringToParse: string){
-    let statoinsArr = this.splitOnStations(stringToParse);
-    let pointsArr =   this.splitOnPoints(statoinsArr);
-    let readyPoints = this.parsePoints(pointsArr);
+  public getParsedData(stringToParse: string) {
+
+    const statoinsArr = this.splitOnStations(stringToParse);
+    const pointsArr =   this.splitOnPoints(statoinsArr);
+    const readyPoints = this.parsePoints(pointsArr);
 
     return this.rollUpData(readyPoints);
   }
 
   private rollUpData(tree) {
-    let pointContainer = [];
+    const pointContainer = [];
     tree.stations.forEach(element => {
       // push base point
       pointContainer.push(element[0]);
@@ -25,15 +28,15 @@ export class CarlsonService {
       });
     });
 
-    return pointContainer
+    return pointContainer;
   }
 
-  private splitOnStations(stringToParse: string){
-    let surveyObject = {
+  private splitOnStations(stringToParse: string) {
+    const surveyObject = {
       sessionInfo: [],
       stations: [],
     };
-    let splittedOnRows = stringToParse.split('\n');
+    const splittedOnRows = stringToParse.split('\n');
     let station = [];
     let isCreatingPoint = false;
     splittedOnRows.forEach((row, index) => {
@@ -44,7 +47,7 @@ export class CarlsonService {
 
       // parse station start
       if (row.startsWith('BP')) {
-        station.length !== 0 ? surveyObject.stations.push(station): null;
+        station.length !== 0 ? surveyObject.stations.push(station) : null ;
         station = [];
         isCreatingPoint =true;
       }
@@ -54,14 +57,15 @@ export class CarlsonService {
         station.push(row);
       }
 
-    })
+    });
+    surveyObject.stations.push(station);
     // console.log(surveyObject)
-    return surveyObject
+    return surveyObject;
   }
 
-  private splitOnPoints(stationsToParse){
-    let newStations = stationsToParse.stations.map(st => {
-      let stObj = {
+  private splitOnPoints(stationsToParse) {
+    const newStations = stationsToParse.stations.map(st => {
+      const stObj = {
         genInfo: [],
         points: []
       };
@@ -69,89 +73,94 @@ export class CarlsonService {
       let isCreatingPoint = false;
       st.forEach((element, index) => {
 
+        // parce station meta Info
         if (index === 0 || element.includes('LS') || element.includes('Entered Rover')) {
-          stObj.genInfo.push(element)
+          stObj.genInfo.push(element);
         }
 
         // parse station start
         if (element.startsWith('GPS')) {
-          point.length !== 0 ? stObj.points.push(point): null;
+          point.length !== 0 ? stObj.points.push(point) : null;
+          // console.log(point);
+
           point = [];
-          isCreatingPoint =true;
+          isCreatingPoint = true;
         }
 
         // add data to station
-        if (isCreatingPoint && point.length < 4) {
+        if (isCreatingPoint && point.length < 4 && this.headers.includes(this.trimDashes(element).slice(0, 2))) {
           point.push(element);
         }
-         
+
       });
       stObj.points.push(point);
 
+      // console.log(stObj);
+
       return stObj;
-    })
+    });
 
     stationsToParse.stations = newStations;
     // console.log(stationsToParse);
-    return stationsToParse
+    return stationsToParse;
   }
 
   private parsePoints(pointsArr: any) {
 
-    let sessionInfoObject = this.parseSessionInfo(pointsArr.sessionInfo);
-    pointsArr.sessionInfo = sessionInfoObject
+    const sessionInfoObject = this.parseSessionInfo(pointsArr.sessionInfo);
+    pointsArr.sessionInfo = sessionInfoObject;
 
-    let gpsPoints = this.parseSessionPoints(pointsArr.stations);
+    const gpsPoints = this.parseSessionPoints(pointsArr.stations);
     pointsArr.stations = gpsPoints;
     // console.log(pointsArr);
-    
+
     return pointsArr;
   }
 
   private trimDashes(row: string) {
-    return row.replace(/^[- ]*|[-, ]*$/g, "");
+    return row.replace(/^[- ]*|[-, ]*$/g, '');
   }
 
   private parseSessionInfo(sessionInfo: string[]) {
-    let infoObj = {};
+    const infoObj = {};
     sessionInfo.forEach(r => {
       this.trimDashes(r).split(',').forEach(h => {
-        let property = this.headerComparator(h);       
+        const property = this.headerComparator(h);
         property ? infoObj[property.key] = property.value : null;
       });
 
-    })
+    });
     return infoObj;
   }
 
   private parseSessionPoints(stations: any) {
-    let newStations = stations.map(s => {
-      let basePoint = this.parseBasePoint(s.genInfo);
-      let points = s.points.map(p => this.parsePoint(p));
+    const newStations = stations.map(s => {
+      const basePoint = this.parseBasePoint(s.genInfo);
+      const points = s.points.map(p => this.parsePoint(p));
 
       return [basePoint, points];
-    })
+    });
     return newStations;
   }
 
 
   private parseBasePoint(genInfo: any) {
-    let basePointObj= {};
-    let enteredHR = genInfo.find(r => this.trimDashes(r).startsWith('LS'));
-    
+    const basePointObj = {};
+    const enteredHR = genInfo.find(r => this.trimDashes(r).startsWith('LS'));
+
     if (enteredHR) {
       basePointObj['enteredHR'] = enteredHR.match(/(\d+.\d+)/)[0];
     }
 
-    let reduced = genInfo.reduce((acc, f) => {
+    const reduced = genInfo.reduce((acc, f) => {
       if (f.startsWith('BP') || f.startsWith('LS')) {
         this.trimDashes(f).split(',').forEach(h => {
-          let property = this.headerComparator(h);
-          
+          const property = this.headerComparator(h);
+
           property ? acc[property.key] = property.value : null ;
           });
         }
-      return acc
+      return acc;
       }, {}
     );
 
@@ -161,7 +170,7 @@ export class CarlsonService {
   }
 
   private parsePoint(point: string[]) {
-    let reduced = point.reduce((acc, f, index) => {
+    const reduced = point.reduce((acc, f, index) => {
         this.trimDashes(f).split(/,[ ]*/).forEach(h => {
 
           let property;
@@ -175,21 +184,21 @@ export class CarlsonService {
             if (this.trimDashes(f).startsWith('GS') && h.startsWith('EL')) {
               acc['reducedLocalElevation'] = property.value;
             } else {
-              acc[property.key] = property.value
+              acc[property.key] = property.value;
             }
           }
 
         });
-      return acc
+      return acc;
       }, {}
     );
 
 
-    return reduced
+    return reduced;
   }
 
-  private headerComparator(header: string){   
-    switch(header.slice(0, 2)) {
+  private headerComparator(header: string) {
+    switch (header.slice(0, 2)) {
       // session Info
       case 'NM':
         return {key: 'jobName', value: header.slice(2)};
@@ -227,7 +236,7 @@ export class CarlsonService {
         return {key: 'type_of_LongLINK_network_connection', value: header.slice(2)};
       case 'HR':
         return {key: 'heightOfRod', value: header.slice(2)};
-      
+
         // Point info - Reduced local coordinate from GPS record and localization data
       case 'N ':
         return {key: 'northing', value: header.slice(2)};
@@ -241,14 +250,14 @@ export class CarlsonService {
         return {key: 'endGPSweek', value: header.slice(2)};
       case 'ET':
         return {key: 'endGPStime', value: header.slice(2)};
-      
+
       default:
         return null;
     }
   }
 
   private keyValComparator(header: string) {
-    let h = header.split(':');
+    const h = header.split(':');
     return {key: h[0], value: h[1]};
   }
 }

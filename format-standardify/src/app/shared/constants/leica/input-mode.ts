@@ -4,4 +4,4 @@ export const INPUT_MODE = {
     '2': 'Measured value, Hz-Correction ON',
     '3': 'Measured value, Hz-Correction OFF',
     '4': 'Result of special function',
-}
+};

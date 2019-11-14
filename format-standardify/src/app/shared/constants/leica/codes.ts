@@ -32,4 +32,4 @@ export const CODES = {
     '86': 'H - Station Elevation',
     '87': 'Reflector height',
     '88': 'Instrument height',
-  }
+  };

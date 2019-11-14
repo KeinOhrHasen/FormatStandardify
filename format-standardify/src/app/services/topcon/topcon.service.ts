@@ -19,134 +19,131 @@ export class TopconService {
 
   constructor() { }
 
-  private splitOnPoints(stringToParse: string){
-    let rowsArray = [];
-    let splittedOnRows = stringToParse.split('\n');
+  private splitOnPoints(stringToParse: string) {
+    const rowsArray = [];
+    const splittedOnRows = stringToParse.split('\n');
     splittedOnRows.forEach((row, index) => {
-      if (row !== ""){
-        rowsArray[index] = row.split(/ +/)
+      if (row !== '') {
+        rowsArray[index] = row.split(/ +/);
       }
-    })
-    console.log(rowsArray)
-    return rowsArray
+    });
+    console.log(rowsArray);
+    return rowsArray;
   }
 
-  private parsePoints(pointsArr: string[]){
+  private parsePoints(pointsArr: string[]) {
 
-    let points = [];
+    const points = [];
     let newStation: Station = {};
     let newPoint: Point = {isEmpty: true};
-    let UNITS: Object = {};
+    const UNITS: Object = {};
     let xyzForStation = true;
 
     pointsArr.forEach((row: any ) => {
 
 
-      switch(row[0]){
+      switch (row[0]) {
         case 'UNITS':
-          let [linear, anglar] = row[1].split(',')
+          const [linear, anglar] = row[1].split(',');
           UNITS['linear'] = linear;
           UNITS['anglar'] = anglar;
-          break
+          break;
 
         case 'STN':
           newStation = <Station> new Object();
           xyzForStation = true;
-          let [name, height] = row[1].split(',')
+          const [name, height] = row[1].split(',');
 
           newStation['stationName'] = name;
           newStation['stationHeight'] = height;
-          break
+          break;
 
-        case "BKB":
-          let [BKB_Name, BKB_Azimuth, BKB_hz_angle] = row[1].split(',');
+        case 'BKB':
+          const [BKB_Name, BKB_Azimuth, BKB_hz_angle] = row[1].split(',');
           newStation['BKB_Name'] = BKB_Name;
           newStation['BKB_Azimuth'] = BKB_Azimuth;
           newStation['BKB_hz_angle'] = BKB_hz_angle;
-          break
+          break;
 
-        case "BS":
-          let [BS_Name, BS_height] = row[1].split(',');
+        case 'BS':
+          const [BS_Name, BS_height] = row[1].split(',');
           newStation['BS_Name'] = BS_Name;
           newStation['BS_height'] = BS_height;
-          break
+          break;
 
         case 'SS':
-          if (!newPoint.isEmpty){
-            points.push(newPoint)
+          if (!newPoint.isEmpty) {
+            points.push(newPoint);
           }
           newPoint = <Point> new Object();
           xyzForStation = false;
-          let [name1, targetHeight, pointCode] = row[1].split(',')
+          const [name1, targetHeight, pointCode] = row[1].split(',');
 
-          newPoint['isEmpty'] = false
+          newPoint['isEmpty'] = false;
           newPoint['pointName'] = name1;
           newPoint['pointTargetHeight'] = targetHeight;
           newPoint['pointCode'] = pointCode;
-          newPoint['stationName'] = newStation['stationName']
-          newPoint['stationHeight'] = newStation['stationHeight']
+          newPoint['stationName'] = newStation['stationName'];
+          newPoint['stationHeight'] = newStation['stationHeight'];
           newPoint['linearUnit'] = UNITS['linear'];
           newPoint['angularUnit'] = UNITS['anglar'];
 
-          if(newStation['X - Station Easting']){
+          if (newStation['X - Station Easting']) {
             newPoint['X - Station Easting'] = newStation['X - Station Easting'];
             newPoint['Y - Station Northing'] = newStation['Y - Station Northing'];
             newPoint['H - Station Elevation'] = newStation['H - Station Elevation'];
           }
-
-          break
+          break;
 
         case 'HV':
-          let [hzAngle, vrAngle] = row[1].split(',')
+          const [hzAngle, vrAngle] = row[1].split(',');
           newPoint['HZ'] = hzAngle;
           newPoint['VR'] = vrAngle;
-          
 
-          // points.push(newPoint); 
-          break
+          // points.push(newPoint);
+          break;
 
         case 'SD':
-          let [hzAngle1, vrAngle1, slopeDistance] = row[1].split(',')
+          const [hzAngle1, vrAngle1, slopeDistance] = row[1].split(',');
           newPoint['HZ'] = hzAngle1;
           newPoint['VR'] = vrAngle1;
           newPoint['Sloping distance'] = slopeDistance;
           // points.push(newPoint);
-          break
+          break;
 
         case 'HD':
-          let [hzAngle2, s, dH] = row[1].split(',')
+          const [hzAngle2, s, dH] = row[1].split(',');
           newPoint['HZ'] = hzAngle2;
           newPoint['Horizontal excess'] = s;
           newPoint['Height difference'] = dH;
           // points.push(newPoint);
-          break
+          break;
 
         case 'XYZ':
-          let [x, y, z] = row[1].split(',')
+          const [x, y, z] = row[1].split(',');
 
-          if (xyzForStation){
+          if (xyzForStation) {
             // xyzForStation = false;
 
             newStation['X - Station Easting'] = x;
             newStation['Y - Station Northing'] = y;
             newStation['H - Station Elevation'] = z;
-          }
-          else{
+          } else {
             newPoint['X - Target Easting'] = x;
             newPoint['Y - Target Northing'] = y;
             newPoint['H - Target Elevation'] = z;
           }
-          break
+          break;
       }
-    })
-    
-    points.push(newPoint)
-    return points
+    });
+
+    points.push(newPoint);
+    return points;
   }
-  
-  public getParsedData(stringToParse: string){
-    let pointArr = this.splitOnPoints(stringToParse);      
-    return this.parsePoints(pointArr)
+
+  public getParsedData(stringToParse: string) {
+    const pointArr = this.splitOnPoints(stringToParse);
+    return this.parsePoints(pointArr);
   }
 
 }

@@ -1,38 +1,38 @@
-export const dataToExel_Carlson = function(pointsArray){
-    let data = [[
-    "Point Number",
-    "Latitude",
-    "Longitude",
-    "Elevation",
-    "Cartesian_X",
-    "Cartesian_Y",
-    "Cartesian_Z",
-    "Local_N",
-    "Local_E",
-    "Local_Z",
-    "Ant_Hgt KI",
-    "Ant_Hgt True",
-    "Solution",
-    "SATS",
-    "AGE",
-    "PDOP",
-    "HDOP",
-    "VDOP",
-    "TDOP",
-    "GDOP",
-    "NSDV",
-    "ESDV",
-    "GPS_Date_start",
-    "GPS_Time_start",
-    "GPS_Date_end",
-    "GPS_Time_end",
+export const dataToExel_Carlson = function(pointsArray) {
+    const data = [[
+        'Point Number',
+        'Latitude',
+        'Longitude',
+        'Elevation',
+        'Cartesian_X',
+        'Cartesian_Y',
+        'Cartesian_Z',
+        'Local_N',
+        'Local_E',
+        'Local_Z',
+        'Ant_Hgt KI',
+        'Ant_Hgt True',
+        'Solution',
+        'SATS',
+        'AGE',
+        'PDOP',
+        'HDOP',
+        'VDOP',
+        'TDOP',
+        'GDOP',
+        'NSDV',
+        'ESDV',
+        'GPS_Date_start',
+        'GPS_Time_start',
+        'GPS_Date_end',
+        'GPS_Time_end',
     ]];
     pointsArray.forEach((point) => {
-      let exelArray = [
+      const exelArray = [
         point.pointNumber || point.data.pointNumber || '',
-        point.latitude    || point.data.latitude    || ''  ,
-        point.longitude  || point.data.longitude  || ''  ,
-        point.elevation   || point.data.elevation   || ''  ,
+        point.latitude    || point.data.latitude    || '' ,
+        point.longitude   || point.data.longitude   || '' ,
+        point.elevation   || point.data.elevation   || '' ,
         'non-calculated',
         'non-calculated',
         'non-calculated',
@@ -56,8 +56,8 @@ export const dataToExel_Carlson = function(pointsArray){
         point.endGPSweek   || '',
         point.endGPStime   || '',
       ];
-      data.push(exelArray)
-    })
-  
-    return data
-  }
+      data.push(exelArray);
+    });
+
+    return data;
+  };
