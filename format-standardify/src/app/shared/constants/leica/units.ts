@@ -7,5 +7,5 @@ export const UNITS = {
     '5': '6400 mil',
     '6': 'Meter (last digit: 1/10mm)',
     '7': 'Feet (last digit: 1/10‘000ft)',
-    '8':'Meter (last digit: 1/100mm)',
-}
+    '8': 'Meter (last digit: 1/100mm)',
+};
