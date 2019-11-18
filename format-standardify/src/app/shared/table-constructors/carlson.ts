@@ -1,15 +1,17 @@
+import * as moment from 'moment';
+
 export const dataToExel_Carlson = function(pointsArray) {
     const data = [[
         'Point Number',
-        'Latitude',
-        'Longitude',
+        'Latitude, decimal graduses',
+        'Longitude, decimal graduses',
         'Elevation',
-        'Cartesian_X',
-        'Cartesian_Y',
-        'Cartesian_Z',
-        'Local_N',
-        'Local_E',
-        'Local_Z',
+        'Cartesian_X, m',
+        'Cartesian_Y, m',
+        'Cartesian_Z, m',
+        'Local_N, m',
+        'Local_E, m',
+        'Local_Z, m',
         'Ant_Hgt KI',
         'Ant_Hgt True',
         'Solution',
@@ -22,10 +24,8 @@ export const dataToExel_Carlson = function(pointsArray) {
         'GDOP',
         'NSDV',
         'ESDV',
-        'GPS_Date_start',
-        'GPS_Time_start',
-        'GPS_Date_end',
-        'GPS_Time_end',
+        'Date',
+        'Time',
     ]];
     pointsArray.forEach((point) => {
       const exelArray = [
@@ -33,14 +33,26 @@ export const dataToExel_Carlson = function(pointsArray) {
         point.latitude    || point.data.latitude    || '' ,
         point.longitude   || point.data.longitude   || '' ,
         point.elevation   || point.data.elevation   || '' ,
-        'non-calculated',
-        'non-calculated',
-        'non-calculated',
+        toCartesian(
+          point.latitude  || point.data.latitude,
+          point.longitude || point.data.longitude,
+          point.elevation || point.data.elevation,
+          ).X,
+        toCartesian(
+          point.latitude  || point.data.latitude,
+          point.longitude || point.data.longitude,
+          point.elevation || point.data.elevation,
+          ).Y,
+        toCartesian(
+          point.latitude  || point.data.latitude,
+          point.longitude || point.data.longitude,
+          point.elevation || point.data.elevation,
+          ).Z,
         point.northing    || '',
         point.easting     || '',
         point.reducedLocalElevation || '',
-        point.data ? point.data.elevation  : '',
-        point.data ? point.data.elevation  : '',
+        point.data ? point.enteredRoverHR  : '',
+        point.data ? +point.enteredRoverHR + +point.data.antenna.antenna_Offset1  : '',
         point.STATUS || '',
         point.SATS || '',
         point.AGE  || '',
@@ -51,13 +63,42 @@ export const dataToExel_Carlson = function(pointsArray) {
         point.GDOP || '',
         point.NSDV || '',
         point.ESDV || '',
-        point.startGPSweek || '',
-        point.startGPStime || '',
-        point.endGPSweek   || '',
-        point.endGPStime   || '',
+        toUTF(point.startGPSweek, point.startGPStime).date || '',
+        toUTF(point.startGPSweek, point.startGPStime).time || '',
       ];
       data.push(exelArray);
     });
 
     return data;
   };
+
+
+function toUTF(GPSdate: string, GPStime): any {
+  const gpsInit = moment([1980, 0, 6, 0, 0, 0]);
+  gpsInit.add(+GPSdate, 'w');
+  gpsInit.add(+GPStime / 1000, 's');
+  console.log({date: gpsInit.format('dddd, MMMM Do YYYY'), time: gpsInit.format('h:mm:ss a')});
+
+  return {date: gpsInit.format('dddd, MMMM Do YYYY'), time: gpsInit.format('h:mm:ss a')};
+}
+
+function toCartesian(B, L, H) {
+  // B, L to radian
+  const B_rad = B * Math.PI / 180;
+  const L_rad = L * Math.PI / 180;
+
+  // parameters of elipsoid WGS-84
+  const f =	0.003352811;
+  const a =	6378137.000;
+
+  // additional parameters
+  const e2 =	f * (2 - f);
+  const W =	(1 - (e2 * (Math.sin(B_rad) ** 2))) ** .5;
+  const N =	a / W;
+
+  const X = (H + N) * Math.cos(B_rad) * Math.cos(L_rad);
+  const Y =	(H + N) * Math.cos(B_rad) * Math.sin(L_rad);
+  const Z =	((N * (1 - e2)) + H) * Math.sin(B_rad);
+
+  return {X, Y, Z};
+}

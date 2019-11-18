@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,9 @@ export class CarlsonService {
     const statoinsArr = this.splitOnStations(stringToParse);
     const pointsArr =   this.splitOnPoints(statoinsArr);
     const readyPoints = this.parsePoints(pointsArr);
+    const rolledUpPoints = this.rollUpData(readyPoints);
 
-    return this.rollUpData(readyPoints);
+    return rolledUpPoints;
   }
 
   private rollUpData(tree) {
@@ -24,6 +26,7 @@ export class CarlsonService {
       // push base point
       pointContainer.push(element[0]);
       element[1].forEach(p => {
+        p.antenna_Offset1 = element[0].data.antenna.antennaOffset1;
         pointContainer.push(p);
       });
     });
@@ -39,17 +42,38 @@ export class CarlsonService {
     const splittedOnRows = stringToParse.split('\n');
     let station = [];
     let isCreatingPoint = false;
+    let antenna = null;
+    let enteredHR = null;
+    let enteredRoverHR = null;
     splittedOnRows.forEach((row, index) => {
-      // parce session Info 
+      // parse session Info
       if (index < 2) {
         surveyObject.sessionInfo.push(row);
       }
 
+      // parse antenna info ofr station
+      if (this.trimDashes(row).startsWith('Antenna Type')) {
+        antenna = row;
+      }
+      // parse antenna info ofr station
+      if (this.trimDashes(row).startsWith('Entered Rover HR')) {
+        enteredRoverHR = row;
+      }
+
+      if (row.startsWith('LS')) {
+        enteredHR = row;
+      }
+
       // parse station start
       if (row.startsWith('BP')) {
-        station.length !== 0 ? surveyObject.stations.push(station) : null ;
+        if (station.length !== 0) {
+          surveyObject.stations.push(station);
+          station.push(antenna);
+          station.push(enteredRoverHR);
+          station.push(enteredHR);
+        }
         station = [];
-        isCreatingPoint =true;
+        isCreatingPoint = true;
       }
 
       // add data to station
@@ -58,8 +82,12 @@ export class CarlsonService {
       }
 
     });
+    station.push(antenna);
+    station.push(enteredRoverHR);
+    station.push(enteredHR);
     surveyObject.stations.push(station);
-    // console.log(surveyObject)
+    console.log(surveyObject);
+
     return surveyObject;
   }
 
@@ -74,11 +102,11 @@ export class CarlsonService {
       st.forEach((element, index) => {
 
         // parce station meta Info
-        if (index === 0 || element.includes('LS') || element.includes('Entered Rover')) {
+        if (index === 0 || element.includes('LS') || element.includes('Entered Rover') || element.includes('Antenna Type')) {
           stObj.genInfo.push(element);
         }
 
-        // parse station start
+        // parse point start
         if (element.startsWith('GPS')) {
           point.length !== 0 ? stObj.points.push(point) : null;
           // console.log(point);
@@ -117,10 +145,6 @@ export class CarlsonService {
     return pointsArr;
   }
 
-  private trimDashes(row: string) {
-    return row.replace(/^[- ]*|[-, ]*$/g, '');
-  }
-
   private parseSessionInfo(sessionInfo: string[]) {
     const infoObj = {};
     sessionInfo.forEach(r => {
@@ -147,9 +171,13 @@ export class CarlsonService {
   private parseBasePoint(genInfo: any) {
     const basePointObj = {};
     const enteredHR = genInfo.find(r => this.trimDashes(r).startsWith('LS'));
+    const enteredRoverHR = genInfo.find(r => this.trimDashes(r).startsWith('Entered Rover HR'));
 
     if (enteredHR) {
       basePointObj['enteredHR'] = enteredHR.match(/(\d+.\d+)/)[0];
+    }
+    if (enteredRoverHR) {
+      basePointObj['enteredRoverHR'] = enteredRoverHR.match(/(\d+.\d+)/)[0];
     }
 
     const reduced = genInfo.reduce((acc, f) => {
@@ -159,7 +187,11 @@ export class CarlsonService {
 
           property ? acc[property.key] = property.value : null ;
           });
-        }
+      } else if (f.includes('Antenna Type')) {
+        // console.log('found antenna');
+
+        acc['antenna'] = this.getAntennaInfo(f);
+      }
       return acc;
       }, {}
     );
@@ -203,9 +235,9 @@ export class CarlsonService {
       case 'NM':
         return {key: 'jobName', value: header.slice(2)};
       case 'DT':
-        return {key: 'date', value: header.slice(2)};
+        return {key: 'GPSdate', value: header.slice(2)};
       case 'TM':
-        return {key: 'time', value: header.slice(2)};
+        return {key: 'GPStime', value: header.slice(2)};
       case 'AD':
         return {key: 'southAzimuthDirection', value: header.slice(2)};
       case 'UN':
@@ -221,11 +253,11 @@ export class CarlsonService {
       case 'PN':
         return {key: 'pointNumber', value: header.slice(2)};
       case 'LA':
-        return {key: 'latitude', value: header.slice(2)};
+        return {key: 'latitude', value: this.toDecimalAngle(header.slice(2))};
       case 'LN':
-        return {key: 'longitude', value: header.slice(2)};
+        return {key: 'longitude', value: this.toDecimalAngle(header.slice(2))};
       case 'EL':
-        return {key: 'elevation', value: header.slice(2)};
+        return {key: 'elevation', value: this.toMeter(header.slice(2))};
       case 'AG':
         return {key: 'antennaToGround', value: header.slice(2)};
       case 'PA':
@@ -237,11 +269,11 @@ export class CarlsonService {
       case 'HR':
         return {key: 'heightOfRod', value: header.slice(2)};
 
-        // Point info - Reduced local coordinate from GPS record and localization data
+      // Point info - Reduced local coordinate from GPS record and localization data
       case 'N ':
-        return {key: 'northing', value: header.slice(2)};
+        return {key: 'northing', value: this.toMeter(header.slice(2))};
       case 'E ':
-        return {key: 'easting', value: header.slice(2)};
+        return {key: 'easting', value: this.toMeter(header.slice(2))};
       case 'SW':
         return {key: 'startGPSweek', value: header.slice(2)};
       case 'ST':
@@ -250,6 +282,16 @@ export class CarlsonService {
         return {key: 'endGPSweek', value: header.slice(2)};
       case 'ET':
         return {key: 'endGPStime', value: header.slice(2)};
+
+      // antenna data
+      case 'RA':
+        return {key: 'antenna_Radius', value: header.slice(2, -1)};
+      case 'SH':
+        return {key: 'antenna_Slant_Height_Measure_Point', value: header.slice(2, -1)};
+      case 'L1':
+        return {key: 'antenna_Offset1', value: header.slice(2, -1)};
+      case 'L2':
+        return {key: 'antenna_Offset2', value: header.slice(2, -1)};
 
       default:
         return null;
@@ -260,4 +302,30 @@ export class CarlsonService {
     const h = header.split(':');
     return {key: h[0], value: h[1]};
   }
+
+  private trimDashes(row: string): string {
+    return row.replace(/^[- ]*|[-, ]*$/g, '');
+  }
+
+  private getAntennaInfo(row: string): any {
+    // console.log('get antenna');
+
+    const reduced = this.trimDashes(row).split(',').reduce((acc, h) => {
+      const property = this.headerComparator(h);
+      property ? acc[property.key] = property.value : null ;
+
+      return acc;
+    }, {});
+    return reduced;
+  }
+
+  private toDecimalAngle(angle: string): number {
+    return +angle;
+  }
+
+  private toMeter(line: string): number {
+    return +line;
+  }
+
+
 }
