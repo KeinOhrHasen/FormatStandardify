@@ -7,6 +7,7 @@ import { dataToExel_Leica } from './shared/table-constructors/leica';
 import { dataToExel_Topcon } from './shared/table-constructors/topcon';
 import { dataToExel_Carlson } from './shared/table-constructors/carlson';
 import { CarlsonService } from './services/carlson/carlson.service';
+import { dataToExel_CubeA } from './shared/table-constructors/cube-a';
 
 @Component({
   selector: 'app-root',
@@ -85,7 +86,15 @@ public dataToExel(pointsArray) {
   } else if (this.choosenFormat === '.rts-6') {
     return dataToExel_Topcon(pointsArray);
   } else if (this.choosenFormat === '.rw-5') {
-    return dataToExel_Carlson(pointsArray);
+    return this.stonexMiddleware(pointsArray);
+  }
+}
+
+private stonexMiddleware(pointsObject) {
+  if (pointsObject.softName === 'SurvCE') {
+    return dataToExel_Carlson(pointsObject.pointsArray);
+  } else if (pointsObject.softName === 'Cube-A') {
+    return dataToExel_CubeA(pointsObject.pointsArray);
   }
 }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
+import { Carlson } from 'src/app/interfaces/carlson-point';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +7,7 @@ import * as moment from 'moment';
 export class CarlsonService {
 
   public headers = ['GP', 'GS', 'GT', 'HS'];
+  private units = {UN: null, AU: null};
 
   constructor() { }
 
@@ -21,13 +22,18 @@ export class CarlsonService {
   }
 
   private rollUpData(tree) {
-    const pointContainer = [];
+    const pointContainer = {softName: tree.sessionInfo.softName, pointsArray: []};
+
     tree.stations.forEach(element => {
       // push base point
-      pointContainer.push(element[0]);
+      pointContainer.pointsArray.push(element[0]);
       element[1].forEach(p => {
-        p.antenna_Offset1 = element[0].data.antenna.antennaOffset1;
-        pointContainer.push(p);
+        if (element[0].data.antenna) {
+          p.antenna_Offset1 = element[0].data.antenna.antennaOffset1;
+        } else {
+          p.antenna_Offset1 = element[0].enteredHR - element[0].enteredRoverHR;
+        }
+        pointContainer.pointsArray.push(p);
       });
     });
 
@@ -47,7 +53,7 @@ export class CarlsonService {
     let enteredRoverHR = null;
     splittedOnRows.forEach((row, index) => {
       // parse session Info
-      if (index < 2) {
+      if (index < 3) {
         surveyObject.sessionInfo.push(row);
       }
 
@@ -68,7 +74,7 @@ export class CarlsonService {
       if (row.startsWith('BP')) {
         if (station.length !== 0) {
           surveyObject.stations.push(station);
-          station.push(antenna);
+          antenna ? station.push(antenna) : null;
           station.push(enteredRoverHR);
           station.push(enteredHR);
         }
@@ -82,7 +88,7 @@ export class CarlsonService {
       }
 
     });
-    station.push(antenna);
+    antenna ? station.push(antenna) : null;
     station.push(enteredRoverHR);
     station.push(enteredHR);
     surveyObject.stations.push(station);
@@ -146,15 +152,27 @@ export class CarlsonService {
   }
 
   private parseSessionInfo(sessionInfo: string[]) {
-    const infoObj = {};
-    sessionInfo.forEach(r => {
-      this.trimDashes(r).split(',').forEach(h => {
+    const reduced = sessionInfo.reduce((acc, f) => {
+      this.trimDashes(f).split(',').forEach(h => {
         const property = this.headerComparator(h);
-        property ? infoObj[property.key] = property.value : null;
-      });
 
-    });
-    return infoObj;
+        if (property) {
+          acc[property.key] = property.value;
+          if (property.key === 'UN' || property.key === 'AU') {
+            this.units[property.key] = +property.value;
+          }
+        }
+
+        if (f.includes('Stonex')) {
+          acc['softName'] = f.match(/Stonex ([a-zA-Z0-9-]+)/)[1];
+        }
+
+        });
+        return acc;
+      }, {}
+    );
+
+    return reduced;
   }
 
   private parseSessionPoints(stations: any) {
@@ -239,15 +257,15 @@ export class CarlsonService {
       case 'TM':
         return {key: 'GPStime', value: header.slice(2)};
       case 'AD':
-        return {key: 'southAzimuthDirection', value: header.slice(2)};
+        return {key: 'southAzimuthDirection', value: +header.slice(2)};
       case 'UN':
-        return {key: 'distanceUnit', value: header.slice(2)};
+        return {key: 'distanceUnit', value: +header.slice(2)};
       case 'SF':
-        return {key: 'scaleFactor', value: header.slice(2)};
+        return {key: 'scaleFactor', value: +header.slice(2)};
       case 'EC':
-        return {key: 'isEnabledEarthCurvature', value: header.slice(2)};
+        return {key: 'isEnabledEarthCurvature', value: +header.slice(2)};
       case 'AU':
-        return {key: 'angleUnit', value: header.slice(2)};
+        return {key: 'angleUnit', value: +header.slice(2)};
 
       // Base point info
       case 'PN':
@@ -257,7 +275,7 @@ export class CarlsonService {
       case 'LN':
         return {key: 'longitude', value: this.toDecimalAngle(header.slice(2))};
       case 'EL':
-        return {key: 'elevation', value: this.toMeter(header.slice(2))};
+        return {key: 'elevation', value: +header.slice(2)};
       case 'AG':
         return {key: 'antennaToGround', value: header.slice(2)};
       case 'PA':
@@ -267,21 +285,21 @@ export class CarlsonService {
       case 'SR':
         return {key: 'type_of_LongLINK_network_connection', value: header.slice(2)};
       case 'HR':
-        return {key: 'heightOfRod', value: header.slice(2)};
+        return {key: 'heightOfRod', value: this.toMeter(+header.slice(2))};
 
       // Point info - Reduced local coordinate from GPS record and localization data
       case 'N ':
-        return {key: 'northing', value: this.toMeter(header.slice(2))};
+        return {key: 'northing', value: this.toMeter(+header.slice(2))};
       case 'E ':
-        return {key: 'easting', value: this.toMeter(header.slice(2))};
+        return {key: 'easting', value: this.toMeter(+header.slice(2))};
       case 'SW':
-        return {key: 'startGPSweek', value: header.slice(2)};
+        return {key: 'startGPSweek', value: +header.slice(2)};
       case 'ST':
-        return {key: 'startGPStime', value: header.slice(2)};
+        return {key: 'startGPStime', value: +header.slice(2)};
       case 'EW':
-        return {key: 'endGPSweek', value: header.slice(2)};
+        return {key: 'endGPSweek', value: +header.slice(2)};
       case 'ET':
-        return {key: 'endGPStime', value: header.slice(2)};
+        return {key: 'endGPStime', value: +header.slice(2)};
 
       // antenna data
       case 'RA':
@@ -320,12 +338,28 @@ export class CarlsonService {
   }
 
   private toDecimalAngle(angle: string): number {
-    return +angle;
+    // 0 == sixtydecimal - 360
+    // 1 == gradians - 400
+    const [degree, ms] = angle.split('.');
+    const minutes = +ms.slice(0, 2);
+    const seconds = +ms.slice(2) / 100000000;
+    const decimal = +degree + (minutes / 60) + (seconds / 3600);
+
+    if (this.units.UN === 0) {
+      return decimal;
+    }
+
+    return +degree * .9 + (minutes / 60) + (seconds / 3600);
+
   }
 
-  private toMeter(line: string): number {
-    return +line;
+  private toMeter(line: number): number {
+    // 0 == feet
+    // 1 == meter
+    if (this.units.UN === 0) {
+      return line / 3.28084;
+    }
+    return line;
   }
-
 
 }

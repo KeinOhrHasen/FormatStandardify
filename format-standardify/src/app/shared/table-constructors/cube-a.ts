@@ -1,6 +1,8 @@
 import * as moment from 'moment';
 
-export const dataToExel_Carlson = function(pointsArray) {
+export const dataToExel_CubeA = function(pointsArray) {
+    console.log(pointsArray);
+    
     const data = [[
         'Point Number',
         'Latitude, decimal graduses',
@@ -16,54 +18,52 @@ export const dataToExel_Carlson = function(pointsArray) {
         'Ant_Hgt True, m',
         'Solution',
         'SATS',
-        'AGE',
+
         'PDOP',
         'HDOP',
         'VDOP',
-        'TDOP',
-        'GDOP',
-        'NSDV',
-        'ESDV',
+        'HSDV',
+        'VSDV',
+
         'Date',
         'Time',
     ]];
     pointsArray.forEach((point) => {
       const exelArray = [
         point.pointNumber || point.data.pointNumber || '',
-        point.latitude    || point.data.latitude    || '' ,
-        point.longitude   || point.data.longitude   || '' ,
-        point.elevation   || point.data.elevation   || '' ,
+        point.latitude    || point.data.latitude    || '',
+        point.longitude   || point.data.longitude   || '',
+        point.elevation   -  1.0832  || point.data.elevation   -  1.0832 || '',
         toCartesian(
-          point.latitude  || point.data.latitude,
-          point.longitude || point.data.longitude,
-          point.elevation || point.data.elevation,
+          point.latitude  - 1.0832  || point.data.latitude -  1.0832,
+          point.longitude -  1.0832 || point.data.longitude -  1.0832,
+          point.elevation -  1.0832 || point.data.elevation -  1.0832,
           ).X,
         toCartesian(
-          point.latitude  || point.data.latitude,
-          point.longitude || point.data.longitude,
-          point.elevation || point.data.elevation,
+          point.latitude -  1.0832  || point.data.latitude -  1.0832,
+          point.longitude -  1.0832 || point.data.longitude -  1.0832,
+          point.elevation  -  1.0832 || point.data.elevation -  1.0832,
           ).Y,
         toCartesian(
-          point.latitude  || point.data.latitude,
-          point.longitude || point.data.longitude,
-          point.elevation || point.data.elevation,
+          point.latitude   -  1.0832 || point.data.latitude -  1.0832 ,
+          point.longitude  -  1.0832 || point.data.longitude -  1.0832,
+          point.elevation  -  1.0832 || point.data.elevation -  1.0832,
           ).Z,
         point.northing    || '',
         point.easting     || '',
         point.reducedLocalElevation || '',
         point.data ? point.enteredRoverHR  : '',
-        point.data ? +point.enteredRoverHR + +point.data.antenna.antenna_Offset1  : '',
+        point.data ?  +point.enteredHR - +point.enteredRoverHR : '',
 
         point.STATUS || '',
         point.SATS || '',
-        point.AGE  || '',
+
         point.PDOP || '',
         point.HDOP || '',
         point.VDOP || '',
-        point.TDOP || '',
-        point.GDOP || '',
-        point.NSDV || '',
-        point.ESDV || '',
+        point.HSDV  || '',
+        point.VSDV  || '',
+
         point.startGPSweek ? toUTF(point.startGPSweek, point.startGPStime).date : '',
         point.startGPSweek ? toUTF(point.startGPSweek, point.startGPStime).time : '',
       ];
@@ -82,7 +82,7 @@ function toUTF(GPSdate: string, GPStime): any {
   return {
     date: gpsInit.format('DD.MM.YYYY'),
     time: gpsInit.format('HH:mm:ss')
-  };
+    };
 }
 
 function toCartesian(B: number, L: number, H: number) {
