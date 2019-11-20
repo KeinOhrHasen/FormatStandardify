@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()">
   <input type="file" (change)="onFileChange($event)" /> <br>
   <button mat-button color="primary" type="submit" [disabled]="formGroup.invalid || !choosenFormat">Submit</button>
-  <button mat-button color="primary" type="button" [disabled]="formGroup.invalid || !choosenFormat" (click)="saveFile()">Save file</button>
+  <button mat-button color="primary" type="button" [disabled]="true" (click)="saveFile()">Save file</button>
   <button mat-button color="primary" type="button" (click)="creeteXLSX()">Save EXEL file</button>
 </form>
 
