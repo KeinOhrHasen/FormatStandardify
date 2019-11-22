@@ -18,8 +18,9 @@ export class AppComponent  {
   public points;
   public choosenFormat: string;
   public  all_formats: string[] = ['.gsi', '.rts-6',  '.rw-5'];
+  public readyToSaveExcel = false;
 
-  formGroup = this.fb.group({
+  public formGroup = this.fb.group({
     file: [null, Validators.required]
   });
 
@@ -60,6 +61,7 @@ export class AppComponent  {
     }
     // this.points.forEach((row)=> console.log(row))
     console.log(this.points);
+    this.readyToSaveExcel = true;
 
   }
 

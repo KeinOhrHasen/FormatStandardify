@@ -7,7 +7,7 @@ import { Carlson } from 'src/app/interfaces/carlson-point';
 export class CarlsonService {
 
   public headers = ['GP', 'GS', 'GT', 'HS'];
-  private units = {UN: null, AU: null};
+  public units = {UN: null, AU: null};
 
   constructor() { }
 
@@ -22,17 +22,25 @@ export class CarlsonService {
   }
 
   private rollUpData(tree) {
+    console.log(tree);
+    
     const pointContainer = {softName: tree.sessionInfo.softName, pointsArray: []};
 
     tree.stations.forEach(element => {
       // push base point
       pointContainer.pointsArray.push(element[0]);
       element[1].forEach(p => {
+
+
         if (element[0].data.antenna) {
-          p.antenna_Offset1 = element[0].data.antenna.antennaOffset1;
+          p.antenna_Offset1 = element[0].data.antenna.antenna_Offset1;
         } else {
           p.antenna_Offset1 = element[0].enteredHR - element[0].enteredRoverHR;
         }
+
+        p['enteredHR'] =  element[0].enteredHR;
+        p.enteredRoverHR =  element[0].enteredRoverHR;
+
         pointContainer.pointsArray.push(p);
       });
     });
@@ -92,7 +100,7 @@ export class CarlsonService {
     station.push(enteredRoverHR);
     station.push(enteredHR);
     surveyObject.stations.push(station);
-    console.log(surveyObject);
+    // console.log(surveyObject);
 
     return surveyObject;
   }
@@ -115,8 +123,6 @@ export class CarlsonService {
         // parse point start
         if (element.startsWith('GPS')) {
           point.length !== 0 ? stObj.points.push(point) : null;
-          // console.log(point);
-
           point = [];
           isCreatingPoint = true;
         }
@@ -156,10 +162,11 @@ export class CarlsonService {
       this.trimDashes(f).split(',').forEach(h => {
         const property = this.headerComparator(h);
 
+        // fix me
         if (property) {
           acc[property.key] = property.value;
-          if (property.key === 'UN' || property.key === 'AU') {
-            this.units[property.key] = +property.value;
+          if (h.slice(0, 2) === 'UN' || h.slice(0, 2) === 'AU') {
+            this.units[h.slice(0, 2)] = property.value;
           }
         }
 
@@ -206,8 +213,6 @@ export class CarlsonService {
           property ? acc[property.key] = property.value : null ;
           });
       } else if (f.includes('Antenna Type')) {
-        // console.log('found antenna');
-
         acc['antenna'] = this.getAntennaInfo(f);
       }
       return acc;
@@ -242,7 +247,6 @@ export class CarlsonService {
       return acc;
       }, {}
     );
-
 
     return reduced;
   }
@@ -326,8 +330,6 @@ export class CarlsonService {
   }
 
   private getAntennaInfo(row: string): any {
-    // console.log('get antenna');
-
     const reduced = this.trimDashes(row).split(',').reduce((acc, h) => {
       const property = this.headerComparator(h);
       property ? acc[property.key] = property.value : null ;
@@ -338,19 +340,17 @@ export class CarlsonService {
   }
 
   private toDecimalAngle(angle: string): number {
-    // 0 == sixtydecimal - 360
-    // 1 == gradians - 400
-    const [degree, ms] = angle.split('.');
-    const minutes = +ms.slice(0, 2);
-    const seconds = +ms.slice(2) / 100000000;
-    const decimal = +degree + (minutes / 60) + (seconds / 3600);
+    // 0 == decimal - 360,00
+    // 1 == sixtydecimal - 360,mm,ss
+    if (this.units.AU === 1) {
+      const [degree, ms] = angle.split('.');
+      const minutes = +ms.slice(0, 2);
+      const seconds = +ms.slice(2) / 10 ** 10;
 
-    if (this.units.UN === 0) {
-      return decimal;
+      return  +degree +  (minutes / 60) + (seconds / 3600);
+    } else if (this.units.AU === 0) {
+      return +angle;
     }
-
-    return +degree * .9 + (minutes / 60) + (seconds / 3600);
-
   }
 
   private toMeter(line: number): number {

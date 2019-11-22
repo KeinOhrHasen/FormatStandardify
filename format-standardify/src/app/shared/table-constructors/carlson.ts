@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 
 export const dataToExel_Carlson = function(pointsArray) {
+  console.log(pointsArray);
     const data = [[
         'Point Number',
         'Latitude, decimal graduses',
@@ -32,27 +33,31 @@ export const dataToExel_Carlson = function(pointsArray) {
         point.pointNumber || point.data.pointNumber || '',
         point.latitude    || point.data.latitude    || '' ,
         point.longitude   || point.data.longitude   || '' ,
-        point.elevation   || point.data.elevation   || '' ,
+        // include summary antenna height ( rod + vertical antenna offset) for Geodesic height
+        point.elevation   - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR || '' ,
         toCartesian(
           point.latitude  || point.data.latitude,
           point.longitude || point.data.longitude,
-          point.elevation || point.data.elevation,
+          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+          point.elevation - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR,
           ).X,
         toCartesian(
           point.latitude  || point.data.latitude,
           point.longitude || point.data.longitude,
-          point.elevation || point.data.elevation,
+          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+          point.elevation - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR,
           ).Y,
         toCartesian(
           point.latitude  || point.data.latitude,
           point.longitude || point.data.longitude,
-          point.elevation || point.data.elevation,
+          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+          point.elevation - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR,
           ).Z,
         point.northing    || '',
         point.easting     || '',
         point.reducedLocalElevation || '',
-        point.data ? point.enteredRoverHR  : '',
-        point.data ? +point.enteredRoverHR + +point.data.antenna.antenna_Offset1  : '',
+        point.enteredRoverHR,
+        +point.enteredRoverHR + +point.antenna_Offset1  ||  +point.enteredRoverHR + +point.data.antenna.antenna_Offset1 || '',
 
         point.STATUS || '',
         point.SATS || '',
