@@ -1,8 +1,7 @@
 import * as moment from 'moment';
 
 export const dataToExel_CubeA = function(pointsArray) {
-    console.log(pointsArray);
-    
+
     const data = [[
         'Point Number',
         'Latitude, decimal graduses',
@@ -35,25 +34,26 @@ export const dataToExel_CubeA = function(pointsArray) {
         point.longitude   || point.data.longitude   || '',
         point.elevation   -  1.0832  || point.data.elevation   -  1.0832 || '',
         toCartesian(
-          point.latitude  - 1.0832  || point.data.latitude -  1.0832,
-          point.longitude -  1.0832 || point.data.longitude -  1.0832,
-          point.elevation -  1.0832 || point.data.elevation -  1.0832,
+          point.latitude   || point.data.latitude,
+          point.longitude  || point.data.longitude,
+          point.elevation -  1.0832  || point.data.elevation -  1.0832,
           ).X,
         toCartesian(
-          point.latitude -  1.0832  || point.data.latitude -  1.0832,
-          point.longitude -  1.0832 || point.data.longitude -  1.0832,
+          point.latitude  || point.data.latitude,
+          point.longitude || point.data.longitude,
           point.elevation  -  1.0832 || point.data.elevation -  1.0832,
           ).Y,
         toCartesian(
-          point.latitude   -  1.0832 || point.data.latitude -  1.0832 ,
-          point.longitude  -  1.0832 || point.data.longitude -  1.0832,
+          point.latitude    || point.data.latitude,
+          point.longitude   || point.data.longitude,
           point.elevation  -  1.0832 || point.data.elevation -  1.0832,
           ).Z,
         point.northing    || '',
         point.easting     || '',
         point.reducedLocalElevation || '',
-        point.data ? point.enteredRoverHR  : '',
-        point.data ?  +point.enteredHR - +point.enteredRoverHR : '',
+
+        point.data ? point.enteredRoverHR : '',
+        point.data ? point.enteredHR  : '',
 
         point.STATUS || '',
         point.SATS || '',
@@ -91,7 +91,7 @@ function toCartesian(B: number, L: number, H: number) {
   const L_rad = L * Math.PI / 180;
 
   // parameters of elipsoid WGS-84
-  const f =	0.003352811;
+  const f =	1 / 298.25722356;
   const a =	6378137.000;
 
   // additional parameters
@@ -99,9 +99,9 @@ function toCartesian(B: number, L: number, H: number) {
   const W =	(1 - (e2 * (Math.sin(B_rad) ** 2))) ** .5;
   const N =	a / W;
 
-  const X = (H + N) * Math.cos(B_rad) * Math.cos(L_rad);
+  const X    = (H + N) * Math.cos(B_rad) * Math.cos(L_rad);
   const Y =	(H + N) * Math.cos(B_rad) * Math.sin(L_rad);
-  const Z =	((N * (1 - e2)) + H) * Math.sin(B_rad);
+  const Z =	(N * (1 - e2) + H) * Math.sin(B_rad);
 
   return {X, Y, Z};
 }
