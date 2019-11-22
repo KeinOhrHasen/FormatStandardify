@@ -1,7 +1,6 @@
 import * as moment from 'moment';
 
 export const dataToExel_CubeA = function(pointsArray) {
-
     const data = [[
         'Point Number',
         'Latitude, decimal graduses',
@@ -32,28 +31,31 @@ export const dataToExel_CubeA = function(pointsArray) {
         point.pointNumber || point.data.pointNumber || '',
         point.latitude    || point.data.latitude    || '',
         point.longitude   || point.data.longitude   || '',
-        point.elevation   -  1.0832  || point.data.elevation   -  1.0832 || '',
+        // include summary antenna height ( rod + vertical antenna offset) for Geodesic height
+        point.elevation   -  point.enteredHR  || point.data.elevation   -  point.enteredHR || '',
         toCartesian(
-          point.latitude   || point.data.latitude,
-          point.longitude  || point.data.longitude,
-          point.elevation -  1.0832  || point.data.elevation -  1.0832,
+          point.latitude  || point.data.latitude,
+          point.longitude || point.data.longitude,
+          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+          point.elevation -  point.enteredHR || point.data.elevation -  point.enteredHR,
           ).X,
         toCartesian(
           point.latitude  || point.data.latitude,
           point.longitude || point.data.longitude,
-          point.elevation  -  1.0832 || point.data.elevation -  1.0832,
+          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+          point.elevation  -  point.enteredHR || point.data.elevation -  point.enteredHR,
           ).Y,
         toCartesian(
-          point.latitude    || point.data.latitude,
-          point.longitude   || point.data.longitude,
-          point.elevation  -  1.0832 || point.data.elevation -  1.0832,
+          point.latitude   || point.data.latitude ,
+          point.longitude  || point.data.longitude,
+          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+          point.elevation  -  point.enteredHR || point.data.elevation -  point.enteredHR,
           ).Z,
         point.northing    || '',
         point.easting     || '',
         point.reducedLocalElevation || '',
-
-        point.data ? point.enteredRoverHR : '',
-        point.data ? point.enteredHR  : '',
+        point.enteredRoverHR  ||  '',
+        point.enteredHR || '',
 
         point.STATUS || '',
         point.SATS || '',
@@ -92,7 +94,7 @@ function toCartesian(B: number, L: number, H: number) {
 
   // parameters of elipsoid WGS-84
   const f =	1 / 298.25722356;
-  const a =	6378137.000;
+  const a =	6378137;
 
   // additional parameters
   const e2 =	f * (2 - f);

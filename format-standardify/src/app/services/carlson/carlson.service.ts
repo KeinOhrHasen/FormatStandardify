@@ -22,17 +22,25 @@ export class CarlsonService {
   }
 
   private rollUpData(tree) {
+    console.log(tree);
+    
     const pointContainer = {softName: tree.sessionInfo.softName, pointsArray: []};
 
     tree.stations.forEach(element => {
       // push base point
       pointContainer.pointsArray.push(element[0]);
       element[1].forEach(p => {
+
+
         if (element[0].data.antenna) {
-          p.antenna_Offset1 = element[0].data.antenna.antennaOffset1;
+          p.antenna_Offset1 = element[0].data.antenna.antenna_Offset1;
         } else {
           p.antenna_Offset1 = element[0].enteredHR - element[0].enteredRoverHR;
         }
+
+        p['enteredHR'] =  element[0].enteredHR;
+        p.enteredRoverHR =  element[0].enteredRoverHR;
+
         pointContainer.pointsArray.push(p);
       });
     });
