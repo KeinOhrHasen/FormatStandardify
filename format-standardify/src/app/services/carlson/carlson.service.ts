@@ -22,8 +22,6 @@ export class CarlsonService {
   }
 
   private rollUpData(tree) {
-    console.log(tree);
-    
     const pointContainer = {softName: tree.sessionInfo.softName, pointsArray: []};
 
     tree.stations.forEach(element => {
