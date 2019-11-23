@@ -1,6 +1,8 @@
 import * as moment from 'moment';
+import { IUTF } from '../../interfaces/stonex/utfDate';
+import { ICartesianCoordinates } from '../../interfaces/stonex/cartesian-coordinates';
 
-export const toUTF = function(GPSdate: string, GPStime): any {
+export const toUTF = function(GPSdate: number, GPStime: number): IUTF {
     const gpsInit = moment([1980, 0, 6, 0, 0, 0]);
     gpsInit.add(+GPSdate, 'w');
     gpsInit.add(+GPStime / 1000, 's');
@@ -11,7 +13,7 @@ export const toUTF = function(GPSdate: string, GPStime): any {
     };
 };
 
-export const toCartesian = function (B: number, L: number, H: number) {
+export const toCartesian = function (B: number, L: number, H: number): ICartesianCoordinates {
     // B, L to radian
     const B_rad = B * Math.PI / 180;
     const L_rad = L * Math.PI / 180;

@@ -1,16 +1,6 @@
 import { Injectable } from '@angular/core';
-
-export interface Point {
-  isEmpty: boolean;
-  description?: string;
-  done?: boolean;
-}
-export interface Station {
-  isEmpty?: boolean;
-  description?: string;
-  done?: boolean;
-}
-
+import { Station } from 'src/app/shared/interfaces/topcon/station.model';
+import { Point } from 'src/app/shared/interfaces/topcon/point.model';
 
 @Injectable({
   providedIn: 'root'
@@ -123,8 +113,6 @@ export class TopconService {
           const [x, y, z] = row[1].split(',');
 
           if (xyzForStation) {
-            // xyzForStation = false;
-
             newStation['X - Station Easting'] = x;
             newStation['Y - Station Northing'] = y;
             newStation['H - Station Elevation'] = z;

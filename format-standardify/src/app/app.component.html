@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()">
-  <input type="file" (change)="onFileChange($event)" /> <br>
+  <input type="file" (change)="onFileChange($event)"/> <br>
   <button mat-button color="primary" type="submit" [disabled]="formGroup.invalid || !choosenFormat">Submit</button>
-  <button mat-button color="primary" type="button" [disabled]="true" (click)="saveFile()">Save file</button>
+  <button mat-button color="primary" type="button" [disabled]="false" (click)="saveFile()">Save file</button>
   <button mat-button color="primary" type="button" [disabled]="!readyToSaveExcel" (click)="creeteXLSX()">Save EXСEL file</button>
 </form>
 
@@ -17,14 +17,5 @@
   </mat-radio-group>
   <div>Choosed format is: {{choosenFormat}}</div>
 </div>
-
-
-<table class="sjs-table">
-  <!-- <tr *ngFor="let row of points">
-    <td *ngFor="let val of row">
-      {{val}}
-    </td>
-  </tr> -->
-</table>
 
 <router-outlet></router-outlet>

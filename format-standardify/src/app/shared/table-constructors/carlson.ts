@@ -1,4 +1,4 @@
-import { toUTF, toCartesian } from '../common-functions/transformations';
+import { toUTF, toCartesian } from '../common-functions/stonex/transformations';
 
 export const dataToExel_Carlson = function(pointsArray) {
   const data = [[

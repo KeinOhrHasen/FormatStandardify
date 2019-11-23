@@ -1,4 +1,4 @@
-export interface Carlson {
+export interface ICarlson {
     HDOP: number;
     HSDV: number;
     PDOP: number;
