@@ -1,40 +1,39 @@
-import * as moment from 'moment';
+import { toUTF, toCartesian } from '../common-functions/transformations';
 
 export const dataToExel_Carlson = function(pointsArray) {
-  console.log(pointsArray);
-    const data = [[
-        'Point Number',
-        'Latitude, decimal graduses',
-        'Longitude, decimal graduses',
-        'Elevation, m',
-        'Cartesian_X, m',
-        'Cartesian_Y, m',
-        'Cartesian_Z, m',
-        'Local_N, m',
-        'Local_E, m',
-        'Local_Z, m',
-        'Ant_Hgt KI, m',
-        'Ant_Hgt True, m',
-        'Solution',
-        'SATS',
-        'AGE',
-        'PDOP',
-        'HDOP',
-        'VDOP',
-        'TDOP',
-        'GDOP',
-        'NSDV',
-        'ESDV',
-        'Date',
-        'Time',
+  const data = [[
+    'Point Number',
+    'Latitude, decimal graduses',
+    'Longitude, decimal graduses',
+    'Elevation, m',
+    'Cartesian_X, m',
+    'Cartesian_Y, m',
+    'Cartesian_Z, m',
+    'Local_N, m',
+    'Local_E, m',
+    'Local_Z, m',
+    'Ant_Hgt KI, m',
+    'Ant_Hgt True, m',
+    'Solution',
+    'SATS',
+    'AGE',
+    'PDOP',
+    'HDOP',
+    'VDOP',
+    'TDOP',
+    'GDOP',
+    'NSDV',
+    'ESDV',
+    'Date',
+    'Time',
     ]];
     pointsArray.forEach((point) => {
       const exelArray = [
         point.pointNumber || point.data.pointNumber || '',
-        point.latitude    || point.data.latitude    || '' ,
-        point.longitude   || point.data.longitude   || '' ,
+        point.latitude    || point.data.latitude    || '',
+        point.longitude   || point.data.longitude   || '',
         // include summary antenna height ( rod + vertical antenna offset) for Geodesic height
-        point.elevation   - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR || '' ,
+        point.elevation  - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR || '' ,
         toCartesian(
           point.latitude  || point.data.latitude,
           point.longitude || point.data.longitude,
@@ -79,34 +78,4 @@ export const dataToExel_Carlson = function(pointsArray) {
   };
 
 
-function toUTF(GPSdate: string, GPStime): any {
-  const gpsInit = moment([1980, 0, 6, 0, 0, 0]);
-  gpsInit.add(+GPSdate, 'w');
-  gpsInit.add(+GPStime / 1000, 's');
 
-  return {
-    date: gpsInit.format('DD.MM.YYYY'),
-    time: gpsInit.format('HH:mm:ss')
-  };
-}
-
-function toCartesian(B: number, L: number, H: number) {
-  // B, L to radian
-  const B_rad = B * Math.PI / 180;
-  const L_rad = L * Math.PI / 180;
-
-  // parameters of elipsoid WGS-84
-  const f =	0.003352811;
-  const a =	6378137.000;
-
-  // additional parameters
-  const e2 =	f * (2 - f);
-  const W =	(1 - (e2 * (Math.sin(B_rad) ** 2))) ** .5;
-  const N =	a / W;
-
-  const X = (H + N) * Math.cos(B_rad) * Math.cos(L_rad);
-  const Y =	(H + N) * Math.cos(B_rad) * Math.sin(L_rad);
-  const Z =	((N * (1 - e2)) + H) * Math.sin(B_rad);
-
-  return {X, Y, Z};
-}

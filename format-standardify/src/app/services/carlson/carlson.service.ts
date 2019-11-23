@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Carlson } from 'src/app/interfaces/carlson-point';
 
 @Injectable({
   providedIn: 'root'

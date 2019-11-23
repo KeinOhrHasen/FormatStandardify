@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CODES } from '../../constants/leica/codes';
-import { UNITS } from '../../constants/leica/units';
-import { INPUT_MODE } from '../../constants//leica/input-mode';
+import { CODES } from 'src/app/shared/constants/leica/codes';
+import { INPUT_MODE } from 'src/app/shared/constants/leica/input-mode';
+import { UNITS } from 'src/app/shared/constants/leica/units';
+
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class LeicaGsiService {
     pointsArr.forEach((point: any ) => {
       const newPoint = {};
       point.forEach((word: string) => {
-        let format_length: number = 8;
+        let format_length = 8;
         word.length === 23 ? format_length = 16 : null ;
         newPoint['Format_name'] = 'GSI' + format_length;
         const wordCode = word.slice(0, 2);
