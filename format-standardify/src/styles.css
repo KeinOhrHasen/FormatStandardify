@@ -1,3 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+html{
+    background-color: #D4EDF7;
+    font-family: Verdana, sans-serif;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}

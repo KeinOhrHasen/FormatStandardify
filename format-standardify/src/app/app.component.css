@@ -1,9 +1,65 @@
-form,
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+header{
+    position: fixed;
+    background-color: #2b667e;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    width: 100%;
+    top:0;
+    padding: 1rem;
+    box-sizing: border-box;
+
+}
+
+.main-logo{
+    font-size: 40px;
+    color:#FB9902;
+    width: 40px;
+    height: 40px;
+
+}
+
+.title{
+    color: #110934;
+    font-size: 22px;
+    align-self: flex-end;
+    margin-left: 1rem;
+    font-weight: 500;
+    font-family: Verdana, sans-serif;
+}
+
+.login-button{
+    justify-self: end;
+    padding: 0 1rem;
+    margin-right: 1rem;
+    font-weight: 600;
+    color: #110934;
+    font-family: Verdana, sans-serif;
+    font-size: 16px;
+
+}
+
+section{
+    margin-top: 72px;
+    background-color: #D4EDF7;
+}
+
+form{
+    background-color: #0000003b;
+    margin: 10rem auto 1rem;
+    padding-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+
 .pick-format{
-    background-color: aquamarine;
+    background-color: #D4EDF7;
     padding: 2rem;
     margin: 2rem auto;
-    width: 50%;
+    /* width: 50%; */
     border-radius: 10px;
 }
 .example-radio-button{
@@ -13,4 +69,92 @@ form,
 
 form input{
     margin: 1rem;
+}
+
+footer{
+    display: flex;
+    background-color: #110934;
+    color:#347B98;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 12px;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+
+
+.inputfile + label * {
+	pointer-events: none;
+}
+
+ .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    line-height: 32px;
+ }
+
+ label{
+    padding: 1rem 1rem;
+    background-color: #347B98;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    line-height: 20px;
+    height: 20px;
+    margin-bottom: 1rem;
+    border-radius: 3px;
+
+ }
+
+ .filename{
+    width: 200px;
+    display: inline-block;
+    /* background-color: azure; */
+    padding: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 20px;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem
+ }
+
+::ng-deep.mat-form-field-wrapper{
+    padding-bottom: 0 !important;
+}
+
+::ng-deep.mat-form-field-underline{
+    height: 0px !important;
+    display: none;
+}
+
+::ng-deep button.mat-button[disabled][disabled]{
+    color: #bbb;
+}
+
+.selectFormat{
+    background-color: #347B98;
+    padding: 0 1rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 3px;
+
+}
+
+.control-botton{
+    margin-right: 1rem;
+    margin-left: 1rem;
+
+    background-color: #347B98;
+    height: 52px;
+    margin-bottom: 1rem;
+    border-radius: 3px;
 }

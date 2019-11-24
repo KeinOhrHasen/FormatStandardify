@@ -7,7 +7,7 @@ import { dataToExel_Topcon } from './shared/table-constructors/topcon';
 import { dataToExel_Carlson } from './shared/table-constructors/carlson';
 import { CarlsonService } from './services/carlson/carlson.service';
 import { dataToExel_CubeA } from './shared/table-constructors/cube-a';
-import { saveToTxtFile, creeteXLSXfile } from './shared/common-functions/stonex/file-manager';
+import { creeteXLSXfile } from './shared/common-functions/stonex/file-manager';
 import { ALL_FORMATS } from './shared/constants/all_formats';
 
 @Component({
@@ -18,11 +18,14 @@ import { ALL_FORMATS } from './shared/constants/all_formats';
 export class AppComponent  {
     public points: any;
     public choosenFormat: string;
+    public fileName = '';
     public all_formats: string[] = ALL_FORMATS;
     public readyToSaveExcel = false;
+    public currentYear = new Date().getFullYear();
 
-    public formGroup: FormGroup = this.fb.group({
-        file: [null, Validators.required]
+    public formatForm: FormGroup = this.fb.group({
+        file: [null, Validators.required],
+        format: null
     });
 
     constructor(
@@ -40,8 +43,10 @@ export class AppComponent  {
             const [file] = event.target.files;
             reader.readAsText(file);
 
+            this.fileName = file.name;
+
             reader.onload = () => {
-            this.formGroup.patchValue({
+            this.formatForm.patchValue({
                 file: reader.result
             });
 
@@ -49,27 +54,35 @@ export class AppComponent  {
             this.cd.markForCheck();
             };
         }
+
+        this.readyToSaveExcel = false;
+        this.deselectFormatType();
+    }
+
+    private deselectFormatType(): void {
+        this.formatForm.patchValue({
+            format: null
+        });
     }
 
     public onSubmit(): void {
-        if (this.choosenFormat === '.gsi') {
-            this.points = this.leicaGsiService.getParsedData(this.formGroup.value.file);
-        } else if (this.choosenFormat === '.rts-6') {
-            this.points = this.topconService.getParsedData(this.formGroup.value.file);
-        } else if (this.choosenFormat === '.rw-5') {
-            this.points = this.carlsonService.getParsedData(this.formGroup.value.file);
+        if (this.formatForm.get('format').value === '.gsi') {
+            this.points = this.leicaGsiService.getParsedData(this.formatForm.value.file);
+        } else if (this.formatForm.get('format').value === '.rts-6') {
+            this.points = this.topconService.getParsedData(this.formatForm.value.file);
+        } else if (this.formatForm.get('format').value === '.rw-5') {
+            this.points = this.carlsonService.getParsedData(this.formatForm.value.file);
         }
 
     this.readyToSaveExcel = true;
-
     }
 
     public dataToExel(pointsArray: any): any {
-        if (this.choosenFormat === '.gsi') {
+        if (this.formatForm.get('format').value === '.gsi') {
             return dataToExel_Leica(pointsArray);
-        } else if (this.choosenFormat === '.rts-6') {
+        } else if (this.formatForm.get('format').value === '.rts-6') {
             return dataToExel_Topcon(pointsArray);
-        } else if (this.choosenFormat === '.rw-5') {
+        } else if (this.formatForm.get('format').value === '.rw-5') {
             return this.stonexMiddleware(pointsArray);
         }
     }
@@ -84,9 +97,5 @@ export class AppComponent  {
 
     public creeteXLSX(): void {
         creeteXLSXfile(this.dataToExel(this.points));
-    }
-
-    public saveFile(): void {
-        saveToTxtFile(this.formGroup.value.file);
     }
 }

@@ -1,21 +1,28 @@
-<form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()">
-  <input type="file" (change)="onFileChange($event)"/> <br>
-  <button mat-button color="primary" type="submit" [disabled]="formGroup.invalid || !choosenFormat">Submit</button>
-  <button mat-button color="primary" type="button" [disabled]="false" (click)="saveFile()">Save file</button>
-  <button mat-button color="primary" type="button" [disabled]="!readyToSaveExcel" (click)="creeteXLSX()">Save EXСEL file</button>
-</form>
+<header>
+    <mat-icon class="main-logo"matSuffix>repeat</mat-icon>
+    <span class="title">FormatStandardify.io</span>
+    <button class="login-button" mat-button type="button" >Login</button>
+</header>
 
-<div class="pick-format">
-  <label id="example-radio-group-label">Pick your favorite format</label>
-  <mat-radio-group
-    aria-labelledby="example-radio-group-label"
-    class="example-radio-group"
-    [(ngModel)]="choosenFormat">
-    <mat-radio-button class="example-radio-button" *ngFor="let format of all_formats" [value]="format">
-      {{format}}
-    </mat-radio-button>
-  </mat-radio-group>
-  <div>Choosed format is: {{choosenFormat}}</div>
-</div>
+<section>
+    <form [formGroup]="formatForm" novalidate (ngSubmit)="onSubmit()">
+        <input type="file"name="file" id="file" class="inputfile" (change)="onFileChange($event)" required/>
+        <label for="file">Choose a file</label>
+        <span class="filename">{{fileName}}</span>
+        <mat-form-field class="selectFormat">
+            <mat-select formControlName="format" placeholder="Select a team" required> 
+                <mat-option *ngFor="let format of all_formats" [value]="format">
+                    {{format}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-button  type="submit" [disabled]="formatForm.invalid" class="control-botton">Submit</button>
+        <button mat-button  type="button" [disabled]="!readyToSaveExcel" (click)="creeteXLSX()" class="control-botton">Save EXСEL file</button>
+    </form>
+
+</section>
+<footer>
+    {{currentYear}} | created by Yurii Zityniuk
+</footer>
 
 <router-outlet></router-outlet>
