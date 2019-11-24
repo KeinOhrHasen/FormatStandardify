@@ -354,7 +354,7 @@ export class CarlsonService {
     // 0 == feet
     // 1 == meter
     if (this.units.UN === 0) {
-      return line / 3.28084;
+      return line / 3.280839895;
     }
     return line;
   }

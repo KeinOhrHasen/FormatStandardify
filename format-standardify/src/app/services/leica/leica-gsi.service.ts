@@ -11,18 +11,18 @@ export class LeicaGsiService {
 
   constructor() { }
 
-  private splitOnPoints(stringToParse: string) {
-    const pointsArray = [];
-    const splittedOnRows = stringToParse.split('\n');
-    splittedOnRows.forEach((row, index) => {
+  private splitOnPoints(stringToParse: string): any {
+    const pointsArray: any = [];
+    const splittedOnRows: string[] = stringToParse.split('\n');
+    splittedOnRows.forEach((row: string, index: number) => {
       pointsArray[index] = row.split(' ');
     });
     return pointsArray;
   }
 
-  private parsePoints(pointsArr: string[]) {
+  private parsePoints(pointsArr: string[]): any {
 
-    const points = [];
+    const points: any = [];
     pointsArr.forEach((point: any ) => {
       const newPoint = {};
       point.forEach((word: string) => {
@@ -57,8 +57,6 @@ export class LeicaGsiService {
           case '19':
             newPoint[CODES[wordCode]] = getTime(word, format_length);
             break;
-
-
 
 
           case '21':
@@ -125,17 +123,18 @@ export class LeicaGsiService {
             break;
 
           case '41':
-
+            // station ID
             newPoint[CODES[wordCode]] = trimZeros(word.slice(-format_length));
             newPoint['lineNumber'] = word.slice(2, 6);
             break;
 
           case '42':
+            // station name
             newPoint[CODES[wordCode]] = trimZeros(word.slice(-format_length));
             break;
 
           case '43':
-            // parse absolute height in meters
+            // station absolute height in meters
             newPoint[CODES[wordCode]] = getDistanceInMt_Ft(word, format_length);
             break;
 
@@ -268,7 +267,7 @@ export class LeicaGsiService {
     return points;
   }
 
-  public getParsedData(stringToParse: string) {
+  public getParsedData(stringToParse: string): any {
     const pointArr = this.splitOnPoints(stringToParse);
     return this.parsePoints(pointArr);
   }

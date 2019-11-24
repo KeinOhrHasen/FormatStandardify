@@ -115,7 +115,6 @@ export const getAngle = function(survey: string, format_length: number) {
     }
 };
 
-
 // ============ Distance =================
 // GSI8, GSI16
 export const getDistanceInMt_Ft = function(word: string, format_length: number): number {
@@ -135,10 +134,13 @@ export const getDistanceInMt_Ft = function(word: string, format_length: number):
 
 function converteToMeter(survey: number, unit: string): number {
     switch (unit) {
+        // for meters
         case '0':
         case '6':
         case '8':
             return survey;
+
+        // for feet
         case '1':
         case '7':
             return survey * 3.280839895;
