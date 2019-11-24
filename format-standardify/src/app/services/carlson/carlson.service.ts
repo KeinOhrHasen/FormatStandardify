@@ -155,7 +155,7 @@ export class CarlsonService {
   }
 
   private parseSessionInfo(sessionInfo: string[]) {
-    const reduced = sessionInfo.reduce((acc, f) => {
+    const reduced = sessionInfo.reduce((acc, f, index) => {
       this.trimDashes(f).split(',').forEach(h => {
         const property = this.headerComparator(h);
 
@@ -167,8 +167,9 @@ export class CarlsonService {
           }
         }
 
-        if (f.includes('Stonex')) {
-          acc['softName'] = f.match(/Stonex ([a-zA-Z0-9-]+)/)[1];
+        // === work just for two software type ! ===
+        if (index === 2) {
+          acc['softName'] = f.match(/(SurvCE)|(Cube-A)/)[1] || f.match(/(SurvCE)|(Cube-A)/)[2];
         }
 
         });
@@ -317,7 +318,7 @@ export class CarlsonService {
     }
   }
 
-  private keyValComparator(header: string) {
+  private keyValComparator(header: string): any {
     const h = header.split(':');
     return {key: h[0], value: h[1]};
   }

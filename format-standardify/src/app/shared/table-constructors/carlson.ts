@@ -1,4 +1,5 @@
 import { toUTF, toCartesian } from '../common-functions/stonex/transformations';
+import { validateValue } from '../common-functions/stonex/type-checking';
 
 export const dataToExel_Carlson = function(pointsArray) {
   const data = [[
@@ -29,53 +30,53 @@ export const dataToExel_Carlson = function(pointsArray) {
     ]];
     pointsArray.forEach((point) => {
       const exelArray = [
-        point.pointNumber || point.data.pointNumber || '',
-        point.latitude    || point.data.latitude    || '',
-        point.longitude   || point.data.longitude   || '',
-        // include summary antenna height ( rod + vertical antenna offset) for Geodesic height
-        point.elevation  - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR || '' ,
-        toCartesian(
-          point.latitude  || point.data.latitude,
-          point.longitude || point.data.longitude,
-          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
-          point.elevation - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR,
-          ).X,
-        toCartesian(
-          point.latitude  || point.data.latitude,
-          point.longitude || point.data.longitude,
-          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
-          point.elevation - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR,
-          ).Y,
-        toCartesian(
-          point.latitude  || point.data.latitude,
-          point.longitude || point.data.longitude,
-          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
-          point.elevation - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR,
-          ).Z,
-        point.northing    || '',
-        point.easting     || '',
-        point.reducedLocalElevation || '',
-        point.enteredRoverHR,
-        +point.enteredRoverHR + +point.antenna_Offset1  ||  +point.enteredRoverHR + +point.data.antenna.antenna_Offset1 || '',
+        validateValue(point.pointNumber || point.data.pointNumber),
+        validateValue(point.latitude) || validateValue(point.data.latitude),
+        validateValue(point.longitude) || validateValue(point.data.longitude),
 
-        point.STATUS || '',
-        point.SATS || '',
-        point.AGE  || '',
-        point.PDOP || '',
-        point.HDOP || '',
-        point.VDOP || '',
-        point.TDOP || '',
-        point.GDOP || '',
-        point.NSDV || '',
-        point.ESDV || '',
-        point.startGPSweek ? toUTF(point.startGPSweek, point.startGPStime).date : '',
-        point.startGPSweek ? toUTF(point.startGPSweek, point.startGPStime).time : '',
+        // include summary antenna height ( rod + vertical antenna offset) for Geodesic height
+        validateValue(point.elevation  - point.enteredRoverHR) || validateValue(point.data.elevation - point.enteredRoverHR),
+
+        validateValue(toCartesian(
+          point.latitude  || point.data.latitude,
+          point.longitude || point.data.longitude,
+          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+          point.elevation - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR,
+          ).X),
+        validateValue(toCartesian(
+          point.latitude  || point.data.latitude,
+          point.longitude || point.data.longitude,
+          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+          point.elevation - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR,
+          ).Y),
+        validateValue(toCartesian(
+          point.latitude  || point.data.latitude,
+          point.longitude || point.data.longitude,
+          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+          point.elevation - point.enteredRoverHR || point.data.elevation - point.enteredRoverHR,
+          ).Z),
+
+        validateValue(point.northing),
+        validateValue(point.easting),
+        validateValue(point.reducedLocalElevation),
+        validateValue(point.enteredRoverHR),
+        validateValue(+point.enteredRoverHR + +point.antenna_Offset1  ||  +point.enteredRoverHR + +point.data.antenna.antenna_Offset1),
+
+        validateValue(point.STATUS),
+        validateValue(point.SATS),
+        validateValue(point.AGE),
+        validateValue(point.PDOP),
+        validateValue(point.HDOP),
+        validateValue(point.VDOP),
+        validateValue(point.TDOP),
+        validateValue(point.GDOP),
+        validateValue(point.NSDV),
+        validateValue(point.ESDV),
+        validateValue(toUTF(point.startGPSweek, point.startGPStime).date),
+        validateValue(toUTF(point.startGPSweek, point.startGPStime).time),
       ];
       data.push(exelArray);
     });
 
     return data;
   };
-
-
-

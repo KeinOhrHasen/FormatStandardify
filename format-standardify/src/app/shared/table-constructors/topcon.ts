@@ -1,3 +1,5 @@
+import { validateValue } from '../common-functions/stonex/type-checking';
+
 export const dataToExel_Topcon = function(pointsArray) {
   const data = [[
   'Point Number',
@@ -18,21 +20,21 @@ export const dataToExel_Topcon = function(pointsArray) {
   ]];
   pointsArray.forEach((point) => {
     const exelArray = [
-      point.pointName,
-      point['stationName']           || '',
-      point.HZ                       || '',
-      point.VR                       || '',
-      point['Sloping distance']      || '',
-      point['Instrument Height']      || '',
-      point['pointTargetHeight']     || '',
-      point['Horizontal excess']     || '',
-      point['Height difference']     || '',
-      // point['X - Target Easting']    || '',
-      // point['Y - Target Northing']   || '',
-      // point['H - Target Elevation']  || '',
-      // point['X - Station Easting']   || '',
-      // point['Y - Station Northing']  || '',
-      // point['H - Station Elevation'] || '',
+      validateValue(point.pointName),
+      validateValue(point['stationName']),
+      validateValue(point.HZ),
+      validateValue(point.VR),
+      validateValue(point['Sloping distance']),
+      validateValue(point['Instrument Height']),
+      validateValue(point['pointTargetHeight']),
+      validateValue(point['Horizontal excess']),
+      validateValue(point['Height difference']),
+      // validateValue(point['X - Target Easting']   ),
+      // validateValue(point['Y - Target Northing']  ),
+      // validateValue(point['H - Target Elevation'] ),
+      // validateValue(point['X - Station Easting']  ),
+      // validateValue(point['Y - Station Northing'] ),
+      // validateValue(point['H - Station Elevation']),
     ];
     data.push(exelArray);
   });

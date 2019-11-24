@@ -1,7 +1,8 @@
 import { toUTF, toCartesian } from '../common-functions/stonex/transformations';
+import { validateValue } from '../common-functions/stonex/type-checking';
 
 export const dataToExel_CubeA = function(pointsArray) {
-  const data = [[
+const data = [[
     'Point Number',
     'Latitude, decimal graduses',
     'Longitude, decimal graduses',
@@ -27,50 +28,53 @@ export const dataToExel_CubeA = function(pointsArray) {
     'Time',
     ]];
     pointsArray.forEach((point) => {
-      const exelArray = [
-        point.pointNumber || point.data.pointNumber || '',
-        point.latitude    || point.data.latitude    || '',
-        point.longitude   || point.data.longitude   || '',
+    const exelArray = [
+        validateValue(point.pointNumber || point.data.pointNumber),
+        validateValue(point.latitude) || validateValue(point.data.latitude),
+        validateValue(point.longitude) || validateValue(point.data.longitude),
+
         // include summary antenna height ( rod + vertical antenna offset) for Geodesic height
-        point.elevation   -  point.enteredHR  || point.data.elevation   -  point.enteredHR || '',
-        toCartesian(
-          point.latitude  || point.data.latitude,
-          point.longitude || point.data.longitude,
-          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
-          point.elevation -  point.enteredHR || point.data.elevation -  point.enteredHR,
-          ).X,
-        toCartesian(
-          point.latitude  || point.data.latitude,
-          point.longitude || point.data.longitude,
-          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
-          point.elevation  -  point.enteredHR || point.data.elevation -  point.enteredHR,
-          ).Y,
-        toCartesian(
-          point.latitude   || point.data.latitude ,
-          point.longitude  || point.data.longitude,
-          // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
-          point.elevation  -  point.enteredHR || point.data.elevation -  point.enteredHR,
-          ).Z,
-        point.northing    || '',
-        point.easting     || '',
-        point.reducedLocalElevation || '',
-        point.enteredRoverHR  ||  '',
-        point.enteredHR || '',
+        validateValue(point.elevation  - point.enteredHR)  || validateValue(point.data.elevation  - point.enteredHR),
 
-        point.STATUS || '',
-        point.SATS || '',
+        validateValue(toCartesian(
+            point.latitude  || point.data.latitude,
+            point.longitude || point.data.longitude,
+            // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+            point.elevation -  point.enteredHR || point.data.elevation -  point.enteredHR,
+        ).X),
+        validateValue(toCartesian(
+            point.latitude  || point.data.latitude,
+            point.longitude || point.data.longitude,
+            // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+            point.elevation  -  point.enteredHR || point.data.elevation -  point.enteredHR,
+        ).Y),
+        validateValue(toCartesian(
+            point.latitude   || point.data.latitude ,
+            point.longitude  || point.data.longitude,
+            // include summary antenna height ( rod + vertical antenna offset) for Cartsian coordinates
+            point.elevation  -  point.enteredHR || point.data.elevation -  point.enteredHR,
+        ).Z),
 
-        point.PDOP || '',
-        point.HDOP || '',
-        point.VDOP || '',
-        point.HSDV  || '',
-        point.VSDV  || '',
+        validateValue(point.northing),
+        validateValue(point.easting),
+        validateValue(point.reducedLocalElevation),
+        validateValue(point.enteredRoverHR),
+        validateValue(point.enteredHR),
 
-        point.startGPSweek ? toUTF(point.startGPSweek, point.startGPStime).date : '',
-        point.startGPSweek ? toUTF(point.startGPSweek, point.startGPStime).time : '',
-      ];
-      data.push(exelArray);
+        validateValue(point.STATUS),
+        validateValue(point.SATS),
+
+        validateValue(point.PDOP),
+        validateValue(point.HDOP),
+        validateValue(point.VDOP),
+        validateValue(point.HSDV),
+        validateValue(point.VSDV),
+
+        validateValue(toUTF(point.startGPSweek, point.startGPStime).date),
+        validateValue(toUTF(point.startGPSweek, point.startGPStime).time),
+    ];
+    data.push(exelArray);
     });
 
     return data;
-  };
+};

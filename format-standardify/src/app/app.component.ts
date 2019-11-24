@@ -60,7 +60,6 @@ export class AppComponent  {
             this.points = this.carlsonService.getParsedData(this.formGroup.value.file);
         }
 
-    console.log(this.points);
     this.readyToSaveExcel = true;
 
     }
