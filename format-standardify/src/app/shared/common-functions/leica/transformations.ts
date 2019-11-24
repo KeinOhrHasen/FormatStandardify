@@ -33,10 +33,10 @@ export const trimZeros = function(value: string): string {
 export const getAutomaticIndex = function(word) {
     const automaticIndexHZ = word.trim().split('').splice(3, 1)[0];
     if (automaticIndexHZ === '0') {
-      return 'OFF';
+        return 'OFF';
     }
     if (automaticIndexHZ === '1' || automaticIndexHZ === '3' ) {
-      return 'OPERATING';
+        return 'OPERATING';
     }
 };
 
@@ -61,37 +61,57 @@ export const getUnitName = function(word: string): string {
 
 // ============ Angels =================
 // GSI8
-export const getDecimalAngle = function(survey: string, divisor: number, format_length: number) {
+function fromDecimalAngle_ToDecimal(survey: string, divisor: number, format_length: number) {
     const angleArr  = survey.split('').slice(-format_length - 1);
     const angle = +(angleArr[0] + '1') * ( +angleArr.slice(-8).join('') / divisor );
 
     return angle;
-};
+}
 
 // GSI8
-export const getSexagesimalAngle = function(survey: string, format_length: number) {
+function fromSexagesimalAngle_ToDecimal(survey: string, format_length: number) {
     const angleArr  = survey.split('').slice(-format_length - 1);
     const degrees = +angleArr.slice(-8, -5).join('');
     const minutes = +angleArr.slice(-5, -3).join('');
     const seconds = +angleArr.slice(-3).join('') / 10;
 
     return +(angleArr[0] + '1') * (degrees + minutes / 60 + seconds / 3600);
-};
+}
+
+function converteToDecimalDegrees(angle: number, unit: string): number {
+    switch (unit) {
+        case '2':
+            return angle *  0.9;
+        case '3':
+            return angle;
+        case '4':
+            return angle;
+        case '5':
+            return angle *  0.05625;
+    }
+}
 
   // GSI8
 export const getAngle = function(survey: string, format_length) {
     const unit = getUnitCode(survey);
     let divisor = 100000;
 
-    if (unit === '5') {
-      divisor = 10000;
-      return getDecimalAngle(survey, divisor, format_length);
+    switch (unit) {
+        // for 400 gon decimal
+        case '2':
+        return converteToDecimalDegrees(fromDecimalAngle_ToDecimal(survey, divisor, format_length), unit);
 
-    } else if (unit === '4') {
-      return getSexagesimalAngle(survey, format_length);
+        // for 360 decimal
+        case '3':
+        return converteToDecimalDegrees(fromDecimalAngle_ToDecimal(survey, divisor, format_length), unit);
 
-    } else {
-      return getDecimalAngle(survey, divisor, format_length);
+        // for sexagesimal
+        case '4':
+        return converteToDecimalDegrees(fromSexagesimalAngle_ToDecimal(survey, format_length), unit);
+
+        // for 6400 mil
+        case '5':
+        return converteToDecimalDegrees(fromDecimalAngle_ToDecimal(survey, divisor = 10000, format_length), unit);
     }
 };
 
