@@ -33,3 +33,30 @@ export const toCartesian = function (B: number, L: number, H: number): ICartesia
 
     return {X, Y, Z};
 };
+
+export const toDecimalAngle = function(angle: string, units: any): number {
+    // 0 == decimal - 360,00
+    // 1 == sixtydecimal - 360,mm,ss
+    if (units.AU === 1) {
+    const [degree, ms] = angle.split('.');
+    const minutes = +ms.slice(0, 2);
+    const seconds = +ms.slice(2) / 10 ** 10;
+
+    return  +degree +  (minutes / 60) + (seconds / 3600);
+    } else if (units.AU === 0) {
+    return +angle;
+    }
+};
+
+export const toMeter = function(line: number, units: any): number {
+    // 0 == feet
+    // 1 == meter
+    if (units.UN === 0) {
+    return line / 3.280839895;
+    }
+    return line;
+};
+
+export const  trimDashes = function(row: string): string {
+    return row.replace(/^[- ]*|[-, ]*$/g, '');
+};

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { toDecimalAngle, toMeter, trimDashes } from 'src/app/shared/common-functions/stonex/transformations';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class CarlsonService {
     return rolledUpPoints;
   }
 
-  private rollUpData(tree) {
+  private rollUpData(tree: any): any {
     const pointContainer = {softName: tree.sessionInfo.softName, pointsArray: []};
 
     tree.stations.forEach(element => {
@@ -45,7 +46,7 @@ export class CarlsonService {
     return pointContainer;
   }
 
-  private splitOnStations(stringToParse: string) {
+  private splitOnStations(stringToParse: string): any {
     const surveyObject = {
       sessionInfo: [],
       stations: [],
@@ -63,11 +64,11 @@ export class CarlsonService {
       }
 
       // parse antenna info ofr station
-      if (this.trimDashes(row).startsWith('Antenna Type')) {
+      if (trimDashes(row).startsWith('Antenna Type')) {
         antenna = row;
       }
       // parse antenna info ofr station
-      if (this.trimDashes(row).startsWith('Entered Rover HR')) {
+      if (trimDashes(row).startsWith('Entered Rover HR')) {
         enteredRoverHR = row;
       }
 
@@ -102,7 +103,7 @@ export class CarlsonService {
     return surveyObject;
   }
 
-  private splitOnPoints(stationsToParse) {
+  private splitOnPoints(stationsToParse: any): any {
     const newStations = stationsToParse.stations.map(st => {
       const stObj = {
         genInfo: [],
@@ -125,38 +126,35 @@ export class CarlsonService {
         }
 
         // add data to station
-        if (isCreatingPoint && point.length < 4 && this.headers.includes(this.trimDashes(element).slice(0, 2))) {
+        if (isCreatingPoint && point.length < 4 && this.headers.includes(trimDashes(element).slice(0, 2))) {
           point.push(element);
         }
 
       });
       stObj.points.push(point);
 
-      // console.log(stObj);
-
       return stObj;
     });
 
     stationsToParse.stations = newStations;
-    // console.log(stationsToParse);
+
     return stationsToParse;
   }
 
-  private parsePoints(pointsArr: any) {
+  private parsePoints(pointsArr: any): any {
 
     const sessionInfoObject = this.parseSessionInfo(pointsArr.sessionInfo);
     pointsArr.sessionInfo = sessionInfoObject;
 
     const gpsPoints = this.parseSessionPoints(pointsArr.stations);
     pointsArr.stations = gpsPoints;
-    // console.log(pointsArr);
 
     return pointsArr;
   }
 
-  private parseSessionInfo(sessionInfo: string[]) {
+  private parseSessionInfo(sessionInfo: string[]): any {
     const reduced = sessionInfo.reduce((acc, f, index) => {
-      this.trimDashes(f).split(',').forEach(h => {
+      trimDashes(f).split(',').forEach(h => {
         const property = this.headerComparator(h);
 
         // fix me
@@ -180,7 +178,7 @@ export class CarlsonService {
     return reduced;
   }
 
-  private parseSessionPoints(stations: any) {
+  private parseSessionPoints(stations: any): any {
     const newStations = stations.map(s => {
       const basePoint = this.parseBasePoint(s.genInfo);
       const points = s.points.map(p => this.parsePoint(p));
@@ -191,10 +189,10 @@ export class CarlsonService {
   }
 
 
-  private parseBasePoint(genInfo: any) {
+  private parseBasePoint(genInfo: any): any {
     const basePointObj = {};
-    const enteredHR = genInfo.find(r => this.trimDashes(r).startsWith('LS'));
-    const enteredRoverHR = genInfo.find(r => this.trimDashes(r).startsWith('Entered Rover HR'));
+    const enteredHR = genInfo.find(r => trimDashes(r).startsWith('LS'));
+    const enteredRoverHR = genInfo.find(r => trimDashes(r).startsWith('Entered Rover HR'));
 
     if (enteredHR) {
       basePointObj['enteredHR'] = enteredHR.match(/(\d+.\d+)/)[0];
@@ -205,7 +203,7 @@ export class CarlsonService {
 
     const reduced = genInfo.reduce((acc, f) => {
       if (f.startsWith('BP') || f.startsWith('LS')) {
-        this.trimDashes(f).split(',').forEach(h => {
+        trimDashes(f).split(',').forEach(h => {
           const property = this.headerComparator(h);
 
           property ? acc[property.key] = property.value : null ;
@@ -218,13 +216,13 @@ export class CarlsonService {
     );
 
     basePointObj['data'] = reduced;
-    // console.log(basePointObj);
+
     return basePointObj;
   }
 
-  private parsePoint(point: string[]) {
+  private parsePoint(point: string[]): any {
     const reduced = point.reduce((acc, f, index) => {
-        this.trimDashes(f).split(/,[ ]*/).forEach(h => {
+        trimDashes(f).split(/,[ ]*/).forEach(h => {
 
           let property;
           if (index === 3) {
@@ -234,7 +232,7 @@ export class CarlsonService {
           }
 
           if (property) {
-            if (this.trimDashes(f).startsWith('GS') && h.startsWith('EL')) {
+            if (trimDashes(f).startsWith('GS') && h.startsWith('EL')) {
               acc['reducedLocalElevation'] = property.value;
             } else {
               acc[property.key] = property.value;
@@ -249,7 +247,7 @@ export class CarlsonService {
     return reduced;
   }
 
-  private headerComparator(header: string) {
+  private headerComparator(header: string): any {
     switch (header.slice(0, 2)) {
       // session Info
       case 'NM':
@@ -273,9 +271,9 @@ export class CarlsonService {
       case 'PN':
         return {key: 'pointNumber', value: header.slice(2)};
       case 'LA':
-        return {key: 'latitude', value: this.toDecimalAngle(header.slice(2))};
+        return {key: 'latitude', value: toDecimalAngle(header.slice(2), this.units)};
       case 'LN':
-        return {key: 'longitude', value: this.toDecimalAngle(header.slice(2))};
+        return {key: 'longitude', value: toDecimalAngle(header.slice(2), this.units)};
       case 'EL':
         return {key: 'elevation', value: +header.slice(2)};
       case 'AG':
@@ -287,13 +285,13 @@ export class CarlsonService {
       case 'SR':
         return {key: 'type_of_LongLINK_network_connection', value: header.slice(2)};
       case 'HR':
-        return {key: 'heightOfRod', value: this.toMeter(+header.slice(2))};
+        return {key: 'heightOfRod', value: toMeter(+header.slice(2), this.units)};
 
       // Point info - Reduced local coordinate from GPS record and localization data
       case 'N ':
-        return {key: 'northing', value: this.toMeter(+header.slice(2))};
+        return {key: 'northing', value: toMeter(+header.slice(2), this.units)};
       case 'E ':
-        return {key: 'easting', value: this.toMeter(+header.slice(2))};
+        return {key: 'easting', value: toMeter(+header.slice(2), this.units)};
       case 'SW':
         return {key: 'startGPSweek', value: +header.slice(2)};
       case 'ST':
@@ -323,41 +321,14 @@ export class CarlsonService {
     return {key: h[0], value: h[1]};
   }
 
-  private trimDashes(row: string): string {
-    return row.replace(/^[- ]*|[-, ]*$/g, '');
-  }
-
   private getAntennaInfo(row: string): any {
-    const reduced = this.trimDashes(row).split(',').reduce((acc, h) => {
+    const reduced = trimDashes(row).split(',').reduce((acc, h) => {
       const property = this.headerComparator(h);
       property ? acc[property.key] = property.value : null ;
 
       return acc;
     }, {});
     return reduced;
-  }
-
-  private toDecimalAngle(angle: string): number {
-    // 0 == decimal - 360,00
-    // 1 == sixtydecimal - 360,mm,ss
-    if (this.units.AU === 1) {
-      const [degree, ms] = angle.split('.');
-      const minutes = +ms.slice(0, 2);
-      const seconds = +ms.slice(2) / 10 ** 10;
-
-      return  +degree +  (minutes / 60) + (seconds / 3600);
-    } else if (this.units.AU === 0) {
-      return +angle;
-    }
-  }
-
-  private toMeter(line: number): number {
-    // 0 == feet
-    // 1 == meter
-    if (this.units.UN === 0) {
-      return line / 3.280839895;
-    }
-    return line;
   }
 
 }
