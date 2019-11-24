@@ -16,6 +16,12 @@ export const CODES = {
     '32': 'Horizontal distance',
     '33': 'Height difference',
 
+    // just for this project
+    // station information
+    '41': 'StationNumber',
+    '42': 'StationName',
+    '43': 'StationHeight',
+
     // Addicent information for distance
     '51': 'Constants', // ppm, mm
     '52': 'number of measurements, standard deviation',

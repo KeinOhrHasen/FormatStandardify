@@ -124,6 +124,21 @@ export class LeicaGsiService {
             newPoint[CODES[wordCode]] = getDistanceInMt_Ft(word, format_length);
             break;
 
+          case '41':
+
+            newPoint[CODES[wordCode]] = trimZeros(word.slice(-format_length));
+            newPoint['lineNumber'] = word.slice(2, 6);
+            break;
+
+          case '42':
+            newPoint[CODES[wordCode]] = trimZeros(word.slice(-format_length));
+            break;
+
+          case '43':
+            // parse absolute height in meters
+            newPoint[CODES[wordCode]] = getDistanceInMt_Ft(word, format_length);
+            break;
+
           case '51':
             const ppmArr  = word.trim().split('').splice(6, 5);
             const prismConstArr = word.split('').splice(12, 5);
