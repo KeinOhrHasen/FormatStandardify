@@ -92,7 +92,7 @@ function converteToDecimalDegrees(angle: number, unit: string): number {
 }
 
   // GSI8
-export const getAngle = function(survey: string, format_length) {
+export const getAngle = function(survey: string, format_length: number) {
     const unit = getUnitCode(survey);
     let divisor = 100000;
 
@@ -118,18 +118,29 @@ export const getAngle = function(survey: string, format_length) {
 
 // ============ Distance =================
 // GSI8, GSI16
-export const getDistanceInMt_Ft = function(word, format_length: number): number {
+export const getDistanceInMt_Ft = function(word: string, format_length: number): number {
     const unit = getUnitCode(word);
     const numbersArray  = word.trim().split('').slice(-format_length - 1);
     let divisor = 1000;
 
     if (unit === '6' || unit === '7') {
-      divisor = 10000;
+        divisor = 10000;
     } else if (unit === '8') {
-      divisor = 100000;
+        divisor = 100000;
     }
 
     const value = +(numbersArray[0] + '1') * ( + +numbersArray.slice(-format_length).join('') / divisor);
-    console.log(numbersArray);
-    return value;
+    return converteToMeter(value, unit);
 };
+
+function converteToMeter(survey: number, unit: string): number {
+    switch (unit) {
+        case '0':
+        case '6':
+        case '8':
+            return survey;
+        case '1':
+        case '7':
+            return survey * 3.280839895;
+    }
+}
