@@ -45,7 +45,7 @@ export class TopconService {
                 const [name, height] = row[1].split(',');
 
                 newStation['stationName'] = name;
-                newStation['stationHeight'] = converteToMeters(height, UNITS.linear);
+                newStation['Instrument Height'] = converteToMeters(height, UNITS.linear);
                 break;
 
             case 'BKB':
@@ -74,7 +74,7 @@ export class TopconService {
                 newPoint['pointTargetHeight'] = converteToMeters(targetHeight, UNITS.linear);
                 newPoint['pointCode'] = pointCode;
                 newPoint['stationName'] = newStation['stationName'];
-                newPoint['stationHeight'] = newStation['stationHeight'];
+                newPoint['Instrument Height'] = newStation['Instrument Height'];
                 newPoint['linearUnit'] = UNITS['linear'];
                 newPoint['angularUnit'] = UNITS['angular'];
 
