@@ -1,14 +1,5 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { LeicaGsiService } from './services/leica/leica-gsi.service';
-import { TopconService } from './services/topcon/topcon.service';
-import { dataToExel_Leica } from './shared/table-constructors/leica';
-import { dataToExel_Topcon } from './shared/table-constructors/topcon';
-import { dataToExel_Carlson } from './shared/table-constructors/carlson';
-import { CarlsonService } from './services/carlson/carlson.service';
-import { dataToExel_CubeA } from './shared/table-constructors/cube-a';
-import { creeteXLSXfile } from './shared/common-functions/stonex/file-manager';
-import { ALL_FORMATS } from './shared/constants/all_formats';
+import { Component } from '@angular/core';
+
 
 @Component({
     selector: 'app-root',
@@ -16,86 +7,6 @@ import { ALL_FORMATS } from './shared/constants/all_formats';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
-    public points: any;
-    public choosenFormat: string;
-    public fileName = '';
-    public all_formats: string[] = ALL_FORMATS;
-    public readyToSaveExcel = false;
-    public currentYear = new Date().getFullYear();
 
-    public formatForm: FormGroup = this.fb.group({
-        file: [null, Validators.required],
-        format: null
-    });
-
-    constructor(
-        private fb: FormBuilder,
-        private cd: ChangeDetectorRef,
-        private leicaGsiService: LeicaGsiService,
-        private topconService: TopconService,
-        private carlsonService: CarlsonService,
-    ) {}
-
-    onFileChange(event: any): void {
-        const reader = new FileReader();
-
-        if (event.target.files && event.target.files.length) {
-            const [file] = event.target.files;
-            reader.readAsText(file);
-
-            this.fileName = file.name;
-
-            reader.onload = () => {
-            this.formatForm.patchValue({
-                file: reader.result
-            });
-
-            // need to run CD since file load runs outside of zone
-            this.cd.markForCheck();
-            };
-        }
-
-        this.readyToSaveExcel = false;
-        this.deselectFormatType();
-    }
-
-    private deselectFormatType(): void {
-        this.formatForm.patchValue({
-            format: null
-        });
-    }
-
-    public onSubmit(): void {
-        if (this.formatForm.get('format').value === '.gsi') {
-            this.points = this.leicaGsiService.getParsedData(this.formatForm.value.file);
-        } else if (this.formatForm.get('format').value === '.rts-6') {
-            this.points = this.topconService.getParsedData(this.formatForm.value.file);
-        } else if (this.formatForm.get('format').value === '.rw-5') {
-            this.points = this.carlsonService.getParsedData(this.formatForm.value.file);
-        }
-
-    this.readyToSaveExcel = true;
-    }
-
-    public dataToExel(pointsArray: any): any {
-        if (this.formatForm.get('format').value === '.gsi') {
-            return dataToExel_Leica(pointsArray);
-        } else if (this.formatForm.get('format').value === '.rts-6') {
-            return dataToExel_Topcon(pointsArray);
-        } else if (this.formatForm.get('format').value === '.rw-5') {
-            return this.stonexMiddleware(pointsArray);
-        }
-    }
-
-    private stonexMiddleware(pointsObject: any): any {
-        if (pointsObject.softName === 'SurvCE') {
-            return dataToExel_Carlson(pointsObject.pointsArray);
-        } else if (pointsObject.softName === 'Cube-A') {
-            return dataToExel_CubeA(pointsObject.pointsArray);
-        }
-    }
-
-    public creeteXLSX(): void {
-        creeteXLSXfile(this.dataToExel(this.points));
-    }
+    constructor( ) {}
 }
