@@ -11,7 +11,7 @@
       <label for="file">Choose a file</label>
       <span class="filename">{{fileName}}</span>
       <mat-form-field class="selectFormat">
-          <mat-select formControlName="format" placeholder="Select a team" required> 
+          <mat-select formControlName="format" placeholder="Select a format" required> 
               <mat-option *ngFor="let format of all_formats" [value]="format">
                   {{format}}
               </mat-option>
