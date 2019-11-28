@@ -9,7 +9,7 @@ header{
     top:0;
     padding: 1rem;
     box-sizing: border-box;
-
+    z-index: 1;
 }
 
 .main-logo{
