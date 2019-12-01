@@ -2,6 +2,8 @@ import { toUTF, toCartesian } from '../common-functions/stonex/transformations';
 import { validateValue } from '../common-functions/stonex/type-checking';
 
 export const dataToExel_Carlson = function(pointsArray) {
+  console.log(pointsArray);
+  
   const data = [[
     'Point Number',
     'Latitude, decimal graduses',
