@@ -264,6 +264,8 @@ export class CarlsonService {
         return {key: 'scaleFactor', value: +header.slice(2)};
       case 'EC':
         return {key: 'isEnabledEarthCurvature', value: +header.slice(2)};
+      case 'EO':
+        return {key: 'ElectronicDistanceMeasuringOffset', value: +header.slice(2)};
       case 'AU':
         return {key: 'angleUnit', value: +header.slice(2)};
 
