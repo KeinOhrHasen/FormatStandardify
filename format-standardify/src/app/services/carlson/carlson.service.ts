@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { toDecimalAngle, toMeter, trimDashes } from 'src/app/shared/common-functions/stonex/transformations';
+import { POINT_HEADERS } from 'src/app/shared/constants/stonex/point-headers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarlsonService {
 
-  public headers = ['GP', 'GS', 'GT', 'HS'];
+  public headers = POINT_HEADERS;
   public units = {UN: null, AU: null};
 
   constructor() { }
 
   public getParsedData(stringToParse: string) {
-
     const statoinsArr = this.splitOnStations(stringToParse);
     const pointsArr =   this.splitOnPoints(statoinsArr);
     const readyPoints = this.parsePoints(pointsArr);
@@ -27,9 +27,8 @@ export class CarlsonService {
     tree.stations.forEach(element => {
       // push base point
       pointContainer.pointsArray.push(element[0]);
+      // push plain points
       element[1].forEach(p => {
-
-
         if (element[0].data.antenna) {
           p.antenna_Offset1 = element[0].data.antenna.antenna_Offset1;
         } else {
@@ -47,10 +46,7 @@ export class CarlsonService {
   }
 
   private splitOnStations(stringToParse: string): any {
-    const surveyObject = {
-      sessionInfo: [],
-      stations: [],
-    };
+    const surveyObject = { sessionInfo: [], stations: [] };
     const splittedOnRows = stringToParse.split('\n');
     let station = [];
     let isCreatingPoint = false;
@@ -77,9 +73,11 @@ export class CarlsonService {
       }
 
       // parse station start
-      if (row.startsWith('BP')) {
+      if (row.startsWith('BP') ||
+        (row.startsWith('LS') && !splittedOnRows[index - 1].startsWith('BP') && !splittedOnRows[index - 2].startsWith('BP') )) {
         if (station.length !== 0) {
           surveyObject.stations.push(station);
+
           if (antenna) { station.push(antenna); }
           station.push(enteredRoverHR);
           station.push(enteredHR);
@@ -98,20 +96,16 @@ export class CarlsonService {
     station.push(enteredRoverHR);
     station.push(enteredHR);
     surveyObject.stations.push(station);
-    // console.log(surveyObject);
 
     return surveyObject;
   }
 
   private splitOnPoints(stationsToParse: any): any {
-    const newStations = stationsToParse.stations.map(st => {
-      const stObj = {
-        genInfo: [],
-        points: []
-      };
+    const newStations = stationsToParse.stations.map(station => {
+      const stObj = { genInfo: [], points: [] };
       let point = [];
       let isCreatingPoint = false;
-      st.forEach((element, index: number) => {
+      station.forEach((element, index: number) => {
 
         // parce station meta Info
         if (index === 0 || element.includes('LS') || element.includes('Entered Rover') || element.includes('Antenna Type')) {

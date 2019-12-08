@@ -144,7 +144,6 @@ export class LeicaGsiService {
             const ppm = +ppmArr.join('');
             const prismConst = +prismConstArr.join('');
             // parse PPM value and prismConst to milimeter
-            // console.log(ppm, prismConst )
             newPoint[CODES['58']] = prismConst;
             newPoint[CODES['59']] = ppm;
             break;
