@@ -838,6 +838,8 @@ MIT
 
 @angular/material/select
 
+@angular/material/tooltip
+
 webpack
 MIT
 Copyright JS Foundation and other contributors
