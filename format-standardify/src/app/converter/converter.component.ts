@@ -82,7 +82,16 @@ export class ConverterComponent {
           this.points = this.carlsonService.getParsedData(this.formatForm.value.file);
       }
 
-  this.readyToSaveExcel = true;
+    this.readyToSaveExcel = this.checkOnVadlidFormat(this.points);
+  }
+
+  public checkOnVadlidFormat(pointsArray: any): boolean {
+    // if points array invalid - it has only 1 row - table headers
+    if (pointsArray.length < 2) {
+        alert('Choose valid format from dropdown menu or upload a correct file');
+        return false;
+    }
+    return true;
   }
 
   public dataToExel(pointsArray: any): any {
