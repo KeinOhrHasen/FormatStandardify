@@ -17,7 +17,7 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
   ) {
-    /* Saving user data in localstorage when 
+    /* Saving user data in localstorage when
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(user => {
       if (user) {
@@ -28,7 +28,7 @@ export class AuthService {
         localStorage.setItem('user', null);
         JSON.parse(localStorage.getItem('user'));
       }
-    })
+    });
   }
 
 
@@ -41,8 +41,8 @@ export class AuthService {
         });
         this.setUserData(result.user);
       }).catch((error) => {
-        window.alert(error.message)
-      })
+        window.alert(error.message);
+      });
   }
 
 
@@ -50,13 +50,13 @@ export class AuthService {
   signUp(email, password) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign 
+        /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
         this.sendVerificationMail();
         this.setUserData(result.user);
       }).catch((error) => {
-        window.alert(error.message)
-      })
+        window.alert(error.message);
+      });
   }
 
 
@@ -65,7 +65,7 @@ export class AuthService {
     return this.afAuth.auth.currentUser.sendEmailVerification()
     .then(() => {
       this.router.navigate(['verify-email-address']);
-    })
+    });
   }
 
 
@@ -75,8 +75,8 @@ export class AuthService {
     .then(() => {
       window.alert('Password reset email sent, check your inbox.');
     }).catch((error) => {
-      window.alert(error)
-    })
+      window.alert(error);
+    });
   }
 
 
@@ -99,16 +99,16 @@ export class AuthService {
     .then((result) => {
        this.ngZone.run(() => {
           this.router.navigate(['converter']);
-        })
+        });
       this.setUserData(result.user);
     }).catch((error) => {
-      window.alert(error)
-    })
+      window.alert(error);
+    });
   }
 
 
-  /* Setting up user data when sign in with username/password, 
-  sign up with username/password and sign in with social auth  
+  /* Setting up user data when sign in with username/password,
+  sign up with username/password and sign in with social auth
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   setUserData(user) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
@@ -118,19 +118,18 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified
-    }
+    };
     return userRef.set(userData, {
       merge: true
-    })
+    });
   }
 
-  
-  // Sign out 
+  // Sign out
   signOut() {
     return this.afAuth.auth.signOut().then(() => {
       localStorage.removeItem('user');
       this.router.navigate(['sign-in']);
-    })
+    });
   }
 
 }

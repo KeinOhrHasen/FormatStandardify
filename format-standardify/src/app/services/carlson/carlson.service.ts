@@ -80,7 +80,7 @@ export class CarlsonService {
       if (row.startsWith('BP')) {
         if (station.length !== 0) {
           surveyObject.stations.push(station);
-          antenna ? station.push(antenna) : null;
+          if (antenna) { station.push(antenna); }
           station.push(enteredRoverHR);
           station.push(enteredHR);
         }
@@ -94,7 +94,7 @@ export class CarlsonService {
       }
 
     });
-    antenna ? station.push(antenna) : null;
+    if (antenna) { station.push(antenna); }
     station.push(enteredRoverHR);
     station.push(enteredHR);
     surveyObject.stations.push(station);
@@ -111,7 +111,7 @@ export class CarlsonService {
       };
       let point = [];
       let isCreatingPoint = false;
-      st.forEach((element, index) => {
+      st.forEach((element, index: number) => {
 
         // parce station meta Info
         if (index === 0 || element.includes('LS') || element.includes('Entered Rover') || element.includes('Antenna Type')) {
@@ -120,7 +120,7 @@ export class CarlsonService {
 
         // parse point start
         if (element.startsWith('GPS')) {
-          point.length !== 0 ? stObj.points.push(point) : null;
+          if (point.length !== 0) { stObj.points.push(point); }
           point = [];
           isCreatingPoint = true;
         }
@@ -206,7 +206,7 @@ export class CarlsonService {
         trimDashes(f).split(',').forEach(h => {
           const property = this.headerComparator(h);
 
-          property ? acc[property.key] = property.value : null ;
+          if (property) { acc[property.key] = property.value; }
           });
       } else if (f.includes('Antenna Type')) {
         acc['antenna'] = this.getAntennaInfo(f);
@@ -326,8 +326,7 @@ export class CarlsonService {
   private getAntennaInfo(row: string): any {
     const reduced = trimDashes(row).split(',').reduce((acc, h) => {
       const property = this.headerComparator(h);
-      property ? acc[property.key] = property.value : null ;
-
+      if (property) { acc[property.key] = property.value; }
       return acc;
     }, {});
     return reduced;

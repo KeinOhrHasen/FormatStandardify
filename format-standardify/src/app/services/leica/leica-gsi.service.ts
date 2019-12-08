@@ -27,7 +27,7 @@ export class LeicaGsiService {
       const newPoint = {};
       point.forEach((word: string) => {
         let format_length = 8;
-        word.length === 23 ? format_length = 16 : null ;
+        if (word.length === 23) { format_length = 16; }
         newPoint['Format_name'] = 'GSI' + format_length;
         const wordCode = word.slice(0, 2);
 
