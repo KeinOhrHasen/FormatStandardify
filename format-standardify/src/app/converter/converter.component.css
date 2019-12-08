@@ -21,7 +21,7 @@ header{
 }
 
 .title{
-    color: #110934;
+    color: #fff;
     font-size: 22px;
     align-self: flex-end;
     margin-left: 1rem;
@@ -29,29 +29,39 @@ header{
     font-family: Verdana, sans-serif;
 }
 
-.login-button{
+.logout-button{
     justify-self: end;
     padding: 0 1rem;
     margin-right: 1rem;
     font-weight: 600;
-    color: #110934;
+    color: #fff;
     font-family: Verdana, sans-serif;
     font-size: 16px;
 
 }
 
-section{
-    margin-top: 72px;
-    background-color: #D4EDF7;
+.welcome-info{
+    background-color: #0000003b;
+    padding: 1rem;
+    margin: 111px 1rem 0;
+}
+
+.welcome-info h1{
+    font-size: 20px;
+    font-weight: 500;
+}
+.welcome-info h2{
+    font-size: 16px;
+    font-weight: 500;
 }
 
 form{
     background-color: #0000003b;
-    margin: 10rem auto 1rem;
+    margin: 1rem 1rem 1rem;
     padding-top: 1rem;
     display: flex;
     flex-wrap: wrap;
-    width: 90%;
+    /* width: 90%; */
 }
 
 
@@ -69,6 +79,26 @@ form{
 
 form input{
     margin: 1rem;
+}
+
+.available-formats{
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #0000003b;
+}
+
+.available-formats h2{
+    font-size: 16px;
+    font-weight: 500;
+    color:#fff;
+}
+
+.available-formats span{
+    display: inline-block;
+    padding: 0.25rem;
+    background-color: #fb99023b;
+    border-radius: 4px;
+    margin: 0.24rem;
 }
 
 footer{
@@ -106,16 +136,16 @@ footer{
     margin-left: 1rem;
     margin-right: 1rem;
     line-height: 20px;
-    /* height: 20px; */
     margin-bottom: 1rem;
     border-radius: 3px;
-
+    color: #fff;
+    font-size: 14px;
+    font-family: Roboto, sans-serif;
  }
 
  .filename{
     width: 200px;
     display: inline-block;
-    /* background-color: azure; */
     padding: 1rem;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -123,7 +153,9 @@ footer{
     line-height: 20px;
     margin-right: 1rem;
     margin-left: 1rem;
-    margin-bottom: 1rem
+    margin-bottom: 1rem;
+    border-radius: 3px;
+    background-color: #00000014;
  }
 
 ::ng-deep.mat-form-field-wrapper{
@@ -138,6 +170,23 @@ footer{
 ::ng-deep button.mat-button[disabled][disabled]{
     color: #bbb;
 }
+
+::ng-deep .mat-form-field-hide-placeholder .mat-select-placeholder{
+    color: #fff !important;
+}
+
+::ng-deep .mat-select-value-text{
+    color: #fff;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label{
+    color: #fff;
+    font-size: 14px;
+}
+
+::ng-deep .mat-form-field-infix{
+    width: 130px;
+}
+
 
 .selectFormat{
     background-color: #347B98;

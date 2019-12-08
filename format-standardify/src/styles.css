@@ -1,12 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-/*fontawesome library */
-@import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
-
-
 html{
-    background-color: #D4EDF7;
+    background-color: #f0fbff;
     font-family: Verdana, sans-serif;
     height: 100vh
 }
@@ -64,9 +60,12 @@ h6 {
   width: 220px;
 }
 
-.px-logo a img {
-  width: 100%;
+.px-logo h4{
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
 }
+
 
 .displayTable {
   display: table;

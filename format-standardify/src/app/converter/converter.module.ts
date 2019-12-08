@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ConverterComponent } from './converter.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [ConverterComponent],
@@ -24,6 +25,7 @@ import { ConverterComponent } from './converter.component';
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
+    MatTooltipModule,
   ]
 })
 export class ConverterModule { }

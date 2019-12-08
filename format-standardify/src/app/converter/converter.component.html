@@ -1,27 +1,41 @@
 <!-- <router-outlet></router-outlet> -->
 <header>
-  <mat-icon class="main-logo"matSuffix>repeat</mat-icon>
-  <span class="title">FormatStandardify.io</span>
-  <button class="login-button" mat-button type="button" (click)="authService.signOut()">Logout</button>
+    <mat-icon class="main-logo"matSuffix>repeat</mat-icon>
+    <span class="title">FormatStandardify.io</span>
+    <button class="logout-button" mat-button type="button" (click)="authService.signOut()">Logout</button>
 </header>
 
-<section>
-  <form [formGroup]="formatForm" novalidate (ngSubmit)="onSubmit()">
-      <input type="file"name="file" id="file" class="inputfile" (change)="onFileChange($event)" required/>
-      <label for="file">Choose a file</label>
-      <span class="filename">{{fileName}}</span>
-      <mat-form-field class="selectFormat">
-          <mat-select formControlName="format" placeholder="Select a format" required> 
-              <mat-option *ngFor="let format of all_formats" [value]="format">
-                  {{format}}
-              </mat-option>
-          </mat-select>
-      </mat-form-field>
-      <button mat-button  type="submit" [disabled]="formatForm.invalid" class="control-botton">Submit</button>
-      <button mat-button  type="button" [disabled]="!readyToSaveExcel" (click)="creeteXLSX()" class="control-botton">Save EXСEL file</button>
+<section class="welcome-info">
+    <h1>Hello dear geodesist!</h1>
+    <h2>Here you can convert your raw measurement data into EXCEL spreadsheets</h2>
+</section>
+
+<section class="form-wrapper">
+    <form [formGroup]="formatForm" novalidate (ngSubmit)="onSubmit()">
+        <input type="file"name="file" id="file" class="inputfile" (change)="onFileChange($event)" required/>
+        <label for="file" matTooltip="Choose file you want to convert">Upload file</label>
+        <span class="filename">{{fileName}}</span>
+        <mat-form-field class="selectFormat" matTooltip="Choose format of your file">
+            <mat-select formControlName="format" placeholder="Select a format" required> 
+                <mat-option *ngFor="let format of all_formats" [value]="format">
+                        {{format}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-button  type="submit" [disabled]="formatForm.invalid" class="control-botton">Submit</button>
+        <button mat-button  type="button" [disabled]="!readyToSaveExcel" (click)="creeteXLSX()" class="control-botton">Save EXСEL file</button>
   </form>
 
 </section>
+
+<section class="available-formats">
+    <h2>*Available formats</h2>
+    <div class="available-list">
+        <div>Total station data: <span>gsi-8</span>, <span>gsi-16</span>, <span>rts-6</span></div>
+        <div>GNSS data: rw5 via <span>SurvCE</span> and <span>Cube-A</span> interface</div>
+    </div>
+</section>
+
 <footer>
-  {{currentYear}} | created by Yurii Zityniuk
+    {{currentYear}} | created by Yurii Zityniuk
 </footer>
