@@ -237,7 +237,6 @@ export class CarlsonService {
       return acc;
       }, {}
     );
-
     return reduced;
   }
 
