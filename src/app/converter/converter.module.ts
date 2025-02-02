@@ -13,7 +13,7 @@ import { ConverterComponent } from './converter.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-  declarations: [ConverterComponent],
+  declarations: [],
   imports: [
     CommonModule,
     ConverterRoutingModule,
@@ -26,6 +26,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSelectModule,
     MatIconModule,
     MatTooltipModule,
+    ConverterComponent
   ]
 })
 export class ConverterModule { }

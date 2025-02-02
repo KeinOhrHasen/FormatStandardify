@@ -5,10 +5,11 @@ import { SignUpRoutingModule } from './sign-up-routing.module';
 import { SignUpComponent } from './sign-up.component';
 
 @NgModule({
-  declarations: [SignUpComponent],
+  declarations: [],
   imports: [
     CommonModule,
-    SignUpRoutingModule
+    SignUpRoutingModule,
+    SignUpComponent
   ]
 })
 export class SignUpModule { }

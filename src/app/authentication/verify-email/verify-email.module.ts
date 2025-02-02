@@ -5,10 +5,11 @@ import { VerifyEmailRoutingModule } from './verify-email-routing.module';
 import { VerifyEmailComponent } from './verify-email.component';
 
 @NgModule({
-  declarations: [VerifyEmailComponent],
+  declarations: [],
   imports: [
     CommonModule,
-    VerifyEmailRoutingModule
+    VerifyEmailRoutingModule,
+    VerifyEmailComponent
   ]
 })
 export class VerifyEmailModule { }
