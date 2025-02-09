@@ -61,11 +61,11 @@ import {
   isFormRecord,
   ɵInternalFormsSharedModule,
   ɵNgNoValidate,
-  ɵNgSelectMultipleOption
-} from "./chunk-ZYRYXJL6.js";
-import "./chunk-HKR3VAT5.js";
-import "./chunk-S5STJILQ.js";
-import "./chunk-EIB7IA3J.js";
+  ɵNgSelectMultipleOption,
+} from './chunk-ZYRYXJL6.js';
+import './chunk-HKR3VAT5.js';
+import './chunk-S5STJILQ.js';
+import './chunk-EIB7IA3J.js';
 export {
   AbstractControl,
   AbstractControlDirective,
@@ -129,5 +129,5 @@ export {
   isFormRecord,
   ɵInternalFormsSharedModule,
   ɵNgNoValidate,
-  ɵNgSelectMultipleOption
+  ɵNgSelectMultipleOption,
 };

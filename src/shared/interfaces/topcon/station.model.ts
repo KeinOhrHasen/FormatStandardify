@@ -1,5 +1,5 @@
 export interface Station {
-    isEmpty?: boolean;
-    description?: string;
-    done?: boolean;
+  isEmpty?: boolean;
+  description?: string;
+  done?: boolean;
 }

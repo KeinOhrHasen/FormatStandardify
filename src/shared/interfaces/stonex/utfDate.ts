@@ -1,4 +1,4 @@
 export interface IUTF {
-    date: string;
-    time: string;
+  date: string;
+  time: string;
 }

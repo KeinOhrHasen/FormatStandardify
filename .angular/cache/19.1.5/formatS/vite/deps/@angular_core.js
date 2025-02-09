@@ -492,9 +492,9 @@ import {
   ɵɵtwoWayProperty,
   ɵɵvalidateIframeAttribute,
   ɵɵviewQuery,
-  ɵɵviewQuerySignal
-} from "./chunk-S5STJILQ.js";
-import "./chunk-EIB7IA3J.js";
+  ɵɵviewQuerySignal,
+} from './chunk-S5STJILQ.js';
+import './chunk-EIB7IA3J.js';
 export {
   ANIMATION_MODULE_TYPE,
   APP_BOOTSTRAP_LISTENER,
@@ -991,5 +991,5 @@ export {
   ɵɵtwoWayProperty,
   ɵɵvalidateIframeAttribute,
   ɵɵviewQuery,
-  ɵɵviewQuerySignal
+  ɵɵviewQuerySignal,
 };

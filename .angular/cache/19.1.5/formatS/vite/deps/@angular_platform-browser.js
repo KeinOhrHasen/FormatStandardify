@@ -35,13 +35,11 @@ import {
   withHttpTransferCacheOptions,
   withI18nSupport,
   withIncrementalHydration,
-  withNoHttpTransferCache
-} from "./chunk-MOH4XHMW.js";
-import {
-  getDOM
-} from "./chunk-HKR3VAT5.js";
-import "./chunk-S5STJILQ.js";
-import "./chunk-EIB7IA3J.js";
+  withNoHttpTransferCache,
+} from './chunk-MOH4XHMW.js';
+import { getDOM } from './chunk-HKR3VAT5.js';
+import './chunk-S5STJILQ.js';
+import './chunk-EIB7IA3J.js';
 export {
   BrowserModule,
   By,
@@ -80,5 +78,5 @@ export {
   KeyEventsPlugin as ɵKeyEventsPlugin,
   SharedStylesHost as ɵSharedStylesHost,
   getDOM as ɵgetDOM,
-  initDomAdapter as ɵinitDomAdapter
+  initDomAdapter as ɵinitDomAdapter,
 };

@@ -93,12 +93,10 @@ import {
   provideImgixLoader,
   provideNetlifyLoader,
   registerLocaleData,
-  setRootDomAdapter
-} from "./chunk-HKR3VAT5.js";
-import {
-  IMAGE_CONFIG
-} from "./chunk-S5STJILQ.js";
-import "./chunk-EIB7IA3J.js";
+  setRootDomAdapter,
+} from './chunk-HKR3VAT5.js';
+import { IMAGE_CONFIG } from './chunk-S5STJILQ.js';
+import './chunk-EIB7IA3J.js';
 export {
   APP_BASE_HREF,
   AsyncPipe,
@@ -196,5 +194,5 @@ export {
   getDOM as ɵgetDOM,
   normalizeQueryParams as ɵnormalizeQueryParams,
   parseCookieValue as ɵparseCookieValue,
-  setRootDomAdapter as ɵsetRootDomAdapter
+  setRootDomAdapter as ɵsetRootDomAdapter,
 };

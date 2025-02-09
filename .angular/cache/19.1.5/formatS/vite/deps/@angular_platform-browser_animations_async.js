@@ -1,9 +1,5 @@
-import {
-  DomRendererFactory2
-} from "./chunk-MOH4XHMW.js";
-import {
-  DOCUMENT
-} from "./chunk-HKR3VAT5.js";
+import { DomRendererFactory2 } from './chunk-MOH4XHMW.js';
+import { DOCUMENT } from './chunk-HKR3VAT5.js';
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionScheduler,
@@ -18,12 +14,12 @@ import {
   performanceMarkFeature,
   setClassMetadata,
   ɵɵdefineInjectable,
-  ɵɵinvalidFactory
-} from "./chunk-S5STJILQ.js";
-import "./chunk-EIB7IA3J.js";
+  ɵɵinvalidFactory,
+} from './chunk-S5STJILQ.js';
+import './chunk-EIB7IA3J.js';
 
 // node_modules/@angular/platform-browser/fesm2022/animations/async.mjs
-var ANIMATION_PREFIX = "@";
+var ANIMATION_PREFIX = '@';
 var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
   doc;
   delegate;
@@ -34,7 +30,7 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
   scheduler = null;
   injector = inject(Injector);
   loadingSchedulerFn = inject(ɵASYNC_ANIMATION_LOADING_SCHEDULER_FN, {
-    optional: true
+    optional: true,
   });
   _engine;
   /**
@@ -56,24 +52,27 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
    * @internal
    */
   loadImpl() {
-    const loadFn = () => this.moduleImpl ?? import("./browser-VRNMBHYJ.js").then((m) => m);
+    const loadFn = () => this.moduleImpl ?? import('./browser-VRNMBHYJ.js').then((m) => m);
     let moduleImplPromise;
     if (this.loadingSchedulerFn) {
       moduleImplPromise = this.loadingSchedulerFn(loadFn);
     } else {
       moduleImplPromise = loadFn();
     }
-    return moduleImplPromise.catch((e) => {
-      throw new RuntimeError(5300, (typeof ngDevMode === "undefined" || ngDevMode) && "Async loading for animations package was enabled, but loading failed. Angular falls back to using regular rendering. No animations will be displayed and their styles won't be applied.");
-    }).then(({
-      ɵcreateEngine,
-      ɵAnimationRendererFactory
-    }) => {
-      this._engine = ɵcreateEngine(this.animationType, this.doc);
-      const rendererFactory = new ɵAnimationRendererFactory(this.delegate, this._engine, this.zone);
-      this.delegate = rendererFactory;
-      return rendererFactory;
-    });
+    return moduleImplPromise
+      .catch((e) => {
+        throw new RuntimeError(
+          5300,
+          (typeof ngDevMode === 'undefined' || ngDevMode) &&
+            "Async loading for animations package was enabled, but loading failed. Angular falls back to using regular rendering. No animations will be displayed and their styles won't be applied.",
+        );
+      })
+      .then(({ ɵcreateEngine, ɵAnimationRendererFactory }) => {
+        this._engine = ɵcreateEngine(this.animationType, this.doc);
+        const rendererFactory = new ɵAnimationRendererFactory(this.delegate, this._engine, this.zone);
+        this.delegate = rendererFactory;
+        return rendererFactory;
+      });
   }
   /**
    * This method is delegating the renderer creation to the factories.
@@ -88,26 +87,28 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
     if (renderer.ɵtype === 0) {
       return renderer;
     }
-    if (typeof renderer.throwOnSyntheticProps === "boolean") {
+    if (typeof renderer.throwOnSyntheticProps === 'boolean') {
       renderer.throwOnSyntheticProps = false;
     }
     const dynamicRenderer = new DynamicDelegationRenderer(renderer);
-    if (rendererType?.data?.["animation"] && !this._rendererFactoryPromise) {
+    if (rendererType?.data?.['animation'] && !this._rendererFactoryPromise) {
       this._rendererFactoryPromise = this.loadImpl();
     }
-    this._rendererFactoryPromise?.then((animationRendererFactory) => {
-      const animationRenderer = animationRendererFactory.createRenderer(hostElement, rendererType);
-      dynamicRenderer.use(animationRenderer);
-      this.scheduler ??= this.injector.get(ChangeDetectionScheduler, null, {
-        optional: true
+    this._rendererFactoryPromise
+      ?.then((animationRendererFactory) => {
+        const animationRenderer = animationRendererFactory.createRenderer(hostElement, rendererType);
+        dynamicRenderer.use(animationRenderer);
+        this.scheduler ??= this.injector.get(ChangeDetectionScheduler, null, {
+          optional: true,
+        });
+        this.scheduler?.notify(
+          11,
+          /* NotificationSource.AsyncAnimationsLoaded */
+        );
+      })
+      .catch((e) => {
+        dynamicRenderer.use(renderer);
       });
-      this.scheduler?.notify(
-        11
-        /* NotificationSource.AsyncAnimationsLoaded */
-      );
-    }).catch((e) => {
-      dynamicRenderer.use(renderer);
-    });
     return dynamicRenderer;
   }
   begin() {
@@ -132,23 +133,37 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
   };
   static ɵprov = ɵɵdefineInjectable({
     token: _AsyncAnimationRendererFactory,
-    factory: _AsyncAnimationRendererFactory.ɵfac
+    factory: _AsyncAnimationRendererFactory.ɵfac,
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AsyncAnimationRendererFactory, [{
-    type: Injectable
-  }], () => [{
-    type: Document
-  }, {
-    type: RendererFactory2
-  }, {
-    type: NgZone
-  }, {
-    type: void 0
-  }, {
-    type: Promise
-  }], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      AsyncAnimationRendererFactory,
+      [
+        {
+          type: Injectable,
+        },
+      ],
+      () => [
+        {
+          type: Document,
+        },
+        {
+          type: RendererFactory2,
+        },
+        {
+          type: NgZone,
+        },
+        {
+          type: void 0,
+        },
+        {
+          type: Promise,
+        },
+      ],
+      null,
+    );
 })();
 var DynamicDelegationRenderer = class {
   delegate;
@@ -241,24 +256,27 @@ var DynamicDelegationRenderer = class {
     return this.replay !== null && propOrEventName.startsWith(ANIMATION_PREFIX);
   }
 };
-var ɵASYNC_ANIMATION_LOADING_SCHEDULER_FN = new InjectionToken(ngDevMode ? "async_animation_loading_scheduler_fn" : "");
-function provideAnimationsAsync(type = "animations") {
-  performanceMarkFeature("NgAsyncAnimations");
-  return makeEnvironmentProviders([{
-    provide: RendererFactory2,
-    useFactory: (doc, renderer, zone) => {
-      return new AsyncAnimationRendererFactory(doc, renderer, zone, type);
+var ɵASYNC_ANIMATION_LOADING_SCHEDULER_FN = new InjectionToken(ngDevMode ? 'async_animation_loading_scheduler_fn' : '');
+function provideAnimationsAsync(type = 'animations') {
+  performanceMarkFeature('NgAsyncAnimations');
+  return makeEnvironmentProviders([
+    {
+      provide: RendererFactory2,
+      useFactory: (doc, renderer, zone) => {
+        return new AsyncAnimationRendererFactory(doc, renderer, zone, type);
+      },
+      deps: [DOCUMENT, DomRendererFactory2, NgZone],
     },
-    deps: [DOCUMENT, DomRendererFactory2, NgZone]
-  }, {
-    provide: ANIMATION_MODULE_TYPE,
-    useValue: type === "noop" ? "NoopAnimations" : "BrowserAnimations"
-  }]);
+    {
+      provide: ANIMATION_MODULE_TYPE,
+      useValue: type === 'noop' ? 'NoopAnimations' : 'BrowserAnimations',
+    },
+  ]);
 }
 export {
   provideAnimationsAsync,
   ɵASYNC_ANIMATION_LOADING_SCHEDULER_FN,
-  AsyncAnimationRendererFactory as ɵAsyncAnimationRendererFactory
+  AsyncAnimationRendererFactory as ɵAsyncAnimationRendererFactory,
 };
 /*! Bundled license information:
 

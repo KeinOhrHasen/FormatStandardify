@@ -1,10 +1,5 @@
-import {
-  BidiModule
-} from "./chunk-WKOARE77.js";
-import {
-  _CdkPrivateStyleLoader,
-  _VisuallyHiddenLoader
-} from "./chunk-NJ3NMNNI.js";
+import { BidiModule } from './chunk-WKOARE77.js';
+import { _CdkPrivateStyleLoader, _VisuallyHiddenLoader } from './chunk-NJ3NMNNI.js';
 import {
   Platform,
   _getEventTarget,
@@ -13,11 +8,9 @@ import {
   coerceArray,
   coerceElement,
   coerceNumberProperty,
-  normalizePassiveListenerOptions
-} from "./chunk-QDQUQZPY.js";
-import {
-  DOCUMENT
-} from "./chunk-HKR3VAT5.js";
+  normalizePassiveListenerOptions,
+} from './chunk-QDQUQZPY.js';
+import { DOCUMENT } from './chunk-HKR3VAT5.js';
 import {
   ANIMATION_MODULE_TYPE,
   APP_ID,
@@ -90,12 +83,9 @@ import {
   ɵɵtemplate,
   ɵɵtext,
   ɵɵtextInterpolate1,
-  ɵɵviewQuery
-} from "./chunk-S5STJILQ.js";
-import {
-  __spreadProps,
-  __spreadValues
-} from "./chunk-EIB7IA3J.js";
+  ɵɵviewQuery,
+} from './chunk-S5STJILQ.js';
+import { __spreadProps, __spreadValues } from './chunk-EIB7IA3J.js';
 
 // node_modules/@angular/cdk/fesm2022/keycodes.mjs
 var TAB = 9;
@@ -136,10 +126,10 @@ function coerceObservable(data) {
 
 // node_modules/@angular/cdk/fesm2022/observers.mjs
 function shouldIgnoreRecord(record) {
-  if (record.type === "characterData" && record.target instanceof Comment) {
+  if (record.type === 'characterData' && record.target instanceof Comment) {
     return true;
   }
-  if (record.type === "childList") {
+  if (record.type === 'childList') {
     for (let i = 0; i < record.addedNodes.length; i++) {
       if (!(record.addedNodes[i] instanceof Comment)) {
         return false;
@@ -156,7 +146,7 @@ function shouldIgnoreRecord(record) {
 }
 var MutationObserverFactory = class _MutationObserverFactory {
   create(callback) {
-    return typeof MutationObserver === "undefined" ? null : new MutationObserver(callback);
+    return typeof MutationObserver === 'undefined' ? null : new MutationObserver(callback);
   }
   static ɵfac = function MutationObserverFactory_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _MutationObserverFactory)();
@@ -164,24 +154,33 @@ var MutationObserverFactory = class _MutationObserverFactory {
   static ɵprov = ɵɵdefineInjectable({
     token: _MutationObserverFactory,
     factory: _MutationObserverFactory.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MutationObserverFactory, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MutationObserverFactory,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var ContentObserver = class _ContentObserver {
   _mutationObserverFactory = inject(MutationObserverFactory);
   /** Keeps track of the existing MutationObservers so they can be reused. */
   _observedElements = /* @__PURE__ */ new Map();
   _ngZone = inject(NgZone);
-  constructor() {
-  }
+  constructor() {}
   ngOnDestroy() {
     this._observedElements.forEach((_, element) => this._cleanupObserver(element));
   }
@@ -189,11 +188,16 @@ var ContentObserver = class _ContentObserver {
     const element = coerceElement(elementOrRef);
     return new Observable((observer) => {
       const stream = this._observeElement(element);
-      const subscription = stream.pipe(map((records) => records.filter((record) => !shouldIgnoreRecord(record))), filter((records) => !!records.length)).subscribe((records) => {
-        this._ngZone.run(() => {
-          observer.next(records);
+      const subscription = stream
+        .pipe(
+          map((records) => records.filter((record) => !shouldIgnoreRecord(record))),
+          filter((records) => !!records.length),
+        )
+        .subscribe((records) => {
+          this._ngZone.run(() => {
+            observer.next(records);
+          });
         });
-      });
       return () => {
         subscription.unsubscribe();
         this._unobserveElement(element);
@@ -213,13 +217,13 @@ var ContentObserver = class _ContentObserver {
           observer.observe(element, {
             characterData: true,
             childList: true,
-            subtree: true
+            subtree: true,
           });
         }
         this._observedElements.set(element, {
           observer,
           stream,
-          count: 1
+          count: 1,
         });
       } else {
         this._observedElements.get(element).count++;
@@ -242,10 +246,7 @@ var ContentObserver = class _ContentObserver {
   /** Clean up the underlying MutationObserver for the specified element. */
   _cleanupObserver(element) {
     if (this._observedElements.has(element)) {
-      const {
-        observer,
-        stream
-      } = this._observedElements.get(element);
+      const { observer, stream } = this._observedElements.get(element);
       if (observer) {
         observer.disconnect();
       }
@@ -259,16 +260,26 @@ var ContentObserver = class _ContentObserver {
   static ɵprov = ɵɵdefineInjectable({
     token: _ContentObserver,
     factory: _ContentObserver.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ContentObserver, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      ContentObserver,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var CdkObserveContent = class _CdkObserveContent {
   _contentObserver = inject(ContentObserver);
@@ -297,8 +308,7 @@ var CdkObserveContent = class _CdkObserveContent {
   }
   _debounce;
   _currentSubscription = null;
-  constructor() {
-  }
+  constructor() {}
   ngAfterContentInit() {
     if (!this._currentSubscription && !this.disabled) {
       this._subscribe();
@@ -310,7 +320,9 @@ var CdkObserveContent = class _CdkObserveContent {
   _subscribe() {
     this._unsubscribe();
     const stream = this._contentObserver.observe(this._elementRef);
-    this._currentSubscription = (this.debounce ? stream.pipe(debounceTime(this.debounce)) : stream).subscribe(this.event);
+    this._currentSubscription = (this.debounce ? stream.pipe(debounceTime(this.debounce)) : stream).subscribe(
+      this.event,
+    );
   }
   _unsubscribe() {
     this._currentSubscription?.unsubscribe();
@@ -320,41 +332,59 @@ var CdkObserveContent = class _CdkObserveContent {
   };
   static ɵdir = ɵɵdefineDirective({
     type: _CdkObserveContent,
-    selectors: [["", "cdkObserveContent", ""]],
+    selectors: [['', 'cdkObserveContent', '']],
     inputs: {
-      disabled: [2, "cdkObserveContentDisabled", "disabled", booleanAttribute],
-      debounce: "debounce"
+      disabled: [2, 'cdkObserveContentDisabled', 'disabled', booleanAttribute],
+      debounce: 'debounce',
     },
     outputs: {
-      event: "cdkObserveContent"
+      event: 'cdkObserveContent',
     },
-    exportAs: ["cdkObserveContent"],
-    features: [ɵɵInputTransformsFeature]
+    exportAs: ['cdkObserveContent'],
+    features: [ɵɵInputTransformsFeature],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CdkObserveContent, [{
-    type: Directive,
-    args: [{
-      selector: "[cdkObserveContent]",
-      exportAs: "cdkObserveContent"
-    }]
-  }], () => [], {
-    event: [{
-      type: Output,
-      args: ["cdkObserveContent"]
-    }],
-    disabled: [{
-      type: Input,
-      args: [{
-        alias: "cdkObserveContentDisabled",
-        transform: booleanAttribute
-      }]
-    }],
-    debounce: [{
-      type: Input
-    }]
-  });
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      CdkObserveContent,
+      [
+        {
+          type: Directive,
+          args: [
+            {
+              selector: '[cdkObserveContent]',
+              exportAs: 'cdkObserveContent',
+            },
+          ],
+        },
+      ],
+      () => [],
+      {
+        event: [
+          {
+            type: Output,
+            args: ['cdkObserveContent'],
+          },
+        ],
+        disabled: [
+          {
+            type: Input,
+            args: [
+              {
+                alias: 'cdkObserveContentDisabled',
+                transform: booleanAttribute,
+              },
+            ],
+          },
+        ],
+        debounce: [
+          {
+            type: Input,
+          },
+        ],
+      },
+    );
 })();
 var ObserversModule = class _ObserversModule {
   static ɵfac = function ObserversModule_Factory(__ngFactoryType__) {
@@ -363,21 +393,31 @@ var ObserversModule = class _ObserversModule {
   static ɵmod = ɵɵdefineNgModule({
     type: _ObserversModule,
     imports: [CdkObserveContent],
-    exports: [CdkObserveContent]
+    exports: [CdkObserveContent],
   });
   static ɵinj = ɵɵdefineInjector({
-    providers: [MutationObserverFactory]
+    providers: [MutationObserverFactory],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ObserversModule, [{
-    type: NgModule,
-    args: [{
-      imports: [CdkObserveContent],
-      exports: [CdkObserveContent],
-      providers: [MutationObserverFactory]
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      ObserversModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              imports: [CdkObserveContent],
+              exports: [CdkObserveContent],
+              providers: [MutationObserverFactory],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 
 // node_modules/@angular/cdk/fesm2022/layout.mjs
@@ -386,31 +426,40 @@ var LayoutModule = class _LayoutModule {
     return new (__ngFactoryType__ || _LayoutModule)();
   };
   static ɵmod = ɵɵdefineNgModule({
-    type: _LayoutModule
+    type: _LayoutModule,
   });
   static ɵinj = ɵɵdefineInjector({});
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LayoutModule, [{
-    type: NgModule,
-    args: [{}]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      LayoutModule,
+      [
+        {
+          type: NgModule,
+          args: [{}],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var mediaQueriesForWebkitCompatibility = /* @__PURE__ */ new Set();
 var mediaQueryStyleNode;
 var MediaMatcher = class _MediaMatcher {
   _platform = inject(Platform);
   _nonce = inject(CSP_NONCE, {
-    optional: true
+    optional: true,
   });
   /** The internal matchMedia method to return back a MediaQueryList like object. */
   _matchMedia;
   constructor() {
-    this._matchMedia = this._platform.isBrowser && window.matchMedia ? (
-      // matchMedia is bound to the window scope intentionally as it is an illegal invocation to
-      // call it from a different scope.
-      window.matchMedia.bind(window)
-    ) : noopMatchMedia;
+    this._matchMedia =
+      this._platform.isBrowser && window.matchMedia
+        ? // matchMedia is bound to the window scope intentionally as it is an illegal invocation to
+          // call it from a different scope.
+          window.matchMedia.bind(window)
+        : noopMatchMedia;
   }
   /**
    * Evaluates the given media query and returns the native MediaQueryList from which results
@@ -430,16 +479,26 @@ var MediaMatcher = class _MediaMatcher {
   static ɵprov = ɵɵdefineInjectable({
     token: _MediaMatcher,
     factory: _MediaMatcher.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MediaMatcher, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MediaMatcher,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 function createEmptyStyleRule(query, nonce) {
   if (mediaQueriesForWebkitCompatibility.has(query)) {
@@ -447,11 +506,11 @@ function createEmptyStyleRule(query, nonce) {
   }
   try {
     if (!mediaQueryStyleNode) {
-      mediaQueryStyleNode = document.createElement("style");
+      mediaQueryStyleNode = document.createElement('style');
       if (nonce) {
-        mediaQueryStyleNode.setAttribute("nonce", nonce);
+        mediaQueryStyleNode.setAttribute('nonce', nonce);
       }
-      mediaQueryStyleNode.setAttribute("type", "text/css");
+      mediaQueryStyleNode.setAttribute('type', 'text/css');
       document.head.appendChild(mediaQueryStyleNode);
     }
     if (mediaQueryStyleNode.sheet) {
@@ -464,12 +523,10 @@ function createEmptyStyleRule(query, nonce) {
 }
 function noopMatchMedia(query) {
   return {
-    matches: query === "all" || query === "",
+    matches: query === 'all' || query === '',
     media: query,
-    addListener: () => {
-    },
-    removeListener: () => {
-    }
+    addListener: () => {},
+    removeListener: () => {},
   };
 }
 var BreakpointObserver = class _BreakpointObserver {
@@ -479,8 +536,7 @@ var BreakpointObserver = class _BreakpointObserver {
   _queries = /* @__PURE__ */ new Map();
   /** A subject for all other observables to takeUntil based on. */
   _destroySubject = new Subject();
-  constructor() {
-  }
+  constructor() {}
   /** Completes the active subject, signalling to all other observables to complete. */
   ngOnDestroy() {
     this._destroySubject.next();
@@ -506,20 +562,19 @@ var BreakpointObserver = class _BreakpointObserver {
     const observables = queries.map((query) => this._registerQuery(query).observable);
     let stateObservable = combineLatest(observables);
     stateObservable = concat(stateObservable.pipe(take(1)), stateObservable.pipe(skip(1), debounceTime(0)));
-    return stateObservable.pipe(map((breakpointStates) => {
-      const response = {
-        matches: false,
-        breakpoints: {}
-      };
-      breakpointStates.forEach(({
-        matches,
-        query
-      }) => {
-        response.matches = response.matches || matches;
-        response.breakpoints[query] = matches;
-      });
-      return response;
-    }));
+    return stateObservable.pipe(
+      map((breakpointStates) => {
+        const response = {
+          matches: false,
+          breakpoints: {},
+        };
+        breakpointStates.forEach(({ matches, query }) => {
+          response.matches = response.matches || matches;
+          response.breakpoints[query] = matches;
+        });
+        return response;
+      }),
+    );
   }
   /** Registers a specific query to be listened for. */
   _registerQuery(query) {
@@ -533,15 +588,17 @@ var BreakpointObserver = class _BreakpointObserver {
       return () => {
         mql.removeListener(handler);
       };
-    }).pipe(startWith(mql), map(({
-      matches
-    }) => ({
-      query,
-      matches
-    })), takeUntil(this._destroySubject));
+    }).pipe(
+      startWith(mql),
+      map(({ matches }) => ({
+        query,
+        matches,
+      })),
+      takeUntil(this._destroySubject),
+    );
     const output = {
       observable: queryObservable,
-      mql
+      mql,
     };
     this._queries.set(query, output);
     return output;
@@ -552,23 +609,36 @@ var BreakpointObserver = class _BreakpointObserver {
   static ɵprov = ɵɵdefineInjectable({
     token: _BreakpointObserver,
     factory: _BreakpointObserver.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BreakpointObserver, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      BreakpointObserver,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 function splitQueries(queries) {
-  return queries.map((query) => query.split(",")).reduce((a1, a2) => a1.concat(a2)).map((query) => query.trim());
+  return queries
+    .map((query) => query.split(','))
+    .reduce((a1, a2) => a1.concat(a2))
+    .map((query) => query.trim());
 }
 
 // node_modules/@angular/cdk/fesm2022/a11y.mjs
-var ID_DELIMITER = " ";
+var ID_DELIMITER = ' ';
 function addAriaReferencedId(el, attr, id) {
   const ids = getAriaReferenceIds(el, attr);
   id = id.trim();
@@ -592,8 +662,8 @@ function getAriaReferenceIds(el, attr) {
   const attrValue = el.getAttribute(attr);
   return attrValue?.match(/\S+/g) ?? [];
 }
-var CDK_DESCRIBEDBY_ID_PREFIX = "cdk-describedby-message";
-var CDK_DESCRIBEDBY_HOST_ATTRIBUTE = "cdk-describedby-host";
+var CDK_DESCRIBEDBY_ID_PREFIX = 'cdk-describedby-message';
+var CDK_DESCRIBEDBY_HOST_ATTRIBUTE = 'cdk-describedby-host';
 var nextId = 0;
 var AriaDescriber = class _AriaDescriber {
   _platform = inject(Platform);
@@ -606,18 +676,18 @@ var AriaDescriber = class _AriaDescriber {
   _id = `${nextId++}`;
   constructor() {
     inject(_CdkPrivateStyleLoader).load(_VisuallyHiddenLoader);
-    this._id = inject(APP_ID) + "-" + nextId++;
+    this._id = inject(APP_ID) + '-' + nextId++;
   }
   describe(hostElement, message, role) {
     if (!this._canBeDescribed(hostElement, message)) {
       return;
     }
     const key = getKey(message, role);
-    if (typeof message !== "string") {
+    if (typeof message !== 'string') {
       setMessageId(message, this._id);
       this._messageRegistry.set(key, {
         messageElement: message,
-        referenceCount: 0
+        referenceCount: 0,
       });
     } else if (!this._messageRegistry.has(key)) {
       this._createMessageElement(message, role);
@@ -634,7 +704,7 @@ var AriaDescriber = class _AriaDescriber {
     if (this._isElementDescribedByMessage(hostElement, key)) {
       this._removeMessageReference(hostElement, key);
     }
-    if (typeof message === "string") {
+    if (typeof message === 'string') {
       const registeredMessage = this._messageRegistry.get(key);
       if (registeredMessage && registeredMessage.referenceCount === 0) {
         this._deleteMessageElement(key);
@@ -661,17 +731,17 @@ var AriaDescriber = class _AriaDescriber {
    * as its content and adds it to the message registry.
    */
   _createMessageElement(message, role) {
-    const messageElement = this._document.createElement("div");
+    const messageElement = this._document.createElement('div');
     setMessageId(messageElement, this._id);
     messageElement.textContent = message;
     if (role) {
-      messageElement.setAttribute("role", role);
+      messageElement.setAttribute('role', role);
     }
     this._createMessagesContainer();
     this._messagesContainer.appendChild(messageElement);
     this._messageRegistry.set(getKey(message, role), {
       messageElement,
-      referenceCount: 0
+      referenceCount: 0,
     });
   }
   /** Deletes the message element from the global messages container. */
@@ -684,25 +754,27 @@ var AriaDescriber = class _AriaDescriber {
     if (this._messagesContainer) {
       return;
     }
-    const containerClassName = "cdk-describedby-message-container";
+    const containerClassName = 'cdk-describedby-message-container';
     const serverContainers = this._document.querySelectorAll(`.${containerClassName}[platform="server"]`);
     for (let i = 0; i < serverContainers.length; i++) {
       serverContainers[i].remove();
     }
-    const messagesContainer = this._document.createElement("div");
-    messagesContainer.style.visibility = "hidden";
+    const messagesContainer = this._document.createElement('div');
+    messagesContainer.style.visibility = 'hidden';
     messagesContainer.classList.add(containerClassName);
-    messagesContainer.classList.add("cdk-visually-hidden");
+    messagesContainer.classList.add('cdk-visually-hidden');
     if (!this._platform.isBrowser) {
-      messagesContainer.setAttribute("platform", "server");
+      messagesContainer.setAttribute('platform', 'server');
     }
     this._document.body.appendChild(messagesContainer);
     this._messagesContainer = messagesContainer;
   }
   /** Removes all cdk-describedby messages that are hosted through the element. */
   _removeCdkDescribedByReferenceIds(element) {
-    const originalReferenceIds = getAriaReferenceIds(element, "aria-describedby").filter((id) => id.indexOf(CDK_DESCRIBEDBY_ID_PREFIX) != 0);
-    element.setAttribute("aria-describedby", originalReferenceIds.join(" "));
+    const originalReferenceIds = getAriaReferenceIds(element, 'aria-describedby').filter(
+      (id) => id.indexOf(CDK_DESCRIBEDBY_ID_PREFIX) != 0,
+    );
+    element.setAttribute('aria-describedby', originalReferenceIds.join(' '));
   }
   /**
    * Adds a message reference to the element using aria-describedby and increments the registered
@@ -710,7 +782,7 @@ var AriaDescriber = class _AriaDescriber {
    */
   _addMessageReference(element, key) {
     const registeredMessage = this._messageRegistry.get(key);
-    addAriaReferencedId(element, "aria-describedby", registeredMessage.messageElement.id);
+    addAriaReferencedId(element, 'aria-describedby', registeredMessage.messageElement.id);
     element.setAttribute(CDK_DESCRIBEDBY_HOST_ATTRIBUTE, this._id);
     registeredMessage.referenceCount++;
   }
@@ -721,12 +793,12 @@ var AriaDescriber = class _AriaDescriber {
   _removeMessageReference(element, key) {
     const registeredMessage = this._messageRegistry.get(key);
     registeredMessage.referenceCount--;
-    removeAriaReferencedId(element, "aria-describedby", registeredMessage.messageElement.id);
+    removeAriaReferencedId(element, 'aria-describedby', registeredMessage.messageElement.id);
     element.removeAttribute(CDK_DESCRIBEDBY_HOST_ATTRIBUTE);
   }
   /** Returns true if the element has been described by the provided message ID. */
   _isElementDescribedByMessage(element, key) {
-    const referenceIds = getAriaReferenceIds(element, "aria-describedby");
+    const referenceIds = getAriaReferenceIds(element, 'aria-describedby');
     const registeredMessage = this._messageRegistry.get(key);
     const messageId = registeredMessage && registeredMessage.messageElement.id;
     return !!messageId && referenceIds.indexOf(messageId) != -1;
@@ -736,11 +808,11 @@ var AriaDescriber = class _AriaDescriber {
     if (!this._isElementNode(element)) {
       return false;
     }
-    if (message && typeof message === "object") {
+    if (message && typeof message === 'object') {
       return true;
     }
-    const trimmedMessage = message == null ? "" : `${message}`.trim();
-    const ariaLabel = element.getAttribute("aria-label");
+    const trimmedMessage = message == null ? '' : `${message}`.trim();
+    const ariaLabel = element.getAttribute('aria-label');
     return trimmedMessage ? !ariaLabel || ariaLabel.trim() !== trimmedMessage : false;
   }
   /** Checks whether a node is an Element node. */
@@ -753,19 +825,29 @@ var AriaDescriber = class _AriaDescriber {
   static ɵprov = ɵɵdefineInjectable({
     token: _AriaDescriber,
     factory: _AriaDescriber.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AriaDescriber, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      AriaDescriber,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 function getKey(message, role) {
-  return typeof message === "string" ? `${role || ""}/${message}` : message;
+  return typeof message === 'string' ? `${role || ''}/${message}` : message;
 }
 function setMessageId(element, serviceId) {
   if (!element.id) {
@@ -783,12 +865,17 @@ var Typeahead = class {
   _selectedItem = new Subject();
   selectedItem = this._selectedItem;
   constructor(initialItems, config) {
-    const typeAheadInterval = typeof config?.debounceInterval === "number" ? config.debounceInterval : DEFAULT_TYPEAHEAD_DEBOUNCE_INTERVAL_MS;
+    const typeAheadInterval =
+      typeof config?.debounceInterval === 'number' ? config.debounceInterval : DEFAULT_TYPEAHEAD_DEBOUNCE_INTERVAL_MS;
     if (config?.skipPredicate) {
       this._skipPredicateFn = config.skipPredicate;
     }
-    if ((typeof ngDevMode === "undefined" || ngDevMode) && initialItems.length && initialItems.some((item) => typeof item.getLabel !== "function")) {
-      throw new Error("KeyManager items in typeahead mode must implement the `getLabel` method.");
+    if (
+      (typeof ngDevMode === 'undefined' || ngDevMode) &&
+      initialItems.length &&
+      initialItems.some((item) => typeof item.getLabel !== 'function')
+    ) {
+      throw new Error('KeyManager items in typeahead mode must implement the `getLabel` method.');
     }
     this.setItems(initialItems);
     this._setupKeyHandler(typeAheadInterval);
@@ -808,7 +895,7 @@ var Typeahead = class {
     const keyCode = event.keyCode;
     if (event.key && event.key.length === 1) {
       this._letterKeyStream.next(event.key.toLocaleUpperCase());
-    } else if (keyCode >= A && keyCode <= Z || keyCode >= ZERO && keyCode <= NINE) {
+    } else if ((keyCode >= A && keyCode <= Z) || (keyCode >= ZERO && keyCode <= NINE)) {
       this._letterKeyStream.next(String.fromCharCode(keyCode));
     }
   }
@@ -821,17 +908,27 @@ var Typeahead = class {
     this._pressedLetters = [];
   }
   _setupKeyHandler(typeAheadInterval) {
-    this._letterKeyStream.pipe(tap((letter) => this._pressedLetters.push(letter)), debounceTime(typeAheadInterval), filter(() => this._pressedLetters.length > 0), map(() => this._pressedLetters.join("").toLocaleUpperCase())).subscribe((inputString) => {
-      for (let i = 1; i < this._items.length + 1; i++) {
-        const index = (this._selectedItemIndex + i) % this._items.length;
-        const item = this._items[index];
-        if (!this._skipPredicateFn?.(item) && item.getLabel?.().toLocaleUpperCase().trim().indexOf(inputString) === 0) {
-          this._selectedItem.next(item);
-          break;
+    this._letterKeyStream
+      .pipe(
+        tap((letter) => this._pressedLetters.push(letter)),
+        debounceTime(typeAheadInterval),
+        filter(() => this._pressedLetters.length > 0),
+        map(() => this._pressedLetters.join('').toLocaleUpperCase()),
+      )
+      .subscribe((inputString) => {
+        for (let i = 1; i < this._items.length + 1; i++) {
+          const index = (this._selectedItemIndex + i) % this._items.length;
+          const item = this._items[index];
+          if (
+            !this._skipPredicateFn?.(item) &&
+            item.getLabel?.().toLocaleUpperCase().trim().indexOf(inputString) === 0
+          ) {
+            this._selectedItem.next(item);
+            break;
+          }
         }
-      }
-      this._pressedLetters = [];
-    });
+        this._pressedLetters = [];
+      });
   }
 };
 var ListKeyManager = class {
@@ -847,7 +944,7 @@ var ListKeyManager = class {
   _homeAndEnd = false;
   _pageUpAndDown = {
     enabled: false,
-    delta: 10
+    delta: 10,
   };
   _effectRef;
   _typeahead;
@@ -861,11 +958,11 @@ var ListKeyManager = class {
     if (_items instanceof QueryList) {
       this._itemChangesSubscription = _items.changes.subscribe((newItems) => this._itemsChanged(newItems.toArray()));
     } else if (isSignal(_items)) {
-      if (!injector && (typeof ngDevMode === "undefined" || ngDevMode)) {
-        throw new Error("ListKeyManager constructed with a signal must receive an injector");
+      if (!injector && (typeof ngDevMode === 'undefined' || ngDevMode)) {
+        throw new Error('ListKeyManager constructed with a signal must receive an injector');
       }
       this._effectRef = effect(() => this._itemsChanged(_items()), {
-        injector
+        injector,
       });
     }
   }
@@ -924,17 +1021,17 @@ var ListKeyManager = class {
    * @param debounceInterval Time to wait after the last keystroke before setting the active item.
    */
   withTypeAhead(debounceInterval = 200) {
-    if (typeof ngDevMode === "undefined" || ngDevMode) {
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
       const items2 = this._getItemsArray();
-      if (items2.length > 0 && items2.some((item) => typeof item.getLabel !== "function")) {
-        throw Error("ListKeyManager items in typeahead mode must implement the `getLabel` method.");
+      if (items2.length > 0 && items2.some((item) => typeof item.getLabel !== 'function')) {
+        throw Error('ListKeyManager items in typeahead mode must implement the `getLabel` method.');
       }
     }
     this._typeaheadSubscription.unsubscribe();
     const items = this._getItemsArray();
     this._typeahead = new Typeahead(items, {
-      debounceInterval: typeof debounceInterval === "number" ? debounceInterval : void 0,
-      skipPredicate: (item) => this._skipPredicateFn(item)
+      debounceInterval: typeof debounceInterval === 'number' ? debounceInterval : void 0,
+      skipPredicate: (item) => this._skipPredicateFn(item),
     });
     this._typeaheadSubscription = this._typeahead.selectedItem.subscribe((item) => {
       this.setActiveItem(item);
@@ -964,7 +1061,7 @@ var ListKeyManager = class {
   withPageUpDown(enabled = true, delta = 10) {
     this._pageUpAndDown = {
       enabled,
-      delta
+      delta,
     };
     return this;
   }
@@ -981,7 +1078,7 @@ var ListKeyManager = class {
    */
   onKeydown(event) {
     const keyCode = event.keyCode;
-    const modifiers = ["altKey", "ctrlKey", "metaKey", "shiftKey"];
+    const modifiers = ['altKey', 'ctrlKey', 'metaKey', 'shiftKey'];
     const isModifierAllowed = modifiers.every((modifier) => {
       return !event[modifier] || this._allowedModifierKeys.indexOf(modifier) > -1;
     });
@@ -1005,14 +1102,14 @@ var ListKeyManager = class {
         }
       case RIGHT_ARROW:
         if (this._horizontal && isModifierAllowed) {
-          this._horizontal === "rtl" ? this.setPreviousItemActive() : this.setNextItemActive();
+          this._horizontal === 'rtl' ? this.setPreviousItemActive() : this.setNextItemActive();
           break;
         } else {
           return;
         }
       case LEFT_ARROW:
         if (this._horizontal && isModifierAllowed) {
-          this._horizontal === "rtl" ? this.setNextItemActive() : this.setPreviousItemActive();
+          this._horizontal === 'rtl' ? this.setNextItemActive() : this.setPreviousItemActive();
           break;
         } else {
           return;
@@ -1049,7 +1146,7 @@ var ListKeyManager = class {
           return;
         }
       default:
-        if (isModifierAllowed || hasModifierKey(event, "shiftKey")) {
+        if (isModifierAllowed || hasModifierKey(event, 'shiftKey')) {
           this._typeahead?.handleKey(event);
         }
         return;
@@ -1087,7 +1184,7 @@ var ListKeyManager = class {
   }
   updateActiveItem(item) {
     const itemArray = this._getItemsArray();
-    const index = typeof item === "number" ? item : itemArray.indexOf(item);
+    const index = typeof item === 'number' ? item : itemArray.indexOf(item);
     const activeItem = itemArray[index];
     this._activeItem.set(activeItem == null ? null : activeItem);
     this._activeItemIndex = index;
@@ -1194,7 +1291,7 @@ var TreeKeyManager = class {
    * The orientation that the tree is laid out in. In `rtl` mode, the behavior of Left and
    * Right arrow are switched.
    */
-  _horizontalOrientation = "ltr";
+  _horizontalOrientation = 'ltr';
   /**
    * Predicate function that can be used to check whether an item should be skipped
    * by the key manager.
@@ -1262,7 +1359,7 @@ var TreeKeyManager = class {
       this._items = items;
       this._initializeFocus();
     }
-    if (typeof config.shouldActivationFollowFocus === "boolean") {
+    if (typeof config.shouldActivationFollowFocus === 'boolean') {
       this._shouldActivationFollowFocus = config.shouldActivationFollowFocus;
     }
     if (config.horizontalOrientation) {
@@ -1274,7 +1371,7 @@ var TreeKeyManager = class {
     if (config.trackBy) {
       this._trackByFn = config.trackBy;
     }
-    if (typeof config.typeAheadDebounceInterval !== "undefined") {
+    if (typeof config.typeAheadDebounceInterval !== 'undefined') {
       this._setTypeAhead(config.typeAheadDebounceInterval);
     }
   }
@@ -1293,32 +1390,32 @@ var TreeKeyManager = class {
   onKeydown(event) {
     const key = event.key;
     switch (key) {
-      case "Tab":
+      case 'Tab':
         return;
-      case "ArrowDown":
+      case 'ArrowDown':
         this._focusNextItem();
         break;
-      case "ArrowUp":
+      case 'ArrowUp':
         this._focusPreviousItem();
         break;
-      case "ArrowRight":
-        this._horizontalOrientation === "rtl" ? this._collapseCurrentItem() : this._expandCurrentItem();
+      case 'ArrowRight':
+        this._horizontalOrientation === 'rtl' ? this._collapseCurrentItem() : this._expandCurrentItem();
         break;
-      case "ArrowLeft":
-        this._horizontalOrientation === "rtl" ? this._expandCurrentItem() : this._collapseCurrentItem();
+      case 'ArrowLeft':
+        this._horizontalOrientation === 'rtl' ? this._expandCurrentItem() : this._collapseCurrentItem();
         break;
-      case "Home":
+      case 'Home':
         this._focusFirstItem();
         break;
-      case "End":
+      case 'End':
         this._focusLastItem();
         break;
-      case "Enter":
-      case " ":
+      case 'Enter':
+      case ' ':
         this._activateCurrentItem();
         break;
       default:
-        if (event.key === "*") {
+        if (event.key === '*') {
           this._expandAllItemsAtCurrentItemLevel();
           break;
         }
@@ -1354,7 +1451,10 @@ var TreeKeyManager = class {
   }
   focusItem(itemOrIndex, options = {}) {
     options.emitChangeEvent ??= true;
-    let index = typeof itemOrIndex === "number" ? itemOrIndex : this._items.findIndex((item) => this._trackByFn(item) === this._trackByFn(itemOrIndex));
+    let index =
+      typeof itemOrIndex === 'number'
+        ? itemOrIndex
+        : this._items.findIndex((item) => this._trackByFn(item) === this._trackByFn(itemOrIndex));
     if (index < 0 || index >= this._items.length) {
       return;
     }
@@ -1388,8 +1488,8 @@ var TreeKeyManager = class {
   }
   _setTypeAhead(debounceInterval) {
     this._typeahead = new Typeahead(this._items, {
-      debounceInterval: typeof debounceInterval === "number" ? debounceInterval : void 0,
-      skipPredicate: (item) => this._skipPredicateFn(item)
+      debounceInterval: typeof debounceInterval === 'number' ? debounceInterval : void 0,
+      skipPredicate: (item) => this._skipPredicateFn(item),
     });
     this._typeaheadSubscription = this._typeahead.selectedItem.subscribe((item) => {
       this.focusItem(item);
@@ -1438,23 +1538,27 @@ var TreeKeyManager = class {
     if (!this._isCurrentItemExpanded()) {
       this._activeItem.expand();
     } else {
-      coerceObservable(this._activeItem.getChildren()).pipe(take(1)).subscribe((children) => {
-        const firstChild = children.find((child) => !this._skipPredicateFn(child));
-        if (!firstChild) {
-          return;
-        }
-        this.focusItem(firstChild);
-      });
+      coerceObservable(this._activeItem.getChildren())
+        .pipe(take(1))
+        .subscribe((children) => {
+          const firstChild = children.find((child) => !this._skipPredicateFn(child));
+          if (!firstChild) {
+            return;
+          }
+          this.focusItem(firstChild);
+        });
     }
   }
   _isCurrentItemExpanded() {
     if (!this._activeItem) {
       return false;
     }
-    return typeof this._activeItem.isExpanded === "boolean" ? this._activeItem.isExpanded : this._activeItem.isExpanded();
+    return typeof this._activeItem.isExpanded === 'boolean'
+      ? this._activeItem.isExpanded
+      : this._activeItem.isExpanded();
   }
   _isItemDisabled(item) {
-    return typeof item.isDisabled === "boolean" ? item.isDisabled : item.isDisabled?.();
+    return typeof item.isDisabled === 'boolean' ? item.isDisabled : item.isDisabled?.();
   }
   /** For all items that are the same level as the current item, we expand those items. */
   _expandAllItemsAtCurrentItemLevel() {
@@ -1481,14 +1585,13 @@ var TreeKeyManager = class {
 function TREE_KEY_MANAGER_FACTORY() {
   return (items, options) => new TreeKeyManager(items, options);
 }
-var TREE_KEY_MANAGER = new InjectionToken("tree-key-manager", {
-  providedIn: "root",
-  factory: TREE_KEY_MANAGER_FACTORY
+var TREE_KEY_MANAGER = new InjectionToken('tree-key-manager', {
+  providedIn: 'root',
+  factory: TREE_KEY_MANAGER_FACTORY,
 });
 var InteractivityChecker = class _InteractivityChecker {
   _platform = inject(Platform);
-  constructor() {
-  }
+  constructor() {}
   /**
    * Gets whether an element is disabled.
    *
@@ -1496,7 +1599,7 @@ var InteractivityChecker = class _InteractivityChecker {
    * @returns Whether the element is disabled.
    */
   isDisabled(element) {
-    return element.hasAttribute("disabled");
+    return element.hasAttribute('disabled');
   }
   /**
    * Gets whether an element is visible for the purposes of interactivity.
@@ -1507,7 +1610,7 @@ var InteractivityChecker = class _InteractivityChecker {
    * @returns Whether the element is visible.
    */
   isVisible(element) {
-    return hasGeometry(element) && getComputedStyle(element).visibility === "visible";
+    return hasGeometry(element) && getComputedStyle(element).visibility === 'visible';
   }
   /**
    * Gets whether an element can be reached via Tab key.
@@ -1531,29 +1634,29 @@ var InteractivityChecker = class _InteractivityChecker {
     }
     let nodeName = element.nodeName.toLowerCase();
     let tabIndexValue = getTabIndexValue(element);
-    if (element.hasAttribute("contenteditable")) {
+    if (element.hasAttribute('contenteditable')) {
       return tabIndexValue !== -1;
     }
-    if (nodeName === "iframe" || nodeName === "object") {
+    if (nodeName === 'iframe' || nodeName === 'object') {
       return false;
     }
     if (this._platform.WEBKIT && this._platform.IOS && !isPotentiallyTabbableIOS(element)) {
       return false;
     }
-    if (nodeName === "audio") {
-      if (!element.hasAttribute("controls")) {
+    if (nodeName === 'audio') {
+      if (!element.hasAttribute('controls')) {
         return false;
       }
       return tabIndexValue !== -1;
     }
-    if (nodeName === "video") {
+    if (nodeName === 'video') {
       if (tabIndexValue === -1) {
         return false;
       }
       if (tabIndexValue !== null) {
         return true;
       }
-      return this._platform.FIREFOX || element.hasAttribute("controls");
+      return this._platform.FIREFOX || element.hasAttribute('controls');
     }
     return element.tabIndex >= 0;
   }
@@ -1565,7 +1668,11 @@ var InteractivityChecker = class _InteractivityChecker {
    * @returns Whether the element is focusable.
    */
   isFocusable(element, config) {
-    return isPotentiallyFocusable(element) && !this.isDisabled(element) && (config?.ignoreVisibility || this.isVisible(element));
+    return (
+      isPotentiallyFocusable(element) &&
+      !this.isDisabled(element) &&
+      (config?.ignoreVisibility || this.isVisible(element))
+    );
   }
   static ɵfac = function InteractivityChecker_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _InteractivityChecker)();
@@ -1573,16 +1680,26 @@ var InteractivityChecker = class _InteractivityChecker {
   static ɵprov = ɵɵdefineInjectable({
     token: _InteractivityChecker,
     factory: _InteractivityChecker.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(InteractivityChecker, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      InteractivityChecker,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 function getFrameElement(window2) {
   try {
@@ -1592,51 +1709,60 @@ function getFrameElement(window2) {
   }
 }
 function hasGeometry(element) {
-  return !!(element.offsetWidth || element.offsetHeight || typeof element.getClientRects === "function" && element.getClientRects().length);
+  return !!(
+    element.offsetWidth ||
+    element.offsetHeight ||
+    (typeof element.getClientRects === 'function' && element.getClientRects().length)
+  );
 }
 function isNativeFormElement(element) {
   let nodeName = element.nodeName.toLowerCase();
-  return nodeName === "input" || nodeName === "select" || nodeName === "button" || nodeName === "textarea";
+  return nodeName === 'input' || nodeName === 'select' || nodeName === 'button' || nodeName === 'textarea';
 }
 function isHiddenInput(element) {
-  return isInputElement(element) && element.type == "hidden";
+  return isInputElement(element) && element.type == 'hidden';
 }
 function isAnchorWithHref(element) {
-  return isAnchorElement(element) && element.hasAttribute("href");
+  return isAnchorElement(element) && element.hasAttribute('href');
 }
 function isInputElement(element) {
-  return element.nodeName.toLowerCase() == "input";
+  return element.nodeName.toLowerCase() == 'input';
 }
 function isAnchorElement(element) {
-  return element.nodeName.toLowerCase() == "a";
+  return element.nodeName.toLowerCase() == 'a';
 }
 function hasValidTabIndex(element) {
-  if (!element.hasAttribute("tabindex") || element.tabIndex === void 0) {
+  if (!element.hasAttribute('tabindex') || element.tabIndex === void 0) {
     return false;
   }
-  let tabIndex = element.getAttribute("tabindex");
+  let tabIndex = element.getAttribute('tabindex');
   return !!(tabIndex && !isNaN(parseInt(tabIndex, 10)));
 }
 function getTabIndexValue(element) {
   if (!hasValidTabIndex(element)) {
     return null;
   }
-  const tabIndex = parseInt(element.getAttribute("tabindex") || "", 10);
+  const tabIndex = parseInt(element.getAttribute('tabindex') || '', 10);
   return isNaN(tabIndex) ? -1 : tabIndex;
 }
 function isPotentiallyTabbableIOS(element) {
   let nodeName = element.nodeName.toLowerCase();
-  let inputType = nodeName === "input" && element.type;
-  return inputType === "text" || inputType === "password" || nodeName === "select" || nodeName === "textarea";
+  let inputType = nodeName === 'input' && element.type;
+  return inputType === 'text' || inputType === 'password' || nodeName === 'select' || nodeName === 'textarea';
 }
 function isPotentiallyFocusable(element) {
   if (isHiddenInput(element)) {
     return false;
   }
-  return isNativeFormElement(element) || isAnchorWithHref(element) || element.hasAttribute("contenteditable") || hasValidTabIndex(element);
+  return (
+    isNativeFormElement(element) ||
+    isAnchorWithHref(element) ||
+    element.hasAttribute('contenteditable') ||
+    hasValidTabIndex(element)
+  );
 }
 function getWindow(node) {
-  return node.ownerDocument && node.ownerDocument.defaultView || window;
+  return (node.ownerDocument && node.ownerDocument.defaultView) || window;
 }
 var FocusTrap = class {
   _element;
@@ -1677,11 +1803,11 @@ var FocusTrap = class {
     const startAnchor = this._startAnchor;
     const endAnchor = this._endAnchor;
     if (startAnchor) {
-      startAnchor.removeEventListener("focus", this.startAnchorListener);
+      startAnchor.removeEventListener('focus', this.startAnchorListener);
       startAnchor.remove();
     }
     if (endAnchor) {
-      endAnchor.removeEventListener("focus", this.endAnchorListener);
+      endAnchor.removeEventListener('focus', this.endAnchorListener);
       endAnchor.remove();
     }
     this._startAnchor = this._endAnchor = null;
@@ -1700,11 +1826,11 @@ var FocusTrap = class {
     this._ngZone.runOutsideAngular(() => {
       if (!this._startAnchor) {
         this._startAnchor = this._createAnchor();
-        this._startAnchor.addEventListener("focus", this.startAnchorListener);
+        this._startAnchor.addEventListener('focus', this.startAnchorListener);
       }
       if (!this._endAnchor) {
         this._endAnchor = this._createAnchor();
-        this._endAnchor.addEventListener("focus", this.endAnchorListener);
+        this._endAnchor.addEventListener('focus', this.endAnchorListener);
       }
     });
     if (this._element.parentNode) {
@@ -1752,17 +1878,25 @@ var FocusTrap = class {
    * @returns The boundary element.
    */
   _getRegionBoundary(bound) {
-    const markers = this._element.querySelectorAll(`[cdk-focus-region-${bound}], [cdkFocusRegion${bound}], [cdk-focus-${bound}]`);
-    if (typeof ngDevMode === "undefined" || ngDevMode) {
+    const markers = this._element.querySelectorAll(
+      `[cdk-focus-region-${bound}], [cdkFocusRegion${bound}], [cdk-focus-${bound}]`,
+    );
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
       for (let i = 0; i < markers.length; i++) {
         if (markers[i].hasAttribute(`cdk-focus-${bound}`)) {
-          console.warn(`Found use of deprecated attribute 'cdk-focus-${bound}', use 'cdkFocusRegion${bound}' instead. The deprecated attribute will be removed in 8.0.0.`, markers[i]);
+          console.warn(
+            `Found use of deprecated attribute 'cdk-focus-${bound}', use 'cdkFocusRegion${bound}' instead. The deprecated attribute will be removed in 8.0.0.`,
+            markers[i],
+          );
         } else if (markers[i].hasAttribute(`cdk-focus-region-${bound}`)) {
-          console.warn(`Found use of deprecated attribute 'cdk-focus-region-${bound}', use 'cdkFocusRegion${bound}' instead. The deprecated attribute will be removed in 8.0.0.`, markers[i]);
+          console.warn(
+            `Found use of deprecated attribute 'cdk-focus-region-${bound}', use 'cdkFocusRegion${bound}' instead. The deprecated attribute will be removed in 8.0.0.`,
+            markers[i],
+          );
         }
       }
     }
-    if (bound == "start") {
+    if (bound == 'start') {
       return markers.length ? markers[0] : this._getFirstTabbableElement(this._element);
     }
     return markers.length ? markers[markers.length - 1] : this._getLastTabbableElement(this._element);
@@ -1774,10 +1908,13 @@ var FocusTrap = class {
   focusInitialElement(options) {
     const redirectToElement = this._element.querySelector(`[cdk-focus-initial], [cdkFocusInitial]`);
     if (redirectToElement) {
-      if ((typeof ngDevMode === "undefined" || ngDevMode) && redirectToElement.hasAttribute(`cdk-focus-initial`)) {
-        console.warn(`Found use of deprecated attribute 'cdk-focus-initial', use 'cdkFocusInitial' instead. The deprecated attribute will be removed in 8.0.0`, redirectToElement);
+      if ((typeof ngDevMode === 'undefined' || ngDevMode) && redirectToElement.hasAttribute(`cdk-focus-initial`)) {
+        console.warn(
+          `Found use of deprecated attribute 'cdk-focus-initial', use 'cdkFocusInitial' instead. The deprecated attribute will be removed in 8.0.0`,
+          redirectToElement,
+        );
       }
-      if ((typeof ngDevMode === "undefined" || ngDevMode) && !this._checker.isFocusable(redirectToElement)) {
+      if ((typeof ngDevMode === 'undefined' || ngDevMode) && !this._checker.isFocusable(redirectToElement)) {
         console.warn(`Element matching '[cdkFocusInitial]' is not focusable.`, redirectToElement);
       }
       if (!this._checker.isFocusable(redirectToElement)) {
@@ -1795,7 +1932,7 @@ var FocusTrap = class {
    * @returns Whether focus was moved successfully.
    */
   focusFirstTabbableElement(options) {
-    const redirectToElement = this._getRegionBoundary("start");
+    const redirectToElement = this._getRegionBoundary('start');
     if (redirectToElement) {
       redirectToElement.focus(options);
     }
@@ -1806,7 +1943,7 @@ var FocusTrap = class {
    * @returns Whether focus was moved successfully.
    */
   focusLastTabbableElement(options) {
-    const redirectToElement = this._getRegionBoundary("end");
+    const redirectToElement = this._getRegionBoundary('end');
     if (redirectToElement) {
       redirectToElement.focus(options);
     }
@@ -1825,7 +1962,8 @@ var FocusTrap = class {
     }
     const children = root.children;
     for (let i = 0; i < children.length; i++) {
-      const tabbableChild = children[i].nodeType === this._document.ELEMENT_NODE ? this._getFirstTabbableElement(children[i]) : null;
+      const tabbableChild =
+        children[i].nodeType === this._document.ELEMENT_NODE ? this._getFirstTabbableElement(children[i]) : null;
       if (tabbableChild) {
         return tabbableChild;
       }
@@ -1839,7 +1977,8 @@ var FocusTrap = class {
     }
     const children = root.children;
     for (let i = children.length - 1; i >= 0; i--) {
-      const tabbableChild = children[i].nodeType === this._document.ELEMENT_NODE ? this._getLastTabbableElement(children[i]) : null;
+      const tabbableChild =
+        children[i].nodeType === this._document.ELEMENT_NODE ? this._getLastTabbableElement(children[i]) : null;
       if (tabbableChild) {
         return tabbableChild;
       }
@@ -1848,11 +1987,11 @@ var FocusTrap = class {
   }
   /** Creates an anchor element. */
   _createAnchor() {
-    const anchor = this._document.createElement("div");
+    const anchor = this._document.createElement('div');
     this._toggleAnchorTabIndex(this._enabled, anchor);
-    anchor.classList.add("cdk-visually-hidden");
-    anchor.classList.add("cdk-focus-trap-anchor");
-    anchor.setAttribute("aria-hidden", "true");
+    anchor.classList.add('cdk-visually-hidden');
+    anchor.classList.add('cdk-focus-trap-anchor');
+    anchor.setAttribute('aria-hidden', 'true');
     return anchor;
   }
   /**
@@ -1861,7 +2000,7 @@ var FocusTrap = class {
    * @param anchor Anchor on which to toggle the tabindex.
    */
   _toggleAnchorTabIndex(isEnabled, anchor) {
-    isEnabled ? anchor.setAttribute("tabindex", "0") : anchor.removeAttribute("tabindex");
+    isEnabled ? anchor.setAttribute('tabindex', '0') : anchor.removeAttribute('tabindex');
   }
   /**
    * Toggles the`tabindex` of both anchors to either trap Tab focus or allow it to escape.
@@ -1877,7 +2016,7 @@ var FocusTrap = class {
   _executeOnStable(fn) {
     if (this._injector) {
       afterNextRender(fn, {
-        injector: this._injector
+        injector: this._injector,
       });
     } else {
       setTimeout(fn);
@@ -1908,16 +2047,26 @@ var FocusTrapFactory = class _FocusTrapFactory {
   static ɵprov = ɵɵdefineInjectable({
     token: _FocusTrapFactory,
     factory: _FocusTrapFactory.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FocusTrapFactory, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      FocusTrapFactory,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var CdkTrapFocus = class _CdkTrapFocus {
   _elementRef = inject(ElementRef);
@@ -1965,7 +2114,7 @@ var CdkTrapFocus = class _CdkTrapFocus {
     }
   }
   ngOnChanges(changes) {
-    const autoCaptureChange = changes["autoCapture"];
+    const autoCaptureChange = changes['autoCapture'];
     if (autoCaptureChange && !autoCaptureChange.firstChange && this.autoCapture && this.focusTrap?.hasAttached()) {
       this._captureFocus();
     }
@@ -1979,38 +2128,56 @@ var CdkTrapFocus = class _CdkTrapFocus {
   };
   static ɵdir = ɵɵdefineDirective({
     type: _CdkTrapFocus,
-    selectors: [["", "cdkTrapFocus", ""]],
+    selectors: [['', 'cdkTrapFocus', '']],
     inputs: {
-      enabled: [2, "cdkTrapFocus", "enabled", booleanAttribute],
-      autoCapture: [2, "cdkTrapFocusAutoCapture", "autoCapture", booleanAttribute]
+      enabled: [2, 'cdkTrapFocus', 'enabled', booleanAttribute],
+      autoCapture: [2, 'cdkTrapFocusAutoCapture', 'autoCapture', booleanAttribute],
     },
-    exportAs: ["cdkTrapFocus"],
-    features: [ɵɵInputTransformsFeature, ɵɵNgOnChangesFeature]
+    exportAs: ['cdkTrapFocus'],
+    features: [ɵɵInputTransformsFeature, ɵɵNgOnChangesFeature],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CdkTrapFocus, [{
-    type: Directive,
-    args: [{
-      selector: "[cdkTrapFocus]",
-      exportAs: "cdkTrapFocus"
-    }]
-  }], () => [], {
-    enabled: [{
-      type: Input,
-      args: [{
-        alias: "cdkTrapFocus",
-        transform: booleanAttribute
-      }]
-    }],
-    autoCapture: [{
-      type: Input,
-      args: [{
-        alias: "cdkTrapFocusAutoCapture",
-        transform: booleanAttribute
-      }]
-    }]
-  });
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      CdkTrapFocus,
+      [
+        {
+          type: Directive,
+          args: [
+            {
+              selector: '[cdkTrapFocus]',
+              exportAs: 'cdkTrapFocus',
+            },
+          ],
+        },
+      ],
+      () => [],
+      {
+        enabled: [
+          {
+            type: Input,
+            args: [
+              {
+                alias: 'cdkTrapFocus',
+                transform: booleanAttribute,
+              },
+            ],
+          },
+        ],
+        autoCapture: [
+          {
+            type: Input,
+            args: [
+              {
+                alias: 'cdkTrapFocusAutoCapture',
+                transform: booleanAttribute,
+              },
+            ],
+          },
+        ],
+      },
+    );
 })();
 var ConfigurableFocusTrap = class extends FocusTrap {
   _focusTrapManager;
@@ -2055,11 +2222,11 @@ var EventListenerFocusTrapInertStrategy = class {
   /** Adds a document event listener that keeps focus inside the FocusTrap. */
   preventFocus(focusTrap) {
     if (this._listener) {
-      focusTrap._document.removeEventListener("focus", this._listener, true);
+      focusTrap._document.removeEventListener('focus', this._listener, true);
     }
     this._listener = (e) => this._trapFocus(focusTrap, e);
     focusTrap._ngZone.runOutsideAngular(() => {
-      focusTrap._document.addEventListener("focus", this._listener, true);
+      focusTrap._document.addEventListener('focus', this._listener, true);
     });
   }
   /** Removes the event listener added in preventFocus. */
@@ -2067,7 +2234,7 @@ var EventListenerFocusTrapInertStrategy = class {
     if (!this._listener) {
       return;
     }
-    focusTrap._document.removeEventListener("focus", this._listener, true);
+    focusTrap._document.removeEventListener('focus', this._listener, true);
     this._listener = null;
   }
   /**
@@ -2080,7 +2247,7 @@ var EventListenerFocusTrapInertStrategy = class {
   _trapFocus(focusTrap, event) {
     const target = event.target;
     const focusTrapRoot = focusTrap._element;
-    if (target && !focusTrapRoot.contains(target) && !target.closest?.("div.cdk-overlay-pane")) {
+    if (target && !focusTrapRoot.contains(target) && !target.closest?.('div.cdk-overlay-pane')) {
       setTimeout(() => {
         if (focusTrap.enabled && !focusTrapRoot.contains(focusTrap._document.activeElement)) {
           focusTrap.focusFirstTabbableElement();
@@ -2089,7 +2256,7 @@ var EventListenerFocusTrapInertStrategy = class {
     }
   }
 };
-var FOCUS_TRAP_INERT_STRATEGY = new InjectionToken("FOCUS_TRAP_INERT_STRATEGY");
+var FOCUS_TRAP_INERT_STRATEGY = new InjectionToken('FOCUS_TRAP_INERT_STRATEGY');
 var FocusTrapManager = class _FocusTrapManager {
   // A stack of the FocusTraps on the page. Only the FocusTrap at the
   // top of the stack is active.
@@ -2128,16 +2295,26 @@ var FocusTrapManager = class _FocusTrapManager {
   static ɵprov = ɵɵdefineInjectable({
     token: _FocusTrapManager,
     factory: _FocusTrapManager.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FocusTrapManager, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      FocusTrapManager,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var ConfigurableFocusTrapFactory = class _ConfigurableFocusTrapFactory {
   _checker = inject(InteractivityChecker);
@@ -2148,22 +2325,34 @@ var ConfigurableFocusTrapFactory = class _ConfigurableFocusTrapFactory {
   _injector = inject(Injector);
   constructor() {
     const inertStrategy = inject(FOCUS_TRAP_INERT_STRATEGY, {
-      optional: true
+      optional: true,
     });
     this._inertStrategy = inertStrategy || new EventListenerFocusTrapInertStrategy();
   }
-  create(element, config = {
-    defer: false
-  }) {
+  create(
+    element,
+    config = {
+      defer: false,
+    },
+  ) {
     let configObject;
-    if (typeof config === "boolean") {
+    if (typeof config === 'boolean') {
       configObject = {
-        defer: config
+        defer: config,
       };
     } else {
       configObject = config;
     }
-    return new ConfigurableFocusTrap(element, this._checker, this._ngZone, this._document, this._focusTrapManager, this._inertStrategy, configObject, this._injector);
+    return new ConfigurableFocusTrap(
+      element,
+      this._checker,
+      this._ngZone,
+      this._document,
+      this._focusTrapManager,
+      this._inertStrategy,
+      configObject,
+      this._injector,
+    );
   }
   static ɵfac = function ConfigurableFocusTrapFactory_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _ConfigurableFocusTrapFactory)();
@@ -2171,32 +2360,47 @@ var ConfigurableFocusTrapFactory = class _ConfigurableFocusTrapFactory {
   static ɵprov = ɵɵdefineInjectable({
     token: _ConfigurableFocusTrapFactory,
     factory: _ConfigurableFocusTrapFactory.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ConfigurableFocusTrapFactory, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      ConfigurableFocusTrapFactory,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 function isFakeMousedownFromScreenReader(event) {
   return event.buttons === 0 || event.detail === 0;
 }
 function isFakeTouchstartFromScreenReader(event) {
-  const touch = event.touches && event.touches[0] || event.changedTouches && event.changedTouches[0];
-  return !!touch && touch.identifier === -1 && (touch.radiusX == null || touch.radiusX === 1) && (touch.radiusY == null || touch.radiusY === 1);
+  const touch = (event.touches && event.touches[0]) || (event.changedTouches && event.changedTouches[0]);
+  return (
+    !!touch &&
+    touch.identifier === -1 &&
+    (touch.radiusX == null || touch.radiusX === 1) &&
+    (touch.radiusY == null || touch.radiusY === 1)
+  );
 }
-var INPUT_MODALITY_DETECTOR_OPTIONS = new InjectionToken("cdk-input-modality-detector-options");
+var INPUT_MODALITY_DETECTOR_OPTIONS = new InjectionToken('cdk-input-modality-detector-options');
 var INPUT_MODALITY_DETECTOR_DEFAULT_OPTIONS = {
-  ignoreKeys: [ALT, CONTROL, MAC_META, META, SHIFT]
+  ignoreKeys: [ALT, CONTROL, MAC_META, META, SHIFT],
 };
 var TOUCH_BUFFER_MS = 650;
 var modalityEventListenerOptions = normalizePassiveListenerOptions({
   passive: true,
-  capture: true
+  capture: true,
 });
 var InputModalityDetector = class _InputModalityDetector {
   _platform = inject(Platform);
@@ -2230,7 +2434,7 @@ var InputModalityDetector = class _InputModalityDetector {
     if (this._options?.ignoreKeys?.some((keyCode) => keyCode === event.keyCode)) {
       return;
     }
-    this._modality.next("keyboard");
+    this._modality.next('keyboard');
     this._mostRecentTarget = _getEventTarget(event);
   };
   /**
@@ -2241,7 +2445,7 @@ var InputModalityDetector = class _InputModalityDetector {
     if (Date.now() - this._lastTouchMs < TOUCH_BUFFER_MS) {
       return;
     }
-    this._modality.next(isFakeMousedownFromScreenReader(event) ? "keyboard" : "mouse");
+    this._modality.next(isFakeMousedownFromScreenReader(event) ? 'keyboard' : 'mouse');
     this._mostRecentTarget = _getEventTarget(event);
   };
   /**
@@ -2250,36 +2454,36 @@ var InputModalityDetector = class _InputModalityDetector {
    */
   _onTouchstart = (event) => {
     if (isFakeTouchstartFromScreenReader(event)) {
-      this._modality.next("keyboard");
+      this._modality.next('keyboard');
       return;
     }
     this._lastTouchMs = Date.now();
-    this._modality.next("touch");
+    this._modality.next('touch');
     this._mostRecentTarget = _getEventTarget(event);
   };
   constructor() {
     const ngZone = inject(NgZone);
     const document2 = inject(DOCUMENT);
     const options = inject(INPUT_MODALITY_DETECTOR_OPTIONS, {
-      optional: true
+      optional: true,
     });
     this._options = __spreadValues(__spreadValues({}, INPUT_MODALITY_DETECTOR_DEFAULT_OPTIONS), options);
     this.modalityDetected = this._modality.pipe(skip(1));
     this.modalityChanged = this.modalityDetected.pipe(distinctUntilChanged());
     if (this._platform.isBrowser) {
       ngZone.runOutsideAngular(() => {
-        document2.addEventListener("keydown", this._onKeydown, modalityEventListenerOptions);
-        document2.addEventListener("mousedown", this._onMousedown, modalityEventListenerOptions);
-        document2.addEventListener("touchstart", this._onTouchstart, modalityEventListenerOptions);
+        document2.addEventListener('keydown', this._onKeydown, modalityEventListenerOptions);
+        document2.addEventListener('mousedown', this._onMousedown, modalityEventListenerOptions);
+        document2.addEventListener('touchstart', this._onTouchstart, modalityEventListenerOptions);
       });
     }
   }
   ngOnDestroy() {
     this._modality.complete();
     if (this._platform.isBrowser) {
-      document.removeEventListener("keydown", this._onKeydown, modalityEventListenerOptions);
-      document.removeEventListener("mousedown", this._onMousedown, modalityEventListenerOptions);
-      document.removeEventListener("touchstart", this._onTouchstart, modalityEventListenerOptions);
+      document.removeEventListener('keydown', this._onKeydown, modalityEventListenerOptions);
+      document.removeEventListener('mousedown', this._onMousedown, modalityEventListenerOptions);
+      document.removeEventListener('touchstart', this._onTouchstart, modalityEventListenerOptions);
     }
   }
   static ɵfac = function InputModalityDetector_Factory(__ngFactoryType__) {
@@ -2288,30 +2492,40 @@ var InputModalityDetector = class _InputModalityDetector {
   static ɵprov = ɵɵdefineInjectable({
     token: _InputModalityDetector,
     factory: _InputModalityDetector.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(InputModalityDetector, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      InputModalityDetector,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
-var LIVE_ANNOUNCER_ELEMENT_TOKEN = new InjectionToken("liveAnnouncerElement", {
-  providedIn: "root",
-  factory: LIVE_ANNOUNCER_ELEMENT_TOKEN_FACTORY
+var LIVE_ANNOUNCER_ELEMENT_TOKEN = new InjectionToken('liveAnnouncerElement', {
+  providedIn: 'root',
+  factory: LIVE_ANNOUNCER_ELEMENT_TOKEN_FACTORY,
 });
 function LIVE_ANNOUNCER_ELEMENT_TOKEN_FACTORY() {
   return null;
 }
-var LIVE_ANNOUNCER_DEFAULT_OPTIONS = new InjectionToken("LIVE_ANNOUNCER_DEFAULT_OPTIONS");
+var LIVE_ANNOUNCER_DEFAULT_OPTIONS = new InjectionToken('LIVE_ANNOUNCER_DEFAULT_OPTIONS');
 var uniqueIds = 0;
 var LiveAnnouncer = class _LiveAnnouncer {
   _ngZone = inject(NgZone);
   _defaultOptions = inject(LIVE_ANNOUNCER_DEFAULT_OPTIONS, {
-    optional: true
+    optional: true,
   });
   _liveElement;
   _document = inject(DOCUMENT);
@@ -2320,7 +2534,7 @@ var LiveAnnouncer = class _LiveAnnouncer {
   _currentResolve;
   constructor() {
     const elementToken = inject(LIVE_ANNOUNCER_ELEMENT_TOKEN, {
-      optional: true
+      optional: true,
     });
     this._liveElement = elementToken || this._createLiveElement();
   }
@@ -2328,7 +2542,7 @@ var LiveAnnouncer = class _LiveAnnouncer {
     const defaultOptions = this._defaultOptions;
     let politeness;
     let duration;
-    if (args.length === 1 && typeof args[0] === "number") {
+    if (args.length === 1 && typeof args[0] === 'number') {
       duration = args[0];
     } else {
       [politeness, duration] = args;
@@ -2336,23 +2550,23 @@ var LiveAnnouncer = class _LiveAnnouncer {
     this.clear();
     clearTimeout(this._previousTimeout);
     if (!politeness) {
-      politeness = defaultOptions && defaultOptions.politeness ? defaultOptions.politeness : "polite";
+      politeness = defaultOptions && defaultOptions.politeness ? defaultOptions.politeness : 'polite';
     }
     if (duration == null && defaultOptions) {
       duration = defaultOptions.duration;
     }
-    this._liveElement.setAttribute("aria-live", politeness);
+    this._liveElement.setAttribute('aria-live', politeness);
     if (this._liveElement.id) {
       this._exposeAnnouncerToModals(this._liveElement.id);
     }
     return this._ngZone.runOutsideAngular(() => {
       if (!this._currentPromise) {
-        this._currentPromise = new Promise((resolve) => this._currentResolve = resolve);
+        this._currentPromise = new Promise((resolve) => (this._currentResolve = resolve));
       }
       clearTimeout(this._previousTimeout);
       this._previousTimeout = setTimeout(() => {
         this._liveElement.textContent = message;
-        if (typeof duration === "number") {
+        if (typeof duration === 'number') {
           this._previousTimeout = setTimeout(() => this.clear(), duration);
         }
         this._currentResolve?.();
@@ -2368,7 +2582,7 @@ var LiveAnnouncer = class _LiveAnnouncer {
    */
   clear() {
     if (this._liveElement) {
-      this._liveElement.textContent = "";
+      this._liveElement.textContent = '';
     }
   }
   ngOnDestroy() {
@@ -2379,16 +2593,16 @@ var LiveAnnouncer = class _LiveAnnouncer {
     this._currentPromise = this._currentResolve = void 0;
   }
   _createLiveElement() {
-    const elementClass = "cdk-live-announcer-element";
+    const elementClass = 'cdk-live-announcer-element';
     const previousElements = this._document.getElementsByClassName(elementClass);
-    const liveEl = this._document.createElement("div");
+    const liveEl = this._document.createElement('div');
     for (let i = 0; i < previousElements.length; i++) {
       previousElements[i].remove();
     }
     liveEl.classList.add(elementClass);
-    liveEl.classList.add("cdk-visually-hidden");
-    liveEl.setAttribute("aria-atomic", "true");
-    liveEl.setAttribute("aria-live", "polite");
+    liveEl.classList.add('cdk-visually-hidden');
+    liveEl.setAttribute('aria-atomic', 'true');
+    liveEl.setAttribute('aria-live', 'polite');
     liveEl.id = `cdk-live-announcer-${uniqueIds++}`;
     this._document.body.appendChild(liveEl);
     return liveEl;
@@ -2402,11 +2616,11 @@ var LiveAnnouncer = class _LiveAnnouncer {
     const modals = this._document.querySelectorAll('body > .cdk-overlay-container [aria-modal="true"]');
     for (let i = 0; i < modals.length; i++) {
       const modal = modals[i];
-      const ariaOwns = modal.getAttribute("aria-owns");
+      const ariaOwns = modal.getAttribute('aria-owns');
       if (!ariaOwns) {
-        modal.setAttribute("aria-owns", id);
+        modal.setAttribute('aria-owns', id);
       } else if (ariaOwns.indexOf(id) === -1) {
-        modal.setAttribute("aria-owns", ariaOwns + " " + id);
+        modal.setAttribute('aria-owns', ariaOwns + ' ' + id);
       }
     }
   }
@@ -2416,16 +2630,26 @@ var LiveAnnouncer = class _LiveAnnouncer {
   static ɵprov = ɵɵdefineInjectable({
     token: _LiveAnnouncer,
     factory: _LiveAnnouncer.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LiveAnnouncer, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      LiveAnnouncer,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var CdkAriaLive = class _CdkAriaLive {
   _elementRef = inject(ElementRef);
@@ -2437,8 +2661,8 @@ var CdkAriaLive = class _CdkAriaLive {
     return this._politeness;
   }
   set politeness(value) {
-    this._politeness = value === "off" || value === "assertive" ? value : "polite";
-    if (this._politeness === "off") {
+    this._politeness = value === 'off' || value === 'assertive' ? value : 'polite';
+    if (this._politeness === 'off') {
       if (this._subscription) {
         this._subscription.unsubscribe();
         this._subscription = null;
@@ -2455,7 +2679,7 @@ var CdkAriaLive = class _CdkAriaLive {
       });
     }
   }
-  _politeness = "polite";
+  _politeness = 'polite';
   /** Time in milliseconds after which to clear out the announcer element. */
   duration;
   _previousAnnouncedText;
@@ -2473,41 +2697,55 @@ var CdkAriaLive = class _CdkAriaLive {
   };
   static ɵdir = ɵɵdefineDirective({
     type: _CdkAriaLive,
-    selectors: [["", "cdkAriaLive", ""]],
+    selectors: [['', 'cdkAriaLive', '']],
     inputs: {
-      politeness: [0, "cdkAriaLive", "politeness"],
-      duration: [0, "cdkAriaLiveDuration", "duration"]
+      politeness: [0, 'cdkAriaLive', 'politeness'],
+      duration: [0, 'cdkAriaLiveDuration', 'duration'],
     },
-    exportAs: ["cdkAriaLive"]
+    exportAs: ['cdkAriaLive'],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CdkAriaLive, [{
-    type: Directive,
-    args: [{
-      selector: "[cdkAriaLive]",
-      exportAs: "cdkAriaLive"
-    }]
-  }], () => [], {
-    politeness: [{
-      type: Input,
-      args: ["cdkAriaLive"]
-    }],
-    duration: [{
-      type: Input,
-      args: ["cdkAriaLiveDuration"]
-    }]
-  });
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      CdkAriaLive,
+      [
+        {
+          type: Directive,
+          args: [
+            {
+              selector: '[cdkAriaLive]',
+              exportAs: 'cdkAriaLive',
+            },
+          ],
+        },
+      ],
+      () => [],
+      {
+        politeness: [
+          {
+            type: Input,
+            args: ['cdkAriaLive'],
+          },
+        ],
+        duration: [
+          {
+            type: Input,
+            args: ['cdkAriaLiveDuration'],
+          },
+        ],
+      },
+    );
 })();
 var FocusMonitorDetectionMode;
-(function(FocusMonitorDetectionMode2) {
-  FocusMonitorDetectionMode2[FocusMonitorDetectionMode2["IMMEDIATE"] = 0] = "IMMEDIATE";
-  FocusMonitorDetectionMode2[FocusMonitorDetectionMode2["EVENTUAL"] = 1] = "EVENTUAL";
+(function (FocusMonitorDetectionMode2) {
+  FocusMonitorDetectionMode2[(FocusMonitorDetectionMode2['IMMEDIATE'] = 0)] = 'IMMEDIATE';
+  FocusMonitorDetectionMode2[(FocusMonitorDetectionMode2['EVENTUAL'] = 1)] = 'EVENTUAL';
 })(FocusMonitorDetectionMode || (FocusMonitorDetectionMode = {}));
-var FOCUS_MONITOR_DEFAULT_OPTIONS = new InjectionToken("cdk-focus-monitor-default-options");
+var FOCUS_MONITOR_DEFAULT_OPTIONS = new InjectionToken('cdk-focus-monitor-default-options');
 var captureEventListenerOptions = normalizePassiveListenerOptions({
   passive: true,
-  capture: true
+  capture: true,
 });
 var FocusMonitor = class _FocusMonitor {
   _ngZone = inject(NgZone);
@@ -2550,17 +2788,17 @@ var FocusMonitor = class _FocusMonitor {
    */
   _windowFocusListener = () => {
     this._windowFocused = true;
-    this._windowFocusTimeoutId = setTimeout(() => this._windowFocused = false);
+    this._windowFocusTimeoutId = setTimeout(() => (this._windowFocused = false));
   };
   /** Used to reference correct document/window */
   _document = inject(DOCUMENT, {
-    optional: true
+    optional: true,
   });
   /** Subject for stopping our InputModalityDetector subscription. */
   _stopInputModalityDetector = new Subject();
   constructor() {
     const options = inject(FOCUS_MONITOR_DEFAULT_OPTIONS, {
-      optional: true
+      optional: true,
     });
     this._detectionMode = options?.detectionMode || FocusMonitorDetectionMode.IMMEDIATE;
   }
@@ -2571,7 +2809,7 @@ var FocusMonitor = class _FocusMonitor {
   _rootNodeFocusAndBlurListener = (event) => {
     const target = _getEventTarget(event);
     for (let element = target; element; element = element.parentElement) {
-      if (event.type === "focus") {
+      if (event.type === 'focus') {
         this._onFocus(event, element);
       } else {
         this._onBlur(event, element);
@@ -2594,7 +2832,7 @@ var FocusMonitor = class _FocusMonitor {
     const info = {
       checkChildren,
       subject: new Subject(),
-      rootNode
+      rootNode,
     };
     this._elementInfo.set(nativeElement, info);
     this._registerGlobalListeners(info);
@@ -2614,10 +2852,12 @@ var FocusMonitor = class _FocusMonitor {
     const nativeElement = coerceElement(element);
     const focusedElement = this._getDocument().activeElement;
     if (nativeElement === focusedElement) {
-      this._getClosestElementsInfo(nativeElement).forEach(([currentElement, info]) => this._originChanged(currentElement, origin, info));
+      this._getClosestElementsInfo(nativeElement).forEach(([currentElement, info]) =>
+        this._originChanged(currentElement, origin, info),
+      );
     } else {
       this._setOrigin(origin);
-      if (typeof nativeElement.focus === "function") {
+      if (typeof nativeElement.focus === 'function') {
         nativeElement.focus(options);
       }
     }
@@ -2637,7 +2877,7 @@ var FocusMonitor = class _FocusMonitor {
   _getFocusOrigin(focusEventTarget) {
     if (this._origin) {
       if (this._originFromTouchInteraction) {
-        return this._shouldBeAttributedToTouch(focusEventTarget) ? "touch" : "program";
+        return this._shouldBeAttributedToTouch(focusEventTarget) ? 'touch' : 'program';
       } else {
         return this._origin;
       }
@@ -2646,9 +2886,9 @@ var FocusMonitor = class _FocusMonitor {
       return this._lastFocusOrigin;
     }
     if (focusEventTarget && this._isLastInteractionFromInputLabel(focusEventTarget)) {
-      return "mouse";
+      return 'mouse';
     }
-    return "program";
+    return 'program';
   }
   /**
    * Returns whether the focus event should be attributed to touch. Recall that in IMMEDIATE mode, a
@@ -2659,7 +2899,10 @@ var FocusMonitor = class _FocusMonitor {
    * @param focusEventTarget The target of the focus event under examination.
    */
   _shouldBeAttributedToTouch(focusEventTarget) {
-    return this._detectionMode === FocusMonitorDetectionMode.EVENTUAL || !!focusEventTarget?.contains(this._inputModalityDetector._mostRecentTarget);
+    return (
+      this._detectionMode === FocusMonitorDetectionMode.EVENTUAL ||
+      !!focusEventTarget?.contains(this._inputModalityDetector._mostRecentTarget)
+    );
   }
   /**
    * Sets the focus classes on the element based on the given focus origin.
@@ -2667,11 +2910,11 @@ var FocusMonitor = class _FocusMonitor {
    * @param origin The focus origin.
    */
   _setClasses(element, origin) {
-    element.classList.toggle("cdk-focused", !!origin);
-    element.classList.toggle("cdk-touch-focused", origin === "touch");
-    element.classList.toggle("cdk-keyboard-focused", origin === "keyboard");
-    element.classList.toggle("cdk-mouse-focused", origin === "mouse");
-    element.classList.toggle("cdk-program-focused", origin === "program");
+    element.classList.toggle('cdk-focused', !!origin);
+    element.classList.toggle('cdk-touch-focused', origin === 'touch');
+    element.classList.toggle('cdk-keyboard-focused', origin === 'keyboard');
+    element.classList.toggle('cdk-mouse-focused', origin === 'mouse');
+    element.classList.toggle('cdk-program-focused', origin === 'program');
   }
   /**
    * Updates the focus origin. If we're using immediate detection mode, we schedule an async
@@ -2683,11 +2926,11 @@ var FocusMonitor = class _FocusMonitor {
   _setOrigin(origin, isFromInteraction = false) {
     this._ngZone.runOutsideAngular(() => {
       this._origin = origin;
-      this._originFromTouchInteraction = origin === "touch" && isFromInteraction;
+      this._originFromTouchInteraction = origin === 'touch' && isFromInteraction;
       if (this._detectionMode === FocusMonitorDetectionMode.IMMEDIATE) {
         clearTimeout(this._originTimeoutId);
         const ms = this._originFromTouchInteraction ? TOUCH_BUFFER_MS : 1;
-        this._originTimeoutId = setTimeout(() => this._origin = null, ms);
+        this._originTimeoutId = setTimeout(() => (this._origin = null), ms);
       }
     });
   }
@@ -2699,7 +2942,7 @@ var FocusMonitor = class _FocusMonitor {
   _onFocus(event, element) {
     const elementInfo = this._elementInfo.get(element);
     const focusEventTarget = _getEventTarget(event);
-    if (!elementInfo || !elementInfo.checkChildren && element !== focusEventTarget) {
+    if (!elementInfo || (!elementInfo.checkChildren && element !== focusEventTarget)) {
       return;
     }
     this._originChanged(element, this._getFocusOrigin(focusEventTarget), elementInfo);
@@ -2711,7 +2954,10 @@ var FocusMonitor = class _FocusMonitor {
    */
   _onBlur(event, element) {
     const elementInfo = this._elementInfo.get(element);
-    if (!elementInfo || elementInfo.checkChildren && event.relatedTarget instanceof Node && element.contains(event.relatedTarget)) {
+    if (
+      !elementInfo ||
+      (elementInfo.checkChildren && event.relatedTarget instanceof Node && element.contains(event.relatedTarget))
+    ) {
       return;
     }
     this._setClasses(element);
@@ -2730,23 +2976,25 @@ var FocusMonitor = class _FocusMonitor {
     const rootNodeFocusListeners = this._rootNodeFocusListenerCount.get(rootNode) || 0;
     if (!rootNodeFocusListeners) {
       this._ngZone.runOutsideAngular(() => {
-        rootNode.addEventListener("focus", this._rootNodeFocusAndBlurListener, captureEventListenerOptions);
-        rootNode.addEventListener("blur", this._rootNodeFocusAndBlurListener, captureEventListenerOptions);
+        rootNode.addEventListener('focus', this._rootNodeFocusAndBlurListener, captureEventListenerOptions);
+        rootNode.addEventListener('blur', this._rootNodeFocusAndBlurListener, captureEventListenerOptions);
       });
     }
     this._rootNodeFocusListenerCount.set(rootNode, rootNodeFocusListeners + 1);
     if (++this._monitoredElementCount === 1) {
       this._ngZone.runOutsideAngular(() => {
         const window2 = this._getWindow();
-        window2.addEventListener("focus", this._windowFocusListener);
+        window2.addEventListener('focus', this._windowFocusListener);
       });
-      this._inputModalityDetector.modalityDetected.pipe(takeUntil(this._stopInputModalityDetector)).subscribe((modality) => {
-        this._setOrigin(
-          modality,
-          true
-          /* isFromInteraction */
-        );
-      });
+      this._inputModalityDetector.modalityDetected
+        .pipe(takeUntil(this._stopInputModalityDetector))
+        .subscribe((modality) => {
+          this._setOrigin(
+            modality,
+            true,
+            /* isFromInteraction */
+          );
+        });
     }
   }
   _removeGlobalListeners(elementInfo) {
@@ -2756,14 +3004,14 @@ var FocusMonitor = class _FocusMonitor {
       if (rootNodeFocusListeners > 1) {
         this._rootNodeFocusListenerCount.set(rootNode, rootNodeFocusListeners - 1);
       } else {
-        rootNode.removeEventListener("focus", this._rootNodeFocusAndBlurListener, captureEventListenerOptions);
-        rootNode.removeEventListener("blur", this._rootNodeFocusAndBlurListener, captureEventListenerOptions);
+        rootNode.removeEventListener('focus', this._rootNodeFocusAndBlurListener, captureEventListenerOptions);
+        rootNode.removeEventListener('blur', this._rootNodeFocusAndBlurListener, captureEventListenerOptions);
         this._rootNodeFocusListenerCount.delete(rootNode);
       }
     }
     if (!--this._monitoredElementCount) {
       const window2 = this._getWindow();
-      window2.removeEventListener("focus", this._windowFocusListener);
+      window2.removeEventListener('focus', this._windowFocusListener);
       this._stopInputModalityDetector.next();
       clearTimeout(this._windowFocusTimeoutId);
       clearTimeout(this._originTimeoutId);
@@ -2783,7 +3031,7 @@ var FocusMonitor = class _FocusMonitor {
   _getClosestElementsInfo(element) {
     const results = [];
     this._elementInfo.forEach((info, currentElement) => {
-      if (currentElement === element || info.checkChildren && currentElement.contains(element)) {
+      if (currentElement === element || (info.checkChildren && currentElement.contains(element))) {
         results.push([currentElement, info]);
       }
     });
@@ -2795,11 +3043,14 @@ var FocusMonitor = class _FocusMonitor {
    * @param focusEventTarget Target currently receiving focus.
    */
   _isLastInteractionFromInputLabel(focusEventTarget) {
-    const {
-      _mostRecentTarget: mostRecentTarget,
-      mostRecentModality
-    } = this._inputModalityDetector;
-    if (mostRecentModality !== "mouse" || !mostRecentTarget || mostRecentTarget === focusEventTarget || focusEventTarget.nodeName !== "INPUT" && focusEventTarget.nodeName !== "TEXTAREA" || focusEventTarget.disabled) {
+    const { _mostRecentTarget: mostRecentTarget, mostRecentModality } = this._inputModalityDetector;
+    if (
+      mostRecentModality !== 'mouse' ||
+      !mostRecentTarget ||
+      mostRecentTarget === focusEventTarget ||
+      (focusEventTarget.nodeName !== 'INPUT' && focusEventTarget.nodeName !== 'TEXTAREA') ||
+      focusEventTarget.disabled
+    ) {
       return false;
     }
     const labels = focusEventTarget.labels;
@@ -2818,16 +3069,26 @@ var FocusMonitor = class _FocusMonitor {
   static ɵprov = ɵɵdefineInjectable({
     token: _FocusMonitor,
     factory: _FocusMonitor.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FocusMonitor, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      FocusMonitor,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var CdkMonitorFocus = class _CdkMonitorFocus {
   _elementRef = inject(ElementRef);
@@ -2835,17 +3096,18 @@ var CdkMonitorFocus = class _CdkMonitorFocus {
   _monitorSubscription;
   _focusOrigin = null;
   cdkFocusChange = new EventEmitter();
-  constructor() {
-  }
+  constructor() {}
   get focusOrigin() {
     return this._focusOrigin;
   }
   ngAfterViewInit() {
     const element = this._elementRef.nativeElement;
-    this._monitorSubscription = this._focusMonitor.monitor(element, element.nodeType === 1 && element.hasAttribute("cdkMonitorSubtreeFocus")).subscribe((origin) => {
-      this._focusOrigin = origin;
-      this.cdkFocusChange.emit(origin);
-    });
+    this._monitorSubscription = this._focusMonitor
+      .monitor(element, element.nodeType === 1 && element.hasAttribute('cdkMonitorSubtreeFocus'))
+      .subscribe((origin) => {
+        this._focusOrigin = origin;
+        this.cdkFocusChange.emit(origin);
+      });
   }
   ngOnDestroy() {
     this._focusMonitor.stopMonitoring(this._elementRef);
@@ -2858,35 +3120,50 @@ var CdkMonitorFocus = class _CdkMonitorFocus {
   };
   static ɵdir = ɵɵdefineDirective({
     type: _CdkMonitorFocus,
-    selectors: [["", "cdkMonitorElementFocus", ""], ["", "cdkMonitorSubtreeFocus", ""]],
+    selectors: [
+      ['', 'cdkMonitorElementFocus', ''],
+      ['', 'cdkMonitorSubtreeFocus', ''],
+    ],
     outputs: {
-      cdkFocusChange: "cdkFocusChange"
+      cdkFocusChange: 'cdkFocusChange',
     },
-    exportAs: ["cdkMonitorFocus"]
+    exportAs: ['cdkMonitorFocus'],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CdkMonitorFocus, [{
-    type: Directive,
-    args: [{
-      selector: "[cdkMonitorElementFocus], [cdkMonitorSubtreeFocus]",
-      exportAs: "cdkMonitorFocus"
-    }]
-  }], () => [], {
-    cdkFocusChange: [{
-      type: Output
-    }]
-  });
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      CdkMonitorFocus,
+      [
+        {
+          type: Directive,
+          args: [
+            {
+              selector: '[cdkMonitorElementFocus], [cdkMonitorSubtreeFocus]',
+              exportAs: 'cdkMonitorFocus',
+            },
+          ],
+        },
+      ],
+      () => [],
+      {
+        cdkFocusChange: [
+          {
+            type: Output,
+          },
+        ],
+      },
+    );
 })();
 var HighContrastMode;
-(function(HighContrastMode2) {
-  HighContrastMode2[HighContrastMode2["NONE"] = 0] = "NONE";
-  HighContrastMode2[HighContrastMode2["BLACK_ON_WHITE"] = 1] = "BLACK_ON_WHITE";
-  HighContrastMode2[HighContrastMode2["WHITE_ON_BLACK"] = 2] = "WHITE_ON_BLACK";
+(function (HighContrastMode2) {
+  HighContrastMode2[(HighContrastMode2['NONE'] = 0)] = 'NONE';
+  HighContrastMode2[(HighContrastMode2['BLACK_ON_WHITE'] = 1)] = 'BLACK_ON_WHITE';
+  HighContrastMode2[(HighContrastMode2['WHITE_ON_BLACK'] = 2)] = 'WHITE_ON_BLACK';
 })(HighContrastMode || (HighContrastMode = {}));
-var BLACK_ON_WHITE_CSS_CLASS = "cdk-high-contrast-black-on-white";
-var WHITE_ON_BLACK_CSS_CLASS = "cdk-high-contrast-white-on-black";
-var HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS = "cdk-high-contrast-active";
+var BLACK_ON_WHITE_CSS_CLASS = 'cdk-high-contrast-black-on-white';
+var WHITE_ON_BLACK_CSS_CLASS = 'cdk-high-contrast-white-on-black';
+var HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS = 'cdk-high-contrast-active';
 var HighContrastModeDetector = class _HighContrastModeDetector {
   _platform = inject(Platform);
   /**
@@ -2897,37 +3174,40 @@ var HighContrastModeDetector = class _HighContrastModeDetector {
   _document = inject(DOCUMENT);
   _breakpointSubscription;
   constructor() {
-    this._breakpointSubscription = inject(BreakpointObserver).observe("(forced-colors: active)").subscribe(() => {
-      if (this._hasCheckedHighContrastMode) {
-        this._hasCheckedHighContrastMode = false;
-        this._applyBodyHighContrastModeCssClasses();
-      }
-    });
+    this._breakpointSubscription = inject(BreakpointObserver)
+      .observe('(forced-colors: active)')
+      .subscribe(() => {
+        if (this._hasCheckedHighContrastMode) {
+          this._hasCheckedHighContrastMode = false;
+          this._applyBodyHighContrastModeCssClasses();
+        }
+      });
   }
   /** Gets the current high-contrast-mode for the page. */
   getHighContrastMode() {
     if (!this._platform.isBrowser) {
       return HighContrastMode.NONE;
     }
-    const testElement = this._document.createElement("div");
-    testElement.style.backgroundColor = "rgb(1,2,3)";
-    testElement.style.position = "absolute";
+    const testElement = this._document.createElement('div');
+    testElement.style.backgroundColor = 'rgb(1,2,3)';
+    testElement.style.position = 'absolute';
     this._document.body.appendChild(testElement);
     const documentWindow = this._document.defaultView || window;
-    const computedStyle = documentWindow && documentWindow.getComputedStyle ? documentWindow.getComputedStyle(testElement) : null;
-    const computedColor = (computedStyle && computedStyle.backgroundColor || "").replace(/ /g, "");
+    const computedStyle =
+      documentWindow && documentWindow.getComputedStyle ? documentWindow.getComputedStyle(testElement) : null;
+    const computedColor = ((computedStyle && computedStyle.backgroundColor) || '').replace(/ /g, '');
     testElement.remove();
     switch (computedColor) {
       // Pre Windows 11 dark theme.
-      case "rgb(0,0,0)":
+      case 'rgb(0,0,0)':
       // Windows 11 dark themes.
-      case "rgb(45,50,54)":
-      case "rgb(32,32,32)":
+      case 'rgb(45,50,54)':
+      case 'rgb(32,32,32)':
         return HighContrastMode.WHITE_ON_BLACK;
       // Pre Windows 11 light theme.
-      case "rgb(255,255,255)":
+      case 'rgb(255,255,255)':
       // Windows 11 light theme.
-      case "rgb(255,250,239)":
+      case 'rgb(255,250,239)':
         return HighContrastMode.BLACK_ON_WHITE;
     }
     return HighContrastMode.NONE;
@@ -2955,16 +3235,26 @@ var HighContrastModeDetector = class _HighContrastModeDetector {
   static ɵprov = ɵɵdefineInjectable({
     token: _HighContrastModeDetector,
     factory: _HighContrastModeDetector.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(HighContrastModeDetector, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      HighContrastModeDetector,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var A11yModule = class _A11yModule {
   constructor() {
@@ -2976,20 +3266,30 @@ var A11yModule = class _A11yModule {
   static ɵmod = ɵɵdefineNgModule({
     type: _A11yModule,
     imports: [ObserversModule, CdkAriaLive, CdkTrapFocus, CdkMonitorFocus],
-    exports: [CdkAriaLive, CdkTrapFocus, CdkMonitorFocus]
+    exports: [CdkAriaLive, CdkTrapFocus, CdkMonitorFocus],
   });
   static ɵinj = ɵɵdefineInjector({
-    imports: [ObserversModule]
+    imports: [ObserversModule],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(A11yModule, [{
-    type: NgModule,
-    args: [{
-      imports: [ObserversModule, CdkAriaLive, CdkTrapFocus, CdkMonitorFocus],
-      exports: [CdkAriaLive, CdkTrapFocus, CdkMonitorFocus]
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      A11yModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              imports: [ObserversModule, CdkAriaLive, CdkTrapFocus, CdkMonitorFocus],
+              exports: [CdkAriaLive, CdkTrapFocus, CdkMonitorFocus],
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var counters = {};
 var _IdGenerator = class __IdGenerator {
@@ -2999,7 +3299,7 @@ var _IdGenerator = class __IdGenerator {
    * @param prefix Prefix to add to the ID.
    */
   getId(prefix) {
-    if (this._appId !== "ng") {
+    if (this._appId !== 'ng') {
       prefix += this._appId;
     }
     if (!counters.hasOwnProperty(prefix)) {
@@ -3013,71 +3313,81 @@ var _IdGenerator = class __IdGenerator {
   static ɵprov = ɵɵdefineInjectable({
     token: __IdGenerator,
     factory: __IdGenerator.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(_IdGenerator, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      _IdGenerator,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 
 // node_modules/@angular/material/fesm2022/core.mjs
-var _c0 = ["*", [["mat-option"], ["ng-container"]]];
-var _c1 = ["*", "mat-option, ng-container"];
-var _c2 = ["text"];
-var _c3 = [[["mat-icon"]], "*"];
-var _c4 = ["mat-icon", "*"];
+var _c0 = ['*', [['mat-option'], ['ng-container']]];
+var _c1 = ['*', 'mat-option, ng-container'];
+var _c2 = ['text'];
+var _c3 = [[['mat-icon']], '*'];
+var _c4 = ['mat-icon', '*'];
 function MatOption_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    ɵɵelement(0, "mat-pseudo-checkbox", 1);
+    ɵɵelement(0, 'mat-pseudo-checkbox', 1);
   }
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext();
-    ɵɵproperty("disabled", ctx_r0.disabled)("state", ctx_r0.selected ? "checked" : "unchecked");
+    ɵɵproperty('disabled', ctx_r0.disabled)('state', ctx_r0.selected ? 'checked' : 'unchecked');
   }
 }
 function MatOption_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
-    ɵɵelement(0, "mat-pseudo-checkbox", 3);
+    ɵɵelement(0, 'mat-pseudo-checkbox', 3);
   }
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext();
-    ɵɵproperty("disabled", ctx_r0.disabled);
+    ɵɵproperty('disabled', ctx_r0.disabled);
   }
 }
 function MatOption_Conditional_6_Template(rf, ctx) {
   if (rf & 1) {
-    ɵɵelementStart(0, "span", 4);
+    ɵɵelementStart(0, 'span', 4);
     ɵɵtext(1);
     ɵɵelementEnd();
   }
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext();
     ɵɵadvance();
-    ɵɵtextInterpolate1("(", ctx_r0.group.label, ")");
+    ɵɵtextInterpolate1('(', ctx_r0.group.label, ')');
   }
 }
-var _c5 = ["mat-internal-form-field", ""];
-var _c6 = ["*"];
-var VERSION = new Version("19.1.2");
+var _c5 = ['mat-internal-form-field', ''];
+var _c6 = ['*'];
+var VERSION = new Version('19.1.2');
 var AnimationCurves = class {
-  static STANDARD_CURVE = "cubic-bezier(0.4,0.0,0.2,1)";
-  static DECELERATION_CURVE = "cubic-bezier(0.0,0.0,0.2,1)";
-  static ACCELERATION_CURVE = "cubic-bezier(0.4,0.0,1,1)";
-  static SHARP_CURVE = "cubic-bezier(0.4,0.0,0.6,1)";
+  static STANDARD_CURVE = 'cubic-bezier(0.4,0.0,0.2,1)';
+  static DECELERATION_CURVE = 'cubic-bezier(0.0,0.0,0.2,1)';
+  static ACCELERATION_CURVE = 'cubic-bezier(0.4,0.0,1,1)';
+  static SHARP_CURVE = 'cubic-bezier(0.4,0.0,0.6,1)';
 };
 var AnimationDurations = class {
-  static COMPLEX = "375ms";
-  static ENTERING = "225ms";
-  static EXITING = "195ms";
+  static COMPLEX = '375ms';
+  static ENTERING = '225ms';
+  static EXITING = '195ms';
 };
-var MATERIAL_SANITY_CHECKS = new InjectionToken("mat-sanity-checks", {
-  providedIn: "root",
-  factory: () => true
+var MATERIAL_SANITY_CHECKS = new InjectionToken('mat-sanity-checks', {
+  providedIn: 'root',
+  factory: () => true,
 });
 var MatCommonModule = class _MatCommonModule {
   constructor() {
@@ -3089,20 +3399,30 @@ var MatCommonModule = class _MatCommonModule {
   static ɵmod = ɵɵdefineNgModule({
     type: _MatCommonModule,
     imports: [BidiModule],
-    exports: [BidiModule]
+    exports: [BidiModule],
   });
   static ɵinj = ɵɵdefineInjector({
-    imports: [BidiModule, BidiModule]
+    imports: [BidiModule, BidiModule],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatCommonModule, [{
-    type: NgModule,
-    args: [{
-      imports: [BidiModule],
-      exports: [BidiModule]
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatCommonModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              imports: [BidiModule],
+              exports: [BidiModule],
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var _ErrorStateTracker = class {
   _defaultMatcher;
@@ -3134,14 +3454,14 @@ var _ErrorStateTracker = class {
     }
   }
 };
-var MAT_DATE_LOCALE = new InjectionToken("MAT_DATE_LOCALE", {
-  providedIn: "root",
-  factory: MAT_DATE_LOCALE_FACTORY
+var MAT_DATE_LOCALE = new InjectionToken('MAT_DATE_LOCALE', {
+  providedIn: 'root',
+  factory: MAT_DATE_LOCALE_FACTORY,
 });
 function MAT_DATE_LOCALE_FACTORY() {
   return inject(LOCALE_ID);
 }
-var NOT_IMPLEMENTED = "Method not implemented";
+var NOT_IMPLEMENTED = 'Method not implemented';
 var DateAdapter = class {
   /** The locale to use for all dates. */
   locale;
@@ -3218,7 +3538,7 @@ var DateAdapter = class {
    *     deserialized into a null date (e.g. the empty string), or an invalid date.
    */
   deserialize(value) {
-    if (value == null || this.isDateInstance(value) && this.isValid(value)) {
+    if (value == null || (this.isDateInstance(value) && this.isValid(value))) {
       return value;
     }
     return this.invalid();
@@ -3239,7 +3559,11 @@ var DateAdapter = class {
    *     a number greater than 0 if the first date is later.
    */
   compareDate(first, second) {
-    return this.getYear(first) - this.getYear(second) || this.getMonth(first) - this.getMonth(second) || this.getDate(first) - this.getDate(second);
+    return (
+      this.getYear(first) - this.getYear(second) ||
+      this.getMonth(first) - this.getMonth(second) ||
+      this.getDate(first) - this.getDate(second)
+    );
   }
   /**
    * Compares the time values of two dates.
@@ -3249,7 +3573,11 @@ var DateAdapter = class {
    *     a number greater than 0 if the first time is later.
    */
   compareTime(first, second) {
-    return this.getHours(first) - this.getHours(second) || this.getMinutes(first) - this.getMinutes(second) || this.getSeconds(first) - this.getSeconds(second);
+    return (
+      this.getHours(first) - this.getHours(second) ||
+      this.getMinutes(first) - this.getMinutes(second) ||
+      this.getSeconds(first) - this.getSeconds(second)
+    );
   }
   /**
    * Checks if two dates are equal.
@@ -3305,7 +3633,7 @@ var DateAdapter = class {
     return date;
   }
 };
-var MAT_DATE_FORMATS = new InjectionToken("mat-date-formats");
+var MAT_DATE_FORMATS = new InjectionToken('mat-date-formats');
 var ISO_8601_REGEX = /^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|(?:(?:\+|-)\d{2}:\d{2}))?)?$/;
 var TIME_REGEX = /^(\d?\d)[:.](\d?\d)(?:[:.](\d?\d))?\s*(AM|PM)?$/i;
 function range(length, valueFunction) {
@@ -3323,12 +3651,12 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
   useUtcForDisplay = false;
   /** The injected locale. */
   _matDateLocale = inject(MAT_DATE_LOCALE, {
-    optional: true
+    optional: true,
   });
   constructor() {
     super();
     const matDateLocale = inject(MAT_DATE_LOCALE, {
-      optional: true
+      optional: true,
     });
     if (matDateLocale !== void 0) {
       this._matDateLocale = matDateLocale;
@@ -3350,33 +3678,33 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
   getMonthNames(style) {
     const dtf = new Intl.DateTimeFormat(this.locale, {
       month: style,
-      timeZone: "utc"
+      timeZone: 'utc',
     });
     return range(12, (i) => this._format(dtf, new Date(2017, i, 1)));
   }
   getDateNames() {
     const dtf = new Intl.DateTimeFormat(this.locale, {
-      day: "numeric",
-      timeZone: "utc"
+      day: 'numeric',
+      timeZone: 'utc',
     });
     return range(31, (i) => this._format(dtf, new Date(2017, 0, i + 1)));
   }
   getDayOfWeekNames(style) {
     const dtf = new Intl.DateTimeFormat(this.locale, {
       weekday: style,
-      timeZone: "utc"
+      timeZone: 'utc',
     });
     return range(7, (i) => this._format(dtf, new Date(2017, 0, i + 1)));
   }
   getYearName(date) {
     const dtf = new Intl.DateTimeFormat(this.locale, {
-      year: "numeric",
-      timeZone: "utc"
+      year: 'numeric',
+      timeZone: 'utc',
     });
     return this._format(dtf, date);
   }
   getFirstDayOfWeek() {
-    if (typeof Intl !== "undefined" && Intl.Locale) {
+    if (typeof Intl !== 'undefined' && Intl.Locale) {
       const locale = new Intl.Locale(this.locale);
       const firstDay = (locale.getWeekInfo?.() || locale.weekInfo)?.firstDay ?? 0;
       return firstDay === 7 ? 0 : firstDay;
@@ -3390,7 +3718,7 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
     return new Date(date.getTime());
   }
   createDate(year, month, date) {
-    if (typeof ngDevMode === "undefined" || ngDevMode) {
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
       if (month < 0 || month > 11) {
         throw Error(`Invalid month index "${month}". Month index has to be between 0 and 11.`);
       }
@@ -3399,7 +3727,7 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
       }
     }
     let result = this._createDateWithOverflow(year, month, date);
-    if (result.getMonth() != month && (typeof ngDevMode === "undefined" || ngDevMode)) {
+    if (result.getMonth() != month && (typeof ngDevMode === 'undefined' || ngDevMode)) {
       throw Error(`Invalid date "${date}" for month with index "${month}".`);
     }
     return result;
@@ -3408,18 +3736,21 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
     return /* @__PURE__ */ new Date();
   }
   parse(value, parseFormat) {
-    if (typeof value == "number") {
+    if (typeof value == 'number') {
       return new Date(value);
     }
     return value ? new Date(Date.parse(value)) : null;
   }
   format(date, displayFormat) {
     if (!this.isValid(date)) {
-      throw Error("NativeDateAdapter: Cannot format invalid date.");
+      throw Error('NativeDateAdapter: Cannot format invalid date.');
     }
-    const dtf = new Intl.DateTimeFormat(this.locale, __spreadProps(__spreadValues({}, displayFormat), {
-      timeZone: "utc"
-    }));
+    const dtf = new Intl.DateTimeFormat(
+      this.locale,
+      __spreadProps(__spreadValues({}, displayFormat), {
+        timeZone: 'utc',
+      }),
+    );
     return this._format(dtf, date);
   }
   addCalendarYears(date, years) {
@@ -3427,7 +3758,7 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
   }
   addCalendarMonths(date, months) {
     let newDate = this._createDateWithOverflow(this.getYear(date), this.getMonth(date) + months, this.getDate(date));
-    if (this.getMonth(newDate) != ((this.getMonth(date) + months) % 12 + 12) % 12) {
+    if (this.getMonth(newDate) != (((this.getMonth(date) + months) % 12) + 12) % 12) {
       newDate = this._createDateWithOverflow(this.getYear(newDate), this.getMonth(newDate), 0);
     }
     return newDate;
@@ -3436,7 +3767,7 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
     return this._createDateWithOverflow(this.getYear(date), this.getMonth(date), this.getDate(date) + days);
   }
   toIso8601(date) {
-    return [date.getUTCFullYear(), this._2digit(date.getUTCMonth() + 1), this._2digit(date.getUTCDate())].join("-");
+    return [date.getUTCFullYear(), this._2digit(date.getUTCMonth() + 1), this._2digit(date.getUTCDate())].join('-');
   }
   /**
    * Returns the given value if given a valid Date or null. Deserializes valid ISO 8601 strings
@@ -3444,7 +3775,7 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
    * invalid date for all other values.
    */
   deserialize(value) {
-    if (typeof value === "string") {
+    if (typeof value === 'string') {
       if (!value) {
         return null;
       }
@@ -3467,7 +3798,7 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
     return /* @__PURE__ */ new Date(NaN);
   }
   setTime(target, hours, minutes, seconds) {
-    if (typeof ngDevMode === "undefined" || ngDevMode) {
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
       if (!inRange(hours, 0, 23)) {
         throw Error(`Invalid hours "${hours}". Hours value must be between 0 and 23.`);
       }
@@ -3492,7 +3823,7 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
     return date.getSeconds();
   }
   parseTime(userValue, parseFormat) {
-    if (typeof userValue !== "string") {
+    if (typeof userValue !== 'string') {
       return userValue instanceof Date ? new Date(userValue.getTime()) : null;
     }
     const value = userValue.trim();
@@ -3501,7 +3832,7 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
     }
     let result = this._parseTimeString(value);
     if (result === null) {
-      const withoutExtras = value.replace(/[^0-9:(AM|PM)]/gi, "").trim();
+      const withoutExtras = value.replace(/[^0-9:(AM|PM)]/gi, '').trim();
       if (withoutExtras.length > 0) {
         result = this._parseTimeString(withoutExtras);
       }
@@ -3524,7 +3855,7 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
    * @returns The padded number.
    */
   _2digit(n) {
-    return ("00" + n).slice(-2);
+    return ('00' + n).slice(-2);
   }
   /**
    * When converting Date object to string, javascript built-in functions may return wrong
@@ -3555,8 +3886,8 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
       let seconds = parsed[3] == null ? void 0 : parseInt(parsed[3]);
       const amPm = parsed[4];
       if (hours === 12) {
-        hours = amPm === "AM" ? 0 : hours;
-      } else if (amPm === "PM") {
+        hours = amPm === 'AM' ? 0 : hours;
+      } else if (amPm === 'PM') {
         hours += 12;
       }
       if (inRange(hours, 0, 23) && inRange(minutes, 0, 59) && (seconds == null || inRange(seconds, 0, 59))) {
@@ -3570,13 +3901,21 @@ var NativeDateAdapter = class _NativeDateAdapter extends DateAdapter {
   };
   static ɵprov = ɵɵdefineInjectable({
     token: _NativeDateAdapter,
-    factory: _NativeDateAdapter.ɵfac
+    factory: _NativeDateAdapter.ɵfac,
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(NativeDateAdapter, [{
-    type: Injectable
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      NativeDateAdapter,
+      [
+        {
+          type: Injectable,
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 function inRange(value, min, max) {
   return !isNaN(value) && value >= min && value <= max;
@@ -3584,110 +3923,145 @@ function inRange(value, min, max) {
 var MAT_NATIVE_DATE_FORMATS = {
   parse: {
     dateInput: null,
-    timeInput: null
+    timeInput: null,
   },
   display: {
     dateInput: {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric"
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
     },
     timeInput: {
-      hour: "numeric",
-      minute: "numeric"
+      hour: 'numeric',
+      minute: 'numeric',
     },
     monthYearLabel: {
-      year: "numeric",
-      month: "short"
+      year: 'numeric',
+      month: 'short',
     },
     dateA11yLabel: {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     },
     monthYearA11yLabel: {
-      year: "numeric",
-      month: "long"
+      year: 'numeric',
+      month: 'long',
     },
     timeOptionLabel: {
-      hour: "numeric",
-      minute: "numeric"
-    }
-  }
+      hour: 'numeric',
+      minute: 'numeric',
+    },
+  },
 };
 var NativeDateModule = class _NativeDateModule {
   static ɵfac = function NativeDateModule_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _NativeDateModule)();
   };
   static ɵmod = ɵɵdefineNgModule({
-    type: _NativeDateModule
+    type: _NativeDateModule,
   });
   static ɵinj = ɵɵdefineInjector({
-    providers: [{
-      provide: DateAdapter,
-      useClass: NativeDateAdapter
-    }]
+    providers: [
+      {
+        provide: DateAdapter,
+        useClass: NativeDateAdapter,
+      },
+    ],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(NativeDateModule, [{
-    type: NgModule,
-    args: [{
-      providers: [{
-        provide: DateAdapter,
-        useClass: NativeDateAdapter
-      }]
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      NativeDateModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              providers: [
+                {
+                  provide: DateAdapter,
+                  useClass: NativeDateAdapter,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var MatNativeDateModule = class _MatNativeDateModule {
   static ɵfac = function MatNativeDateModule_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _MatNativeDateModule)();
   };
   static ɵmod = ɵɵdefineNgModule({
-    type: _MatNativeDateModule
+    type: _MatNativeDateModule,
   });
   static ɵinj = ɵɵdefineInjector({
-    providers: [provideNativeDateAdapter()]
+    providers: [provideNativeDateAdapter()],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatNativeDateModule, [{
-    type: NgModule,
-    args: [{
-      providers: [provideNativeDateAdapter()]
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatNativeDateModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              providers: [provideNativeDateAdapter()],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 function provideNativeDateAdapter(formats = MAT_NATIVE_DATE_FORMATS) {
-  return [{
-    provide: DateAdapter,
-    useClass: NativeDateAdapter
-  }, {
-    provide: MAT_DATE_FORMATS,
-    useValue: formats
-  }];
+  return [
+    {
+      provide: DateAdapter,
+      useClass: NativeDateAdapter,
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: formats,
+    },
+  ];
 }
 var ShowOnDirtyErrorStateMatcher = class _ShowOnDirtyErrorStateMatcher {
   isErrorState(control, form) {
-    return !!(control && control.invalid && (control.dirty || form && form.submitted));
+    return !!(control && control.invalid && (control.dirty || (form && form.submitted)));
   }
   static ɵfac = function ShowOnDirtyErrorStateMatcher_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _ShowOnDirtyErrorStateMatcher)();
   };
   static ɵprov = ɵɵdefineInjectable({
     token: _ShowOnDirtyErrorStateMatcher,
-    factory: _ShowOnDirtyErrorStateMatcher.ɵfac
+    factory: _ShowOnDirtyErrorStateMatcher.ɵfac,
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ShowOnDirtyErrorStateMatcher, [{
-    type: Injectable
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      ShowOnDirtyErrorStateMatcher,
+      [
+        {
+          type: Injectable,
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var ErrorStateMatcher = class _ErrorStateMatcher {
   isErrorState(control, form) {
-    return !!(control && control.invalid && (control.touched || form && form.submitted));
+    return !!(control && control.invalid && (control.touched || (form && form.submitted)));
   }
   static ɵfac = function ErrorStateMatcher_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _ErrorStateMatcher)();
@@ -3695,16 +4069,26 @@ var ErrorStateMatcher = class _ErrorStateMatcher {
   static ɵprov = ɵɵdefineInjectable({
     token: _ErrorStateMatcher,
     factory: _ErrorStateMatcher.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ErrorStateMatcher, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      ErrorStateMatcher,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var _StructuralStylesLoader = class __StructuralStylesLoader {
   static ɵfac = function _StructuralStylesLoader_Factory(__ngFactoryType__) {
@@ -3712,27 +4096,40 @@ var _StructuralStylesLoader = class __StructuralStylesLoader {
   };
   static ɵcmp = ɵɵdefineComponent({
     type: __StructuralStylesLoader,
-    selectors: [["structural-styles"]],
+    selectors: [['structural-styles']],
     decls: 0,
     vars: 0,
-    template: function _StructuralStylesLoader_Template(rf, ctx) {
-    },
-    styles: ['.mat-focus-indicator{position:relative}.mat-focus-indicator::before{top:0;left:0;right:0;bottom:0;position:absolute;box-sizing:border-box;pointer-events:none;display:var(--mat-focus-indicator-display, none);border-width:var(--mat-focus-indicator-border-width, 3px);border-style:var(--mat-focus-indicator-border-style, solid);border-color:var(--mat-focus-indicator-border-color, transparent);border-radius:var(--mat-focus-indicator-border-radius, 4px)}.mat-focus-indicator:focus::before{content:""}@media(forced-colors: active){html{--mat-focus-indicator-display: block}}'],
+    template: function _StructuralStylesLoader_Template(rf, ctx) {},
+    styles: [
+      '.mat-focus-indicator{position:relative}.mat-focus-indicator::before{top:0;left:0;right:0;bottom:0;position:absolute;box-sizing:border-box;pointer-events:none;display:var(--mat-focus-indicator-display, none);border-width:var(--mat-focus-indicator-border-width, 3px);border-style:var(--mat-focus-indicator-border-style, solid);border-color:var(--mat-focus-indicator-border-color, transparent);border-radius:var(--mat-focus-indicator-border-radius, 4px)}.mat-focus-indicator:focus::before{content:""}@media(forced-colors: active){html{--mat-focus-indicator-display: block}}',
+    ],
     encapsulation: 2,
-    changeDetection: 0
+    changeDetection: 0,
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(_StructuralStylesLoader, [{
-    type: Component,
-    args: [{
-      selector: "structural-styles",
-      encapsulation: ViewEncapsulation.None,
-      template: "",
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      styles: ['.mat-focus-indicator{position:relative}.mat-focus-indicator::before{top:0;left:0;right:0;bottom:0;position:absolute;box-sizing:border-box;pointer-events:none;display:var(--mat-focus-indicator-display, none);border-width:var(--mat-focus-indicator-border-width, 3px);border-style:var(--mat-focus-indicator-border-style, solid);border-color:var(--mat-focus-indicator-border-color, transparent);border-radius:var(--mat-focus-indicator-border-radius, 4px)}.mat-focus-indicator:focus::before{content:""}@media(forced-colors: active){html{--mat-focus-indicator-display: block}}']
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      _StructuralStylesLoader,
+      [
+        {
+          type: Component,
+          args: [
+            {
+              selector: 'structural-styles',
+              encapsulation: ViewEncapsulation.None,
+              template: '',
+              changeDetection: ChangeDetectionStrategy.OnPush,
+              styles: [
+                '.mat-focus-indicator{position:relative}.mat-focus-indicator::before{top:0;left:0;right:0;bottom:0;position:absolute;box-sizing:border-box;pointer-events:none;display:var(--mat-focus-indicator-display, none);border-width:var(--mat-focus-indicator-border-width, 3px);border-style:var(--mat-focus-indicator-border-style, solid);border-color:var(--mat-focus-indicator-border-color, transparent);border-radius:var(--mat-focus-indicator-border-radius, 4px)}.mat-focus-indicator:focus::before{content:""}@media(forced-colors: active){html{--mat-focus-indicator-display: block}}',
+              ],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var MatLine = class _MatLine {
   static ɵfac = function MatLine_Factory(__ngFactoryType__) {
@@ -3740,25 +4137,36 @@ var MatLine = class _MatLine {
   };
   static ɵdir = ɵɵdefineDirective({
     type: _MatLine,
-    selectors: [["", "mat-line", ""], ["", "matLine", ""]],
-    hostAttrs: [1, "mat-line"]
+    selectors: [
+      ['', 'mat-line', ''],
+      ['', 'matLine', ''],
+    ],
+    hostAttrs: [1, 'mat-line'],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatLine, [{
-    type: Directive,
-    args: [{
-      selector: "[mat-line], [matLine]",
-      host: {
-        "class": "mat-line"
-      }
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatLine,
+      [
+        {
+          type: Directive,
+          args: [
+            {
+              selector: '[mat-line], [matLine]',
+              host: {
+                class: 'mat-line',
+              },
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
-function setLines(lines, element, prefix = "mat") {
-  lines.changes.pipe(startWith(lines)).subscribe(({
-    length
-  }) => {
+function setLines(lines, element, prefix = 'mat') {
+  lines.changes.pipe(startWith(lines)).subscribe(({ length }) => {
     setClass(element, `${prefix}-2-line`, false);
     setClass(element, `${prefix}-3-line`, false);
     setClass(element, `${prefix}-multi-line`, false);
@@ -3779,27 +4187,37 @@ var MatLineModule = class _MatLineModule {
   static ɵmod = ɵɵdefineNgModule({
     type: _MatLineModule,
     imports: [MatCommonModule, MatLine],
-    exports: [MatLine, MatCommonModule]
+    exports: [MatLine, MatCommonModule],
   });
   static ɵinj = ɵɵdefineInjector({
-    imports: [MatCommonModule, MatCommonModule]
+    imports: [MatCommonModule, MatCommonModule],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatLineModule, [{
-    type: NgModule,
-    args: [{
-      imports: [MatCommonModule, MatLine],
-      exports: [MatLine, MatCommonModule]
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatLineModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              imports: [MatCommonModule, MatLine],
+              exports: [MatLine, MatCommonModule],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var RippleState;
-(function(RippleState2) {
-  RippleState2[RippleState2["FADING_IN"] = 0] = "FADING_IN";
-  RippleState2[RippleState2["VISIBLE"] = 1] = "VISIBLE";
-  RippleState2[RippleState2["FADING_OUT"] = 2] = "FADING_OUT";
-  RippleState2[RippleState2["HIDDEN"] = 3] = "HIDDEN";
+(function (RippleState2) {
+  RippleState2[(RippleState2['FADING_IN'] = 0)] = 'FADING_IN';
+  RippleState2[(RippleState2['VISIBLE'] = 1)] = 'VISIBLE';
+  RippleState2[(RippleState2['FADING_OUT'] = 2)] = 'FADING_OUT';
+  RippleState2[(RippleState2['HIDDEN'] = 3)] = 'HIDDEN';
 })(RippleState || (RippleState = {}));
 var RippleRef = class {
   _renderer;
@@ -3821,7 +4239,7 @@ var RippleRef = class {
 };
 var passiveCapturingEventOptions$1 = normalizePassiveListenerOptions({
   passive: true,
-  capture: true
+  capture: true,
 });
 var RippleEventManager = class {
   _events = /* @__PURE__ */ new Map();
@@ -3875,45 +4293,58 @@ var RippleEventManager = class {
 };
 var defaultRippleAnimationConfig = {
   enterDuration: 225,
-  exitDuration: 150
+  exitDuration: 150,
 };
 var ignoreMouseEventsTimeout = 800;
 var passiveCapturingEventOptions = normalizePassiveListenerOptions({
   passive: true,
-  capture: true
+  capture: true,
 });
-var pointerDownEvents = ["mousedown", "touchstart"];
-var pointerUpEvents = ["mouseup", "mouseleave", "touchend", "touchcancel"];
+var pointerDownEvents = ['mousedown', 'touchstart'];
+var pointerUpEvents = ['mouseup', 'mouseleave', 'touchend', 'touchcancel'];
 var _MatRippleStylesLoader = class __MatRippleStylesLoader {
   static ɵfac = function _MatRippleStylesLoader_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || __MatRippleStylesLoader)();
   };
   static ɵcmp = ɵɵdefineComponent({
     type: __MatRippleStylesLoader,
-    selectors: [["ng-component"]],
-    hostAttrs: ["mat-ripple-style-loader", ""],
+    selectors: [['ng-component']],
+    hostAttrs: ['mat-ripple-style-loader', ''],
     decls: 0,
     vars: 0,
-    template: function _MatRippleStylesLoader_Template(rf, ctx) {
-    },
-    styles: [".mat-ripple{overflow:hidden;position:relative}.mat-ripple:not(:empty){transform:translateZ(0)}.mat-ripple.mat-ripple-unbounded{overflow:visible}.mat-ripple-element{position:absolute;border-radius:50%;pointer-events:none;transition:opacity,transform 0ms cubic-bezier(0, 0, 0.2, 1);transform:scale3d(0, 0, 0);background-color:var(--mat-ripple-color, color-mix(in srgb, var(--mat-sys-on-surface) 10%, transparent))}@media(forced-colors: active){.mat-ripple-element{display:none}}.cdk-drag-preview .mat-ripple-element,.cdk-drag-placeholder .mat-ripple-element{display:none}"],
+    template: function _MatRippleStylesLoader_Template(rf, ctx) {},
+    styles: [
+      '.mat-ripple{overflow:hidden;position:relative}.mat-ripple:not(:empty){transform:translateZ(0)}.mat-ripple.mat-ripple-unbounded{overflow:visible}.mat-ripple-element{position:absolute;border-radius:50%;pointer-events:none;transition:opacity,transform 0ms cubic-bezier(0, 0, 0.2, 1);transform:scale3d(0, 0, 0);background-color:var(--mat-ripple-color, color-mix(in srgb, var(--mat-sys-on-surface) 10%, transparent))}@media(forced-colors: active){.mat-ripple-element{display:none}}.cdk-drag-preview .mat-ripple-element,.cdk-drag-placeholder .mat-ripple-element{display:none}',
+    ],
     encapsulation: 2,
-    changeDetection: 0
+    changeDetection: 0,
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(_MatRippleStylesLoader, [{
-    type: Component,
-    args: [{
-      template: "",
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      encapsulation: ViewEncapsulation.None,
-      host: {
-        "mat-ripple-style-loader": ""
-      },
-      styles: [".mat-ripple{overflow:hidden;position:relative}.mat-ripple:not(:empty){transform:translateZ(0)}.mat-ripple.mat-ripple-unbounded{overflow:visible}.mat-ripple-element{position:absolute;border-radius:50%;pointer-events:none;transition:opacity,transform 0ms cubic-bezier(0, 0, 0.2, 1);transform:scale3d(0, 0, 0);background-color:var(--mat-ripple-color, color-mix(in srgb, var(--mat-sys-on-surface) 10%, transparent))}@media(forced-colors: active){.mat-ripple-element{display:none}}.cdk-drag-preview .mat-ripple-element,.cdk-drag-placeholder .mat-ripple-element{display:none}"]
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      _MatRippleStylesLoader,
+      [
+        {
+          type: Component,
+          args: [
+            {
+              template: '',
+              changeDetection: ChangeDetectionStrategy.OnPush,
+              encapsulation: ViewEncapsulation.None,
+              host: {
+                'mat-ripple-style-loader': '',
+              },
+              styles: [
+                '.mat-ripple{overflow:hidden;position:relative}.mat-ripple:not(:empty){transform:translateZ(0)}.mat-ripple.mat-ripple-unbounded{overflow:visible}.mat-ripple-element{position:absolute;border-radius:50%;pointer-events:none;transition:opacity,transform 0ms cubic-bezier(0, 0, 0.2, 1);transform:scale3d(0, 0, 0);background-color:var(--mat-ripple-color, color-mix(in srgb, var(--mat-sys-on-surface) 10%, transparent))}@media(forced-colors: active){.mat-ripple-element{display:none}}.cdk-drag-preview .mat-ripple-element,.cdk-drag-placeholder .mat-ripple-element{display:none}',
+              ],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var RippleRenderer = class _RippleRenderer {
   _target;
@@ -3962,7 +4393,7 @@ var RippleRenderer = class _RippleRenderer {
    * @param config Extra ripple options.
    */
   fadeInRipple(x, y, config = {}) {
-    const containerRect = this._containerRect = this._containerRect || this._containerElement.getBoundingClientRect();
+    const containerRect = (this._containerRect = this._containerRect || this._containerElement.getBoundingClientRect());
     const animationConfig = __spreadValues(__spreadValues({}, defaultRippleAnimationConfig), config.animation);
     if (config.centered) {
       x = containerRect.left + containerRect.width / 2;
@@ -3972,8 +4403,8 @@ var RippleRenderer = class _RippleRenderer {
     const offsetX = x - containerRect.left;
     const offsetY = y - containerRect.top;
     const enterDuration = animationConfig.enterDuration;
-    const ripple = document.createElement("div");
-    ripple.classList.add("mat-ripple-element");
+    const ripple = document.createElement('div');
+    ripple.classList.add('mat-ripple-element');
     ripple.style.left = `${offsetX - radius}px`;
     ripple.style.top = `${offsetY - radius}px`;
     ripple.style.height = `${radius * 2}px`;
@@ -3986,12 +4417,14 @@ var RippleRenderer = class _RippleRenderer {
     const computedStyles = window.getComputedStyle(ripple);
     const userTransitionProperty = computedStyles.transitionProperty;
     const userTransitionDuration = computedStyles.transitionDuration;
-    const animationForciblyDisabledThroughCss = userTransitionProperty === "none" || // Note: The canonical unit for serialized CSS `<time>` properties is seconds. Additionally
-    // some browsers expand the duration for every property (in our case `opacity` and `transform`).
-    userTransitionDuration === "0s" || userTransitionDuration === "0s, 0s" || // If the container is 0x0, it's likely `display: none`.
-    containerRect.width === 0 && containerRect.height === 0;
+    const animationForciblyDisabledThroughCss =
+      userTransitionProperty === 'none' || // Note: The canonical unit for serialized CSS `<time>` properties is seconds. Additionally
+      // some browsers expand the duration for every property (in our case `opacity` and `transform`).
+      userTransitionDuration === '0s' ||
+      userTransitionDuration === '0s, 0s' || // If the container is 0x0, it's likely `display: none`.
+      (containerRect.width === 0 && containerRect.height === 0);
     const rippleRef = new RippleRef(this, ripple, config, animationForciblyDisabledThroughCss);
-    ripple.style.transform = "scale3d(1, 1, 1)";
+    ripple.style.transform = 'scale3d(1, 1, 1)';
     rippleRef.state = RippleState.FADING_IN;
     if (!config.persistent) {
       this._mostRecentTransientRipple = rippleRef;
@@ -4008,12 +4441,12 @@ var RippleRenderer = class _RippleRenderer {
         };
         const onTransitionCancel = () => this._destroyRipple(rippleRef);
         const fallbackTimer = setTimeout(onTransitionCancel, enterDuration + 100);
-        ripple.addEventListener("transitionend", onTransitionEnd);
-        ripple.addEventListener("transitioncancel", onTransitionCancel);
+        ripple.addEventListener('transitionend', onTransitionEnd);
+        ripple.addEventListener('transitioncancel', onTransitionCancel);
         eventListeners = {
           onTransitionEnd,
           onTransitionCancel,
-          fallbackTimer
+          fallbackTimer,
         };
       });
     }
@@ -4029,9 +4462,12 @@ var RippleRenderer = class _RippleRenderer {
       return;
     }
     const rippleEl = rippleRef.element;
-    const animationConfig = __spreadValues(__spreadValues({}, defaultRippleAnimationConfig), rippleRef.config.animation);
+    const animationConfig = __spreadValues(
+      __spreadValues({}, defaultRippleAnimationConfig),
+      rippleRef.config.animation,
+    );
     rippleEl.style.transitionDuration = `${animationConfig.exitDuration}ms`;
-    rippleEl.style.opacity = "0";
+    rippleEl.style.opacity = '0';
     rippleRef.state = RippleState.FADING_OUT;
     if (rippleRef._animationForciblyDisabledThroughCss || !animationConfig.exitDuration) {
       this._finishRippleTransition(rippleRef);
@@ -4066,9 +4502,9 @@ var RippleRenderer = class _RippleRenderer {
    * @docs-private
    */
   handleEvent(event) {
-    if (event.type === "mousedown") {
+    if (event.type === 'mousedown') {
       this._onMousedown(event);
-    } else if (event.type === "touchstart") {
+    } else if (event.type === 'touchstart') {
       this._onTouchStart(event);
     } else {
       this._onPointerUp();
@@ -4096,9 +4532,7 @@ var RippleRenderer = class _RippleRenderer {
    */
   _startFadeOutTransition(rippleRef) {
     const isMostRecentTransientRipple = rippleRef === this._mostRecentTransientRipple;
-    const {
-      persistent
-    } = rippleRef.config;
+    const { persistent } = rippleRef.config;
     rippleRef.state = RippleState.VISIBLE;
     if (!persistent && (!isMostRecentTransientRipple || !this._isPointerDown)) {
       rippleRef.fadeOut();
@@ -4116,8 +4550,8 @@ var RippleRenderer = class _RippleRenderer {
     }
     rippleRef.state = RippleState.HIDDEN;
     if (eventListeners !== null) {
-      rippleRef.element.removeEventListener("transitionend", eventListeners.onTransitionEnd);
-      rippleRef.element.removeEventListener("transitioncancel", eventListeners.onTransitionCancel);
+      rippleRef.element.removeEventListener('transitionend', eventListeners.onTransitionEnd);
+      rippleRef.element.removeEventListener('transitioncancel', eventListeners.onTransitionCancel);
       if (eventListeners.fallbackTimer !== null) {
         clearTimeout(eventListeners.fallbackTimer);
       }
@@ -4127,7 +4561,8 @@ var RippleRenderer = class _RippleRenderer {
   /** Function being called whenever the trigger is being pressed using mouse. */
   _onMousedown(event) {
     const isFakeMousedown = isFakeMousedownFromScreenReader(event);
-    const isSyntheticEvent = this._lastTouchStartEvent && Date.now() < this._lastTouchStartEvent + ignoreMouseEventsTimeout;
+    const isSyntheticEvent =
+      this._lastTouchStartEvent && Date.now() < this._lastTouchStartEvent + ignoreMouseEventsTimeout;
     if (!this._target.rippleDisabled && !isFakeMousedown && !isSyntheticEvent) {
       this._isPointerDown = true;
       this.fadeInRipple(event.clientX, event.clientY, this._target.rippleConfig);
@@ -4153,7 +4588,9 @@ var RippleRenderer = class _RippleRenderer {
     }
     this._isPointerDown = false;
     this._getActiveRipples().forEach((ripple) => {
-      const isVisible = ripple.state === RippleState.VISIBLE || ripple.config.terminateOnPointerUp && ripple.state === RippleState.FADING_IN;
+      const isVisible =
+        ripple.state === RippleState.VISIBLE ||
+        (ripple.config.terminateOnPointerUp && ripple.state === RippleState.FADING_IN);
       if (!ripple.config.persistent && isVisible) {
         ripple.fadeOut();
       }
@@ -4179,11 +4616,11 @@ function distanceToFurthestCorner(x, y, rect) {
   const distY = Math.max(Math.abs(y - rect.top), Math.abs(y - rect.bottom));
   return Math.sqrt(distX * distX + distY * distY);
 }
-var MAT_RIPPLE_GLOBAL_OPTIONS = new InjectionToken("mat-ripple-global-options");
+var MAT_RIPPLE_GLOBAL_OPTIONS = new InjectionToken('mat-ripple-global-options');
 var MatRipple = class _MatRipple {
   _elementRef = inject(ElementRef);
   _animationMode = inject(ANIMATION_MODULE_TYPE, {
-    optional: true
+    optional: true,
   });
   /** Custom color for all ripples. */
   color;
@@ -4243,7 +4680,7 @@ var MatRipple = class _MatRipple {
     const ngZone = inject(NgZone);
     const platform = inject(Platform);
     const globalOptions = inject(MAT_RIPPLE_GLOBAL_OPTIONS, {
-      optional: true
+      optional: true,
     });
     const injector = inject(Injector);
     this._globalOptions = globalOptions || {};
@@ -4273,11 +4710,19 @@ var MatRipple = class _MatRipple {
       centered: this.centered,
       radius: this.radius,
       color: this.color,
-      animation: __spreadValues(__spreadValues(__spreadValues({}, this._globalOptions.animation), this._animationMode === "NoopAnimations" ? {
-        enterDuration: 0,
-        exitDuration: 0
-      } : {}), this.animation),
-      terminateOnPointerUp: this._globalOptions.terminateOnPointerUp
+      animation: __spreadValues(
+        __spreadValues(
+          __spreadValues({}, this._globalOptions.animation),
+          this._animationMode === 'NoopAnimations'
+            ? {
+                enterDuration: 0,
+                exitDuration: 0,
+              }
+            : {},
+        ),
+        this.animation,
+      ),
+      terminateOnPointerUp: this._globalOptions.terminateOnPointerUp,
     };
   }
   /**
@@ -4295,8 +4740,12 @@ var MatRipple = class _MatRipple {
   }
   /** Launches a manual ripple at the specified coordinated or just by the ripple config. */
   launch(configOrX, y = 0, config) {
-    if (typeof configOrX === "number") {
-      return this._rippleRenderer.fadeInRipple(configOrX, y, __spreadValues(__spreadValues({}, this.rippleConfig), config));
+    if (typeof configOrX === 'number') {
+      return this._rippleRenderer.fadeInRipple(
+        configOrX,
+        y,
+        __spreadValues(__spreadValues({}, this.rippleConfig), config),
+      );
     } else {
       return this._rippleRenderer.fadeInRipple(0, 0, __spreadValues(__spreadValues({}, this.rippleConfig), configOrX));
     }
@@ -4306,67 +4755,94 @@ var MatRipple = class _MatRipple {
   };
   static ɵdir = ɵɵdefineDirective({
     type: _MatRipple,
-    selectors: [["", "mat-ripple", ""], ["", "matRipple", ""]],
-    hostAttrs: [1, "mat-ripple"],
+    selectors: [
+      ['', 'mat-ripple', ''],
+      ['', 'matRipple', ''],
+    ],
+    hostAttrs: [1, 'mat-ripple'],
     hostVars: 2,
     hostBindings: function MatRipple_HostBindings(rf, ctx) {
       if (rf & 2) {
-        ɵɵclassProp("mat-ripple-unbounded", ctx.unbounded);
+        ɵɵclassProp('mat-ripple-unbounded', ctx.unbounded);
       }
     },
     inputs: {
-      color: [0, "matRippleColor", "color"],
-      unbounded: [0, "matRippleUnbounded", "unbounded"],
-      centered: [0, "matRippleCentered", "centered"],
-      radius: [0, "matRippleRadius", "radius"],
-      animation: [0, "matRippleAnimation", "animation"],
-      disabled: [0, "matRippleDisabled", "disabled"],
-      trigger: [0, "matRippleTrigger", "trigger"]
+      color: [0, 'matRippleColor', 'color'],
+      unbounded: [0, 'matRippleUnbounded', 'unbounded'],
+      centered: [0, 'matRippleCentered', 'centered'],
+      radius: [0, 'matRippleRadius', 'radius'],
+      animation: [0, 'matRippleAnimation', 'animation'],
+      disabled: [0, 'matRippleDisabled', 'disabled'],
+      trigger: [0, 'matRippleTrigger', 'trigger'],
     },
-    exportAs: ["matRipple"]
+    exportAs: ['matRipple'],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatRipple, [{
-    type: Directive,
-    args: [{
-      selector: "[mat-ripple], [matRipple]",
-      exportAs: "matRipple",
-      host: {
-        "class": "mat-ripple",
-        "[class.mat-ripple-unbounded]": "unbounded"
-      }
-    }]
-  }], () => [], {
-    color: [{
-      type: Input,
-      args: ["matRippleColor"]
-    }],
-    unbounded: [{
-      type: Input,
-      args: ["matRippleUnbounded"]
-    }],
-    centered: [{
-      type: Input,
-      args: ["matRippleCentered"]
-    }],
-    radius: [{
-      type: Input,
-      args: ["matRippleRadius"]
-    }],
-    animation: [{
-      type: Input,
-      args: ["matRippleAnimation"]
-    }],
-    disabled: [{
-      type: Input,
-      args: ["matRippleDisabled"]
-    }],
-    trigger: [{
-      type: Input,
-      args: ["matRippleTrigger"]
-    }]
-  });
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatRipple,
+      [
+        {
+          type: Directive,
+          args: [
+            {
+              selector: '[mat-ripple], [matRipple]',
+              exportAs: 'matRipple',
+              host: {
+                class: 'mat-ripple',
+                '[class.mat-ripple-unbounded]': 'unbounded',
+              },
+            },
+          ],
+        },
+      ],
+      () => [],
+      {
+        color: [
+          {
+            type: Input,
+            args: ['matRippleColor'],
+          },
+        ],
+        unbounded: [
+          {
+            type: Input,
+            args: ['matRippleUnbounded'],
+          },
+        ],
+        centered: [
+          {
+            type: Input,
+            args: ['matRippleCentered'],
+          },
+        ],
+        radius: [
+          {
+            type: Input,
+            args: ['matRippleRadius'],
+          },
+        ],
+        animation: [
+          {
+            type: Input,
+            args: ['matRippleAnimation'],
+          },
+        ],
+        disabled: [
+          {
+            type: Input,
+            args: ['matRippleDisabled'],
+          },
+        ],
+        trigger: [
+          {
+            type: Input,
+            args: ['matRippleTrigger'],
+          },
+        ],
+      },
+    );
 })();
 var MatRippleModule = class _MatRippleModule {
   static ɵfac = function MatRippleModule_Factory(__ngFactoryType__) {
@@ -4375,93 +4851,127 @@ var MatRippleModule = class _MatRippleModule {
   static ɵmod = ɵɵdefineNgModule({
     type: _MatRippleModule,
     imports: [MatCommonModule, MatRipple],
-    exports: [MatRipple, MatCommonModule]
+    exports: [MatRipple, MatCommonModule],
   });
   static ɵinj = ɵɵdefineInjector({
-    imports: [MatCommonModule, MatCommonModule]
+    imports: [MatCommonModule, MatCommonModule],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatRippleModule, [{
-    type: NgModule,
-    args: [{
-      imports: [MatCommonModule, MatRipple],
-      exports: [MatRipple, MatCommonModule]
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatRippleModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              imports: [MatCommonModule, MatRipple],
+              exports: [MatRipple, MatCommonModule],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var MatPseudoCheckbox = class _MatPseudoCheckbox {
   _animationMode = inject(ANIMATION_MODULE_TYPE, {
-    optional: true
+    optional: true,
   });
   /** Display state of the checkbox. */
-  state = "unchecked";
+  state = 'unchecked';
   /** Whether the checkbox is disabled. */
   disabled = false;
   /**
    * Appearance of the pseudo checkbox. Default appearance of 'full' renders a checkmark/mixedmark
    * indicator inside a square box. 'minimal' appearance only renders the checkmark/mixedmark.
    */
-  appearance = "full";
-  constructor() {
-  }
+  appearance = 'full';
+  constructor() {}
   static ɵfac = function MatPseudoCheckbox_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _MatPseudoCheckbox)();
   };
   static ɵcmp = ɵɵdefineComponent({
     type: _MatPseudoCheckbox,
-    selectors: [["mat-pseudo-checkbox"]],
-    hostAttrs: [1, "mat-pseudo-checkbox"],
+    selectors: [['mat-pseudo-checkbox']],
+    hostAttrs: [1, 'mat-pseudo-checkbox'],
     hostVars: 12,
     hostBindings: function MatPseudoCheckbox_HostBindings(rf, ctx) {
       if (rf & 2) {
-        ɵɵclassProp("mat-pseudo-checkbox-indeterminate", ctx.state === "indeterminate")("mat-pseudo-checkbox-checked", ctx.state === "checked")("mat-pseudo-checkbox-disabled", ctx.disabled)("mat-pseudo-checkbox-minimal", ctx.appearance === "minimal")("mat-pseudo-checkbox-full", ctx.appearance === "full")("_mat-animation-noopable", ctx._animationMode === "NoopAnimations");
+        ɵɵclassProp('mat-pseudo-checkbox-indeterminate', ctx.state === 'indeterminate')(
+          'mat-pseudo-checkbox-checked',
+          ctx.state === 'checked',
+        )('mat-pseudo-checkbox-disabled', ctx.disabled)('mat-pseudo-checkbox-minimal', ctx.appearance === 'minimal')(
+          'mat-pseudo-checkbox-full',
+          ctx.appearance === 'full',
+        )('_mat-animation-noopable', ctx._animationMode === 'NoopAnimations');
       }
     },
     inputs: {
-      state: "state",
-      disabled: "disabled",
-      appearance: "appearance"
+      state: 'state',
+      disabled: 'disabled',
+      appearance: 'appearance',
     },
     decls: 0,
     vars: 0,
-    template: function MatPseudoCheckbox_Template(rf, ctx) {
-    },
-    styles: ['.mat-pseudo-checkbox{border-radius:2px;cursor:pointer;display:inline-block;vertical-align:middle;box-sizing:border-box;position:relative;flex-shrink:0;transition:border-color 90ms cubic-bezier(0, 0, 0.2, 0.1),background-color 90ms cubic-bezier(0, 0, 0.2, 0.1)}.mat-pseudo-checkbox::after{position:absolute;opacity:0;content:"";border-bottom:2px solid currentColor;transition:opacity 90ms cubic-bezier(0, 0, 0.2, 0.1)}.mat-pseudo-checkbox._mat-animation-noopable{transition:none !important;animation:none !important}.mat-pseudo-checkbox._mat-animation-noopable::after{transition:none}.mat-pseudo-checkbox-disabled{cursor:default}.mat-pseudo-checkbox-indeterminate::after{left:1px;opacity:1;border-radius:2px}.mat-pseudo-checkbox-checked::after{left:1px;border-left:2px solid currentColor;transform:rotate(-45deg);opacity:1;box-sizing:content-box}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after,.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after{color:var(--mat-minimal-pseudo-checkbox-selected-checkmark-color, var(--mat-sys-primary))}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled::after,.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled::after{color:var(--mat-minimal-pseudo-checkbox-disabled-selected-checkmark-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full{border-color:var(--mat-full-pseudo-checkbox-unselected-icon-color, var(--mat-sys-on-surface-variant));border-width:2px;border-style:solid}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-disabled{border-color:var(--mat-full-pseudo-checkbox-disabled-unselected-icon-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate{background-color:var(--mat-full-pseudo-checkbox-selected-icon-color, var(--mat-sys-primary));border-color:rgba(0,0,0,0)}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate::after{color:var(--mat-full-pseudo-checkbox-selected-checkmark-color, var(--mat-sys-on-primary))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled{background-color:var(--mat-full-pseudo-checkbox-disabled-selected-icon-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled::after,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled::after{color:var(--mat-full-pseudo-checkbox-disabled-selected-checkmark-color, var(--mat-sys-surface))}.mat-pseudo-checkbox{width:18px;height:18px}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after{width:14px;height:6px;transform-origin:center;top:-4.2426406871px;left:0;bottom:0;right:0;margin:auto}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after{top:8px;width:16px}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after{width:10px;height:4px;transform-origin:center;top:-2.8284271247px;left:0;bottom:0;right:0;margin:auto}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate::after{top:6px;width:12px}'],
+    template: function MatPseudoCheckbox_Template(rf, ctx) {},
+    styles: [
+      '.mat-pseudo-checkbox{border-radius:2px;cursor:pointer;display:inline-block;vertical-align:middle;box-sizing:border-box;position:relative;flex-shrink:0;transition:border-color 90ms cubic-bezier(0, 0, 0.2, 0.1),background-color 90ms cubic-bezier(0, 0, 0.2, 0.1)}.mat-pseudo-checkbox::after{position:absolute;opacity:0;content:"";border-bottom:2px solid currentColor;transition:opacity 90ms cubic-bezier(0, 0, 0.2, 0.1)}.mat-pseudo-checkbox._mat-animation-noopable{transition:none !important;animation:none !important}.mat-pseudo-checkbox._mat-animation-noopable::after{transition:none}.mat-pseudo-checkbox-disabled{cursor:default}.mat-pseudo-checkbox-indeterminate::after{left:1px;opacity:1;border-radius:2px}.mat-pseudo-checkbox-checked::after{left:1px;border-left:2px solid currentColor;transform:rotate(-45deg);opacity:1;box-sizing:content-box}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after,.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after{color:var(--mat-minimal-pseudo-checkbox-selected-checkmark-color, var(--mat-sys-primary))}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled::after,.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled::after{color:var(--mat-minimal-pseudo-checkbox-disabled-selected-checkmark-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full{border-color:var(--mat-full-pseudo-checkbox-unselected-icon-color, var(--mat-sys-on-surface-variant));border-width:2px;border-style:solid}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-disabled{border-color:var(--mat-full-pseudo-checkbox-disabled-unselected-icon-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate{background-color:var(--mat-full-pseudo-checkbox-selected-icon-color, var(--mat-sys-primary));border-color:rgba(0,0,0,0)}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate::after{color:var(--mat-full-pseudo-checkbox-selected-checkmark-color, var(--mat-sys-on-primary))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled{background-color:var(--mat-full-pseudo-checkbox-disabled-selected-icon-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled::after,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled::after{color:var(--mat-full-pseudo-checkbox-disabled-selected-checkmark-color, var(--mat-sys-surface))}.mat-pseudo-checkbox{width:18px;height:18px}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after{width:14px;height:6px;transform-origin:center;top:-4.2426406871px;left:0;bottom:0;right:0;margin:auto}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after{top:8px;width:16px}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after{width:10px;height:4px;transform-origin:center;top:-2.8284271247px;left:0;bottom:0;right:0;margin:auto}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate::after{top:6px;width:12px}',
+    ],
     encapsulation: 2,
-    changeDetection: 0
+    changeDetection: 0,
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatPseudoCheckbox, [{
-    type: Component,
-    args: [{
-      encapsulation: ViewEncapsulation.None,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      selector: "mat-pseudo-checkbox",
-      template: "",
-      host: {
-        "class": "mat-pseudo-checkbox",
-        "[class.mat-pseudo-checkbox-indeterminate]": 'state === "indeterminate"',
-        "[class.mat-pseudo-checkbox-checked]": 'state === "checked"',
-        "[class.mat-pseudo-checkbox-disabled]": "disabled",
-        "[class.mat-pseudo-checkbox-minimal]": 'appearance === "minimal"',
-        "[class.mat-pseudo-checkbox-full]": 'appearance === "full"',
-        "[class._mat-animation-noopable]": '_animationMode === "NoopAnimations"'
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatPseudoCheckbox,
+      [
+        {
+          type: Component,
+          args: [
+            {
+              encapsulation: ViewEncapsulation.None,
+              changeDetection: ChangeDetectionStrategy.OnPush,
+              selector: 'mat-pseudo-checkbox',
+              template: '',
+              host: {
+                class: 'mat-pseudo-checkbox',
+                '[class.mat-pseudo-checkbox-indeterminate]': 'state === "indeterminate"',
+                '[class.mat-pseudo-checkbox-checked]': 'state === "checked"',
+                '[class.mat-pseudo-checkbox-disabled]': 'disabled',
+                '[class.mat-pseudo-checkbox-minimal]': 'appearance === "minimal"',
+                '[class.mat-pseudo-checkbox-full]': 'appearance === "full"',
+                '[class._mat-animation-noopable]': '_animationMode === "NoopAnimations"',
+              },
+              styles: [
+                '.mat-pseudo-checkbox{border-radius:2px;cursor:pointer;display:inline-block;vertical-align:middle;box-sizing:border-box;position:relative;flex-shrink:0;transition:border-color 90ms cubic-bezier(0, 0, 0.2, 0.1),background-color 90ms cubic-bezier(0, 0, 0.2, 0.1)}.mat-pseudo-checkbox::after{position:absolute;opacity:0;content:"";border-bottom:2px solid currentColor;transition:opacity 90ms cubic-bezier(0, 0, 0.2, 0.1)}.mat-pseudo-checkbox._mat-animation-noopable{transition:none !important;animation:none !important}.mat-pseudo-checkbox._mat-animation-noopable::after{transition:none}.mat-pseudo-checkbox-disabled{cursor:default}.mat-pseudo-checkbox-indeterminate::after{left:1px;opacity:1;border-radius:2px}.mat-pseudo-checkbox-checked::after{left:1px;border-left:2px solid currentColor;transform:rotate(-45deg);opacity:1;box-sizing:content-box}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after,.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after{color:var(--mat-minimal-pseudo-checkbox-selected-checkmark-color, var(--mat-sys-primary))}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled::after,.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled::after{color:var(--mat-minimal-pseudo-checkbox-disabled-selected-checkmark-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full{border-color:var(--mat-full-pseudo-checkbox-unselected-icon-color, var(--mat-sys-on-surface-variant));border-width:2px;border-style:solid}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-disabled{border-color:var(--mat-full-pseudo-checkbox-disabled-unselected-icon-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate{background-color:var(--mat-full-pseudo-checkbox-selected-icon-color, var(--mat-sys-primary));border-color:rgba(0,0,0,0)}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate::after{color:var(--mat-full-pseudo-checkbox-selected-checkmark-color, var(--mat-sys-on-primary))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled{background-color:var(--mat-full-pseudo-checkbox-disabled-selected-icon-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled::after,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled::after{color:var(--mat-full-pseudo-checkbox-disabled-selected-checkmark-color, var(--mat-sys-surface))}.mat-pseudo-checkbox{width:18px;height:18px}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after{width:14px;height:6px;transform-origin:center;top:-4.2426406871px;left:0;bottom:0;right:0;margin:auto}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after{top:8px;width:16px}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after{width:10px;height:4px;transform-origin:center;top:-2.8284271247px;left:0;bottom:0;right:0;margin:auto}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate::after{top:6px;width:12px}',
+              ],
+            },
+          ],
+        },
+      ],
+      () => [],
+      {
+        state: [
+          {
+            type: Input,
+          },
+        ],
+        disabled: [
+          {
+            type: Input,
+          },
+        ],
+        appearance: [
+          {
+            type: Input,
+          },
+        ],
       },
-      styles: ['.mat-pseudo-checkbox{border-radius:2px;cursor:pointer;display:inline-block;vertical-align:middle;box-sizing:border-box;position:relative;flex-shrink:0;transition:border-color 90ms cubic-bezier(0, 0, 0.2, 0.1),background-color 90ms cubic-bezier(0, 0, 0.2, 0.1)}.mat-pseudo-checkbox::after{position:absolute;opacity:0;content:"";border-bottom:2px solid currentColor;transition:opacity 90ms cubic-bezier(0, 0, 0.2, 0.1)}.mat-pseudo-checkbox._mat-animation-noopable{transition:none !important;animation:none !important}.mat-pseudo-checkbox._mat-animation-noopable::after{transition:none}.mat-pseudo-checkbox-disabled{cursor:default}.mat-pseudo-checkbox-indeterminate::after{left:1px;opacity:1;border-radius:2px}.mat-pseudo-checkbox-checked::after{left:1px;border-left:2px solid currentColor;transform:rotate(-45deg);opacity:1;box-sizing:content-box}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after,.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after{color:var(--mat-minimal-pseudo-checkbox-selected-checkmark-color, var(--mat-sys-primary))}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled::after,.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled::after{color:var(--mat-minimal-pseudo-checkbox-disabled-selected-checkmark-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full{border-color:var(--mat-full-pseudo-checkbox-unselected-icon-color, var(--mat-sys-on-surface-variant));border-width:2px;border-style:solid}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-disabled{border-color:var(--mat-full-pseudo-checkbox-disabled-unselected-icon-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate{background-color:var(--mat-full-pseudo-checkbox-selected-icon-color, var(--mat-sys-primary));border-color:rgba(0,0,0,0)}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate::after{color:var(--mat-full-pseudo-checkbox-selected-checkmark-color, var(--mat-sys-on-primary))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled{background-color:var(--mat-full-pseudo-checkbox-disabled-selected-icon-color, color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent))}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked.mat-pseudo-checkbox-disabled::after,.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate.mat-pseudo-checkbox-disabled::after{color:var(--mat-full-pseudo-checkbox-disabled-selected-checkmark-color, var(--mat-sys-surface))}.mat-pseudo-checkbox{width:18px;height:18px}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-checked::after{width:14px;height:6px;transform-origin:center;top:-4.2426406871px;left:0;bottom:0;right:0;margin:auto}.mat-pseudo-checkbox-minimal.mat-pseudo-checkbox-indeterminate::after{top:8px;width:16px}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-checked::after{width:10px;height:4px;transform-origin:center;top:-2.8284271247px;left:0;bottom:0;right:0;margin:auto}.mat-pseudo-checkbox-full.mat-pseudo-checkbox-indeterminate::after{top:6px;width:12px}']
-    }]
-  }], () => [], {
-    state: [{
-      type: Input
-    }],
-    disabled: [{
-      type: Input
-    }],
-    appearance: [{
-      type: Input
-    }]
-  });
+    );
 })();
 var MatPseudoCheckboxModule = class _MatPseudoCheckboxModule {
   static ɵfac = function MatPseudoCheckboxModule_Factory(__ngFactoryType__) {
@@ -4470,35 +4980,45 @@ var MatPseudoCheckboxModule = class _MatPseudoCheckboxModule {
   static ɵmod = ɵɵdefineNgModule({
     type: _MatPseudoCheckboxModule,
     imports: [MatCommonModule, MatPseudoCheckbox],
-    exports: [MatPseudoCheckbox]
+    exports: [MatPseudoCheckbox],
   });
   static ɵinj = ɵɵdefineInjector({
-    imports: [MatCommonModule]
+    imports: [MatCommonModule],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatPseudoCheckboxModule, [{
-    type: NgModule,
-    args: [{
-      imports: [MatCommonModule, MatPseudoCheckbox],
-      exports: [MatPseudoCheckbox]
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatPseudoCheckboxModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              imports: [MatCommonModule, MatPseudoCheckbox],
+              exports: [MatPseudoCheckbox],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
-var MAT_OPTION_PARENT_COMPONENT = new InjectionToken("MAT_OPTION_PARENT_COMPONENT");
-var MAT_OPTGROUP = new InjectionToken("MatOptgroup");
+var MAT_OPTION_PARENT_COMPONENT = new InjectionToken('MAT_OPTION_PARENT_COMPONENT');
+var MAT_OPTGROUP = new InjectionToken('MatOptgroup');
 var MatOptgroup = class _MatOptgroup {
   /** Label for the option group. */
   label;
   /** whether the option group is disabled. */
   disabled = false;
   /** Unique id for the underlying label. */
-  _labelId = inject(_IdGenerator).getId("mat-optgroup-label-");
+  _labelId = inject(_IdGenerator).getId('mat-optgroup-label-');
   /** Whether the group is in inert a11y mode. */
   _inert;
   constructor() {
     const parent = inject(MAT_OPTION_PARENT_COMPONENT, {
-      optional: true
+      optional: true,
     });
     this._inert = parent?.inertGroups ?? false;
   }
@@ -4507,80 +5027,114 @@ var MatOptgroup = class _MatOptgroup {
   };
   static ɵcmp = ɵɵdefineComponent({
     type: _MatOptgroup,
-    selectors: [["mat-optgroup"]],
-    hostAttrs: [1, "mat-mdc-optgroup"],
+    selectors: [['mat-optgroup']],
+    hostAttrs: [1, 'mat-mdc-optgroup'],
     hostVars: 3,
     hostBindings: function MatOptgroup_HostBindings(rf, ctx) {
       if (rf & 2) {
-        ɵɵattribute("role", ctx._inert ? null : "group")("aria-disabled", ctx._inert ? null : ctx.disabled.toString())("aria-labelledby", ctx._inert ? null : ctx._labelId);
+        ɵɵattribute('role', ctx._inert ? null : 'group')('aria-disabled', ctx._inert ? null : ctx.disabled.toString())(
+          'aria-labelledby',
+          ctx._inert ? null : ctx._labelId,
+        );
       }
     },
     inputs: {
-      label: "label",
-      disabled: [2, "disabled", "disabled", booleanAttribute]
+      label: 'label',
+      disabled: [2, 'disabled', 'disabled', booleanAttribute],
     },
-    exportAs: ["matOptgroup"],
-    features: [ɵɵProvidersFeature([{
-      provide: MAT_OPTGROUP,
-      useExisting: _MatOptgroup
-    }]), ɵɵInputTransformsFeature],
+    exportAs: ['matOptgroup'],
+    features: [
+      ɵɵProvidersFeature([
+        {
+          provide: MAT_OPTGROUP,
+          useExisting: _MatOptgroup,
+        },
+      ]),
+      ɵɵInputTransformsFeature,
+    ],
     ngContentSelectors: _c1,
     decls: 5,
     vars: 4,
-    consts: [["role", "presentation", 1, "mat-mdc-optgroup-label", 3, "id"], [1, "mdc-list-item__primary-text"]],
+    consts: [
+      ['role', 'presentation', 1, 'mat-mdc-optgroup-label', 3, 'id'],
+      [1, 'mdc-list-item__primary-text'],
+    ],
     template: function MatOptgroup_Template(rf, ctx) {
       if (rf & 1) {
         ɵɵprojectionDef(_c0);
-        ɵɵelementStart(0, "span", 0)(1, "span", 1);
+        ɵɵelementStart(0, 'span', 0)(1, 'span', 1);
         ɵɵtext(2);
         ɵɵprojection(3);
         ɵɵelementEnd()();
         ɵɵprojection(4, 1);
       }
       if (rf & 2) {
-        ɵɵclassProp("mdc-list-item--disabled", ctx.disabled);
-        ɵɵproperty("id", ctx._labelId);
+        ɵɵclassProp('mdc-list-item--disabled', ctx.disabled);
+        ɵɵproperty('id', ctx._labelId);
         ɵɵadvance(2);
-        ɵɵtextInterpolate1("", ctx.label, " ");
+        ɵɵtextInterpolate1('', ctx.label, ' ');
       }
     },
-    styles: [".mat-mdc-optgroup{color:var(--mat-optgroup-label-text-color, var(--mat-sys-on-surface-variant));font-family:var(--mat-optgroup-label-text-font, var(--mat-sys-title-small-font));line-height:var(--mat-optgroup-label-text-line-height, var(--mat-sys-title-small-line-height));font-size:var(--mat-optgroup-label-text-size, var(--mat-sys-title-small-size));letter-spacing:var(--mat-optgroup-label-text-tracking, var(--mat-sys-title-small-tracking));font-weight:var(--mat-optgroup-label-text-weight, var(--mat-sys-title-small-weight))}.mat-mdc-optgroup-label{display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;min-height:48px;padding:0 16px;outline:none}.mat-mdc-optgroup-label.mdc-list-item--disabled{opacity:.38}.mat-mdc-optgroup-label .mdc-list-item__primary-text{font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;font-family:inherit;text-decoration:inherit;text-transform:inherit;white-space:normal;color:inherit}"],
+    styles: [
+      '.mat-mdc-optgroup{color:var(--mat-optgroup-label-text-color, var(--mat-sys-on-surface-variant));font-family:var(--mat-optgroup-label-text-font, var(--mat-sys-title-small-font));line-height:var(--mat-optgroup-label-text-line-height, var(--mat-sys-title-small-line-height));font-size:var(--mat-optgroup-label-text-size, var(--mat-sys-title-small-size));letter-spacing:var(--mat-optgroup-label-text-tracking, var(--mat-sys-title-small-tracking));font-weight:var(--mat-optgroup-label-text-weight, var(--mat-sys-title-small-weight))}.mat-mdc-optgroup-label{display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;min-height:48px;padding:0 16px;outline:none}.mat-mdc-optgroup-label.mdc-list-item--disabled{opacity:.38}.mat-mdc-optgroup-label .mdc-list-item__primary-text{font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;font-family:inherit;text-decoration:inherit;text-transform:inherit;white-space:normal;color:inherit}',
+    ],
     encapsulation: 2,
-    changeDetection: 0
+    changeDetection: 0,
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatOptgroup, [{
-    type: Component,
-    args: [{
-      selector: "mat-optgroup",
-      exportAs: "matOptgroup",
-      encapsulation: ViewEncapsulation.None,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      host: {
-        "class": "mat-mdc-optgroup",
-        "[attr.role]": '_inert ? null : "group"',
-        "[attr.aria-disabled]": "_inert ? null : disabled.toString()",
-        "[attr.aria-labelledby]": "_inert ? null : _labelId"
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatOptgroup,
+      [
+        {
+          type: Component,
+          args: [
+            {
+              selector: 'mat-optgroup',
+              exportAs: 'matOptgroup',
+              encapsulation: ViewEncapsulation.None,
+              changeDetection: ChangeDetectionStrategy.OnPush,
+              host: {
+                class: 'mat-mdc-optgroup',
+                '[attr.role]': '_inert ? null : "group"',
+                '[attr.aria-disabled]': '_inert ? null : disabled.toString()',
+                '[attr.aria-labelledby]': '_inert ? null : _labelId',
+              },
+              providers: [
+                {
+                  provide: MAT_OPTGROUP,
+                  useExisting: MatOptgroup,
+                },
+              ],
+              template:
+                '<span\n  class="mat-mdc-optgroup-label"\n  role="presentation"\n  [class.mdc-list-item--disabled]="disabled"\n  [id]="_labelId">\n  <span class="mdc-list-item__primary-text">{{ label }} <ng-content></ng-content></span>\n</span>\n\n<ng-content select="mat-option, ng-container"></ng-content>\n',
+              styles: [
+                '.mat-mdc-optgroup{color:var(--mat-optgroup-label-text-color, var(--mat-sys-on-surface-variant));font-family:var(--mat-optgroup-label-text-font, var(--mat-sys-title-small-font));line-height:var(--mat-optgroup-label-text-line-height, var(--mat-sys-title-small-line-height));font-size:var(--mat-optgroup-label-text-size, var(--mat-sys-title-small-size));letter-spacing:var(--mat-optgroup-label-text-tracking, var(--mat-sys-title-small-tracking));font-weight:var(--mat-optgroup-label-text-weight, var(--mat-sys-title-small-weight))}.mat-mdc-optgroup-label{display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;min-height:48px;padding:0 16px;outline:none}.mat-mdc-optgroup-label.mdc-list-item--disabled{opacity:.38}.mat-mdc-optgroup-label .mdc-list-item__primary-text{font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;font-family:inherit;text-decoration:inherit;text-transform:inherit;white-space:normal;color:inherit}',
+              ],
+            },
+          ],
+        },
+      ],
+      () => [],
+      {
+        label: [
+          {
+            type: Input,
+          },
+        ],
+        disabled: [
+          {
+            type: Input,
+            args: [
+              {
+                transform: booleanAttribute,
+              },
+            ],
+          },
+        ],
       },
-      providers: [{
-        provide: MAT_OPTGROUP,
-        useExisting: MatOptgroup
-      }],
-      template: '<span\n  class="mat-mdc-optgroup-label"\n  role="presentation"\n  [class.mdc-list-item--disabled]="disabled"\n  [id]="_labelId">\n  <span class="mdc-list-item__primary-text">{{ label }} <ng-content></ng-content></span>\n</span>\n\n<ng-content select="mat-option, ng-container"></ng-content>\n',
-      styles: [".mat-mdc-optgroup{color:var(--mat-optgroup-label-text-color, var(--mat-sys-on-surface-variant));font-family:var(--mat-optgroup-label-text-font, var(--mat-sys-title-small-font));line-height:var(--mat-optgroup-label-text-line-height, var(--mat-sys-title-small-line-height));font-size:var(--mat-optgroup-label-text-size, var(--mat-sys-title-small-size));letter-spacing:var(--mat-optgroup-label-text-tracking, var(--mat-sys-title-small-tracking));font-weight:var(--mat-optgroup-label-text-weight, var(--mat-sys-title-small-weight))}.mat-mdc-optgroup-label{display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;min-height:48px;padding:0 16px;outline:none}.mat-mdc-optgroup-label.mdc-list-item--disabled{opacity:.38}.mat-mdc-optgroup-label .mdc-list-item__primary-text{font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;font-family:inherit;text-decoration:inherit;text-transform:inherit;white-space:normal;color:inherit}"]
-    }]
-  }], () => [], {
-    label: [{
-      type: Input
-    }],
-    disabled: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }]
-  });
+    );
 })();
 var MatOptionSelectionChange = class {
   source;
@@ -4594,16 +5148,16 @@ var MatOption = class _MatOption {
   _element = inject(ElementRef);
   _changeDetectorRef = inject(ChangeDetectorRef);
   _parent = inject(MAT_OPTION_PARENT_COMPONENT, {
-    optional: true
+    optional: true,
   });
   group = inject(MAT_OPTGROUP, {
-    optional: true
+    optional: true,
   });
   _signalDisableRipple = false;
   _selected = false;
   _active = false;
   _disabled = false;
-  _mostRecentViewValue = "";
+  _mostRecentViewValue = '';
   /** Whether the wrapping component is in multiple selection mode. */
   get multiple() {
     return this._parent && this._parent.multiple;
@@ -4615,10 +5169,10 @@ var MatOption = class _MatOption {
   /** The form value of the option. */
   value;
   /** The unique ID of the option. */
-  id = inject(_IdGenerator).getId("mat-option-");
+  id = inject(_IdGenerator).getId('mat-option-');
   /** Whether the option is disabled. */
   get disabled() {
-    return this.group && this.group.disabled || this._disabled;
+    return (this.group && this.group.disabled) || this._disabled;
   }
   set disabled(value) {
     this._disabled = value;
@@ -4657,7 +5211,7 @@ var MatOption = class _MatOption {
    * select's trigger.
    */
   get viewValue() {
-    return (this._text?.nativeElement.textContent || "").trim();
+    return (this._text?.nativeElement.textContent || '').trim();
   }
   /** Selects the option. */
   select(emitEvent = true) {
@@ -4682,7 +5236,7 @@ var MatOption = class _MatOption {
   /** Sets focus onto this option. */
   focus(_origin, options) {
     const element = this._getHostElement();
-    if (typeof element.focus === "function") {
+    if (typeof element.focus === 'function') {
       element.focus(options);
     }
   }
@@ -4735,7 +5289,7 @@ var MatOption = class _MatOption {
   // That's because `MatLegacyOption` use `MatOption` type in a few places such as
   // `MatOptionSelectionChange`. It is safe to delete this when `MatLegacyOption` is deleted.
   _getTabIndex() {
-    return this.disabled ? "-1" : "0";
+    return this.disabled ? '-1' : '0';
   }
   /** Gets the host DOM element. */
   _getHostElement() {
@@ -4764,56 +5318,95 @@ var MatOption = class _MatOption {
   };
   static ɵcmp = ɵɵdefineComponent({
     type: _MatOption,
-    selectors: [["mat-option"]],
+    selectors: [['mat-option']],
     viewQuery: function MatOption_Query(rf, ctx) {
       if (rf & 1) {
         ɵɵviewQuery(_c2, 7);
       }
       if (rf & 2) {
         let _t;
-        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx._text = _t.first);
+        ɵɵqueryRefresh((_t = ɵɵloadQuery())) && (ctx._text = _t.first);
       }
     },
-    hostAttrs: ["role", "option", 1, "mat-mdc-option", "mdc-list-item"],
+    hostAttrs: ['role', 'option', 1, 'mat-mdc-option', 'mdc-list-item'],
     hostVars: 11,
     hostBindings: function MatOption_HostBindings(rf, ctx) {
       if (rf & 1) {
-        ɵɵlistener("click", function MatOption_click_HostBindingHandler() {
+        ɵɵlistener('click', function MatOption_click_HostBindingHandler() {
           return ctx._selectViaInteraction();
-        })("keydown", function MatOption_keydown_HostBindingHandler($event) {
+        })('keydown', function MatOption_keydown_HostBindingHandler($event) {
           return ctx._handleKeydown($event);
         });
       }
       if (rf & 2) {
-        ɵɵhostProperty("id", ctx.id);
-        ɵɵattribute("aria-selected", ctx.selected)("aria-disabled", ctx.disabled.toString());
-        ɵɵclassProp("mdc-list-item--selected", ctx.selected)("mat-mdc-option-multiple", ctx.multiple)("mat-mdc-option-active", ctx.active)("mdc-list-item--disabled", ctx.disabled);
+        ɵɵhostProperty('id', ctx.id);
+        ɵɵattribute('aria-selected', ctx.selected)('aria-disabled', ctx.disabled.toString());
+        ɵɵclassProp('mdc-list-item--selected', ctx.selected)('mat-mdc-option-multiple', ctx.multiple)(
+          'mat-mdc-option-active',
+          ctx.active,
+        )('mdc-list-item--disabled', ctx.disabled);
       }
     },
     inputs: {
-      value: "value",
-      id: "id",
-      disabled: [2, "disabled", "disabled", booleanAttribute]
+      value: 'value',
+      id: 'id',
+      disabled: [2, 'disabled', 'disabled', booleanAttribute],
     },
     outputs: {
-      onSelectionChange: "onSelectionChange"
+      onSelectionChange: 'onSelectionChange',
     },
-    exportAs: ["matOption"],
+    exportAs: ['matOption'],
     features: [ɵɵInputTransformsFeature],
     ngContentSelectors: _c4,
     decls: 8,
     vars: 5,
-    consts: [["text", ""], ["aria-hidden", "true", 1, "mat-mdc-option-pseudo-checkbox", 3, "disabled", "state"], [1, "mdc-list-item__primary-text"], ["state", "checked", "aria-hidden", "true", "appearance", "minimal", 1, "mat-mdc-option-pseudo-checkbox", 3, "disabled"], [1, "cdk-visually-hidden"], ["aria-hidden", "true", "mat-ripple", "", 1, "mat-mdc-option-ripple", "mat-focus-indicator", 3, "matRippleTrigger", "matRippleDisabled"]],
+    consts: [
+      ['text', ''],
+      ['aria-hidden', 'true', 1, 'mat-mdc-option-pseudo-checkbox', 3, 'disabled', 'state'],
+      [1, 'mdc-list-item__primary-text'],
+      [
+        'state',
+        'checked',
+        'aria-hidden',
+        'true',
+        'appearance',
+        'minimal',
+        1,
+        'mat-mdc-option-pseudo-checkbox',
+        3,
+        'disabled',
+      ],
+      [1, 'cdk-visually-hidden'],
+      [
+        'aria-hidden',
+        'true',
+        'mat-ripple',
+        '',
+        1,
+        'mat-mdc-option-ripple',
+        'mat-focus-indicator',
+        3,
+        'matRippleTrigger',
+        'matRippleDisabled',
+      ],
+    ],
     template: function MatOption_Template(rf, ctx) {
       if (rf & 1) {
         ɵɵprojectionDef(_c3);
-        ɵɵtemplate(0, MatOption_Conditional_0_Template, 1, 2, "mat-pseudo-checkbox", 1);
+        ɵɵtemplate(0, MatOption_Conditional_0_Template, 1, 2, 'mat-pseudo-checkbox', 1);
         ɵɵprojection(1);
-        ɵɵelementStart(2, "span", 2, 0);
+        ɵɵelementStart(2, 'span', 2, 0);
         ɵɵprojection(4, 1);
         ɵɵelementEnd();
-        ɵɵtemplate(5, MatOption_Conditional_5_Template, 1, 1, "mat-pseudo-checkbox", 3)(6, MatOption_Conditional_6_Template, 2, 1, "span", 4);
-        ɵɵelement(7, "div", 5);
+        ɵɵtemplate(5, MatOption_Conditional_5_Template, 1, 1, 'mat-pseudo-checkbox', 3)(
+          6,
+          MatOption_Conditional_6_Template,
+          2,
+          1,
+          'span',
+          4,
+        );
+        ɵɵelement(7, 'div', 5);
       }
       if (rf & 2) {
         ɵɵconditional(ctx.multiple ? 0 : -1);
@@ -4822,47 +5415,54 @@ var MatOption = class _MatOption {
         ɵɵadvance();
         ɵɵconditional(ctx.group && ctx.group._inert ? 6 : -1);
         ɵɵadvance();
-        ɵɵproperty("matRippleTrigger", ctx._getHostElement())("matRippleDisabled", ctx.disabled || ctx.disableRipple);
+        ɵɵproperty('matRippleTrigger', ctx._getHostElement())('matRippleDisabled', ctx.disabled || ctx.disableRipple);
       }
     },
     dependencies: [MatPseudoCheckbox, MatRipple],
-    styles: ['.mat-mdc-option{-webkit-user-select:none;user-select:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;min-height:48px;padding:0 16px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);color:var(--mat-option-label-text-color, var(--mat-sys-on-surface));font-family:var(--mat-option-label-text-font, var(--mat-sys-label-large-font));line-height:var(--mat-option-label-text-line-height, var(--mat-sys-label-large-line-height));font-size:var(--mat-option-label-text-size, var(--mat-sys-body-large-size));letter-spacing:var(--mat-option-label-text-tracking, var(--mat-sys-label-large-tracking));font-weight:var(--mat-option-label-text-weight, var(--mat-sys-body-large-weight))}.mat-mdc-option:hover:not(.mdc-list-item--disabled){background-color:var(--mat-option-hover-state-layer-color, color-mix(in srgb, var(--mat-sys-on-surface) calc(var(--mat-sys-hover-state-layer-opacity) * 100%), transparent))}.mat-mdc-option:focus.mdc-list-item,.mat-mdc-option.mat-mdc-option-active.mdc-list-item{background-color:var(--mat-option-focus-state-layer-color, color-mix(in srgb, var(--mat-sys-on-surface) calc(var(--mat-sys-focus-state-layer-opacity) * 100%), transparent));outline:0}.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple){background-color:var(--mat-option-selected-state-layer-color, var(--mat-sys-secondary-container))}.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple) .mdc-list-item__primary-text{color:var(--mat-option-selected-state-label-text-color, var(--mat-sys-on-secondary-container))}.mat-mdc-option .mat-pseudo-checkbox{--mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--mat-option-selected-state-label-text-color, var(--mat-sys-on-secondary-container))}.mat-mdc-option.mdc-list-item{align-items:center;background:rgba(0,0,0,0)}.mat-mdc-option.mdc-list-item--disabled{cursor:default;pointer-events:none}.mat-mdc-option.mdc-list-item--disabled .mat-mdc-option-pseudo-checkbox,.mat-mdc-option.mdc-list-item--disabled .mdc-list-item__primary-text,.mat-mdc-option.mdc-list-item--disabled>mat-icon{opacity:.38}.mat-mdc-optgroup .mat-mdc-option:not(.mat-mdc-option-multiple){padding-left:32px}[dir=rtl] .mat-mdc-optgroup .mat-mdc-option:not(.mat-mdc-option-multiple){padding-left:16px;padding-right:32px}.mat-mdc-option .mat-icon,.mat-mdc-option .mat-pseudo-checkbox-full{margin-right:16px;flex-shrink:0}[dir=rtl] .mat-mdc-option .mat-icon,[dir=rtl] .mat-mdc-option .mat-pseudo-checkbox-full{margin-right:0;margin-left:16px}.mat-mdc-option .mat-pseudo-checkbox-minimal{margin-left:16px;flex-shrink:0}[dir=rtl] .mat-mdc-option .mat-pseudo-checkbox-minimal{margin-right:16px;margin-left:0}.mat-mdc-option .mat-mdc-option-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none}.mat-mdc-option .mdc-list-item__primary-text{white-space:normal;font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;font-family:inherit;text-decoration:inherit;text-transform:inherit;margin-right:auto}[dir=rtl] .mat-mdc-option .mdc-list-item__primary-text{margin-right:0;margin-left:auto}@media(forced-colors: active){.mat-mdc-option.mdc-list-item--selected:not(:has(.mat-mdc-option-pseudo-checkbox))::after{content:"";position:absolute;top:50%;right:16px;transform:translateY(-50%);width:10px;height:0;border-bottom:solid 10px;border-radius:10px}[dir=rtl] .mat-mdc-option.mdc-list-item--selected:not(:has(.mat-mdc-option-pseudo-checkbox))::after{right:auto;left:16px}}.mat-mdc-option-multiple{--mdc-list-list-item-selected-container-color:var(--mdc-list-list-item-container-color, transparent)}.mat-mdc-option-active .mat-focus-indicator::before{content:""}'],
+    styles: [
+      '.mat-mdc-option{-webkit-user-select:none;user-select:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;min-height:48px;padding:0 16px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);color:var(--mat-option-label-text-color, var(--mat-sys-on-surface));font-family:var(--mat-option-label-text-font, var(--mat-sys-label-large-font));line-height:var(--mat-option-label-text-line-height, var(--mat-sys-label-large-line-height));font-size:var(--mat-option-label-text-size, var(--mat-sys-body-large-size));letter-spacing:var(--mat-option-label-text-tracking, var(--mat-sys-label-large-tracking));font-weight:var(--mat-option-label-text-weight, var(--mat-sys-body-large-weight))}.mat-mdc-option:hover:not(.mdc-list-item--disabled){background-color:var(--mat-option-hover-state-layer-color, color-mix(in srgb, var(--mat-sys-on-surface) calc(var(--mat-sys-hover-state-layer-opacity) * 100%), transparent))}.mat-mdc-option:focus.mdc-list-item,.mat-mdc-option.mat-mdc-option-active.mdc-list-item{background-color:var(--mat-option-focus-state-layer-color, color-mix(in srgb, var(--mat-sys-on-surface) calc(var(--mat-sys-focus-state-layer-opacity) * 100%), transparent));outline:0}.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple){background-color:var(--mat-option-selected-state-layer-color, var(--mat-sys-secondary-container))}.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple) .mdc-list-item__primary-text{color:var(--mat-option-selected-state-label-text-color, var(--mat-sys-on-secondary-container))}.mat-mdc-option .mat-pseudo-checkbox{--mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--mat-option-selected-state-label-text-color, var(--mat-sys-on-secondary-container))}.mat-mdc-option.mdc-list-item{align-items:center;background:rgba(0,0,0,0)}.mat-mdc-option.mdc-list-item--disabled{cursor:default;pointer-events:none}.mat-mdc-option.mdc-list-item--disabled .mat-mdc-option-pseudo-checkbox,.mat-mdc-option.mdc-list-item--disabled .mdc-list-item__primary-text,.mat-mdc-option.mdc-list-item--disabled>mat-icon{opacity:.38}.mat-mdc-optgroup .mat-mdc-option:not(.mat-mdc-option-multiple){padding-left:32px}[dir=rtl] .mat-mdc-optgroup .mat-mdc-option:not(.mat-mdc-option-multiple){padding-left:16px;padding-right:32px}.mat-mdc-option .mat-icon,.mat-mdc-option .mat-pseudo-checkbox-full{margin-right:16px;flex-shrink:0}[dir=rtl] .mat-mdc-option .mat-icon,[dir=rtl] .mat-mdc-option .mat-pseudo-checkbox-full{margin-right:0;margin-left:16px}.mat-mdc-option .mat-pseudo-checkbox-minimal{margin-left:16px;flex-shrink:0}[dir=rtl] .mat-mdc-option .mat-pseudo-checkbox-minimal{margin-right:16px;margin-left:0}.mat-mdc-option .mat-mdc-option-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none}.mat-mdc-option .mdc-list-item__primary-text{white-space:normal;font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;font-family:inherit;text-decoration:inherit;text-transform:inherit;margin-right:auto}[dir=rtl] .mat-mdc-option .mdc-list-item__primary-text{margin-right:0;margin-left:auto}@media(forced-colors: active){.mat-mdc-option.mdc-list-item--selected:not(:has(.mat-mdc-option-pseudo-checkbox))::after{content:"";position:absolute;top:50%;right:16px;transform:translateY(-50%);width:10px;height:0;border-bottom:solid 10px;border-radius:10px}[dir=rtl] .mat-mdc-option.mdc-list-item--selected:not(:has(.mat-mdc-option-pseudo-checkbox))::after{right:auto;left:16px}}.mat-mdc-option-multiple{--mdc-list-list-item-selected-container-color:var(--mdc-list-list-item-container-color, transparent)}.mat-mdc-option-active .mat-focus-indicator::before{content:""}',
+    ],
     encapsulation: 2,
-    changeDetection: 0
+    changeDetection: 0,
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatOption, [{
-    type: Component,
-    args: [{
-      selector: "mat-option",
-      exportAs: "matOption",
-      host: {
-        "role": "option",
-        "[class.mdc-list-item--selected]": "selected",
-        "[class.mat-mdc-option-multiple]": "multiple",
-        "[class.mat-mdc-option-active]": "active",
-        "[class.mdc-list-item--disabled]": "disabled",
-        "[id]": "id",
-        // Set aria-selected to false for non-selected items and true for selected items. Conform to
-        // [WAI ARIA Listbox authoring practices guide](
-        //  https://www.w3.org/WAI/ARIA/apg/patterns/listbox/), "If any options are selected, each
-        // selected option has either aria-selected or aria-checked  set to true. All options that are
-        // selectable but not selected have either aria-selected or aria-checked set to false." Align
-        // aria-selected implementation of Chips and List components.
-        //
-        // Set `aria-selected="false"` on not-selected listbox options to fix VoiceOver announcing
-        // every option as "selected" (#21491).
-        "[attr.aria-selected]": "selected",
-        "[attr.aria-disabled]": "disabled.toString()",
-        "(click)": "_selectViaInteraction()",
-        "(keydown)": "_handleKeydown($event)",
-        "class": "mat-mdc-option mdc-list-item"
-      },
-      encapsulation: ViewEncapsulation.None,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      imports: [MatPseudoCheckbox, MatRipple],
-      template: `<!-- Set aria-hidden="true" to this DOM node and other decorative nodes in this file. This might
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatOption,
+      [
+        {
+          type: Component,
+          args: [
+            {
+              selector: 'mat-option',
+              exportAs: 'matOption',
+              host: {
+                role: 'option',
+                '[class.mdc-list-item--selected]': 'selected',
+                '[class.mat-mdc-option-multiple]': 'multiple',
+                '[class.mat-mdc-option-active]': 'active',
+                '[class.mdc-list-item--disabled]': 'disabled',
+                '[id]': 'id',
+                // Set aria-selected to false for non-selected items and true for selected items. Conform to
+                // [WAI ARIA Listbox authoring practices guide](
+                //  https://www.w3.org/WAI/ARIA/apg/patterns/listbox/), "If any options are selected, each
+                // selected option has either aria-selected or aria-checked  set to true. All options that are
+                // selectable but not selected have either aria-selected or aria-checked set to false." Align
+                // aria-selected implementation of Chips and List components.
+                //
+                // Set `aria-selected="false"` on not-selected listbox options to fix VoiceOver announcing
+                // every option as "selected" (#21491).
+                '[attr.aria-selected]': 'selected',
+                '[attr.aria-disabled]': 'disabled.toString()',
+                '(click)': '_selectViaInteraction()',
+                '(keydown)': '_handleKeydown($event)',
+                class: 'mat-mdc-option mdc-list-item',
+              },
+              encapsulation: ViewEncapsulation.None,
+              changeDetection: ChangeDetectionStrategy.OnPush,
+              imports: [MatPseudoCheckbox, MatRipple],
+              template: `<!-- Set aria-hidden="true" to this DOM node and other decorative nodes in this file. This might
  be contributing to issue where sometimes VoiceOver focuses on a TextNode in the a11y tree instead
  of the Option node (#23202). Most assistive technology will generally ignore non-role,
  non-text-content elements. Adding aria-hidden seems to make VoiceOver behave more consistently. -->
@@ -4897,31 +5497,53 @@ var MatOption = class _MatOption {
      [matRippleTrigger]="_getHostElement()" [matRippleDisabled]="disabled || disableRipple">
 </div>
 `,
-      styles: ['.mat-mdc-option{-webkit-user-select:none;user-select:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;min-height:48px;padding:0 16px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);color:var(--mat-option-label-text-color, var(--mat-sys-on-surface));font-family:var(--mat-option-label-text-font, var(--mat-sys-label-large-font));line-height:var(--mat-option-label-text-line-height, var(--mat-sys-label-large-line-height));font-size:var(--mat-option-label-text-size, var(--mat-sys-body-large-size));letter-spacing:var(--mat-option-label-text-tracking, var(--mat-sys-label-large-tracking));font-weight:var(--mat-option-label-text-weight, var(--mat-sys-body-large-weight))}.mat-mdc-option:hover:not(.mdc-list-item--disabled){background-color:var(--mat-option-hover-state-layer-color, color-mix(in srgb, var(--mat-sys-on-surface) calc(var(--mat-sys-hover-state-layer-opacity) * 100%), transparent))}.mat-mdc-option:focus.mdc-list-item,.mat-mdc-option.mat-mdc-option-active.mdc-list-item{background-color:var(--mat-option-focus-state-layer-color, color-mix(in srgb, var(--mat-sys-on-surface) calc(var(--mat-sys-focus-state-layer-opacity) * 100%), transparent));outline:0}.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple){background-color:var(--mat-option-selected-state-layer-color, var(--mat-sys-secondary-container))}.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple) .mdc-list-item__primary-text{color:var(--mat-option-selected-state-label-text-color, var(--mat-sys-on-secondary-container))}.mat-mdc-option .mat-pseudo-checkbox{--mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--mat-option-selected-state-label-text-color, var(--mat-sys-on-secondary-container))}.mat-mdc-option.mdc-list-item{align-items:center;background:rgba(0,0,0,0)}.mat-mdc-option.mdc-list-item--disabled{cursor:default;pointer-events:none}.mat-mdc-option.mdc-list-item--disabled .mat-mdc-option-pseudo-checkbox,.mat-mdc-option.mdc-list-item--disabled .mdc-list-item__primary-text,.mat-mdc-option.mdc-list-item--disabled>mat-icon{opacity:.38}.mat-mdc-optgroup .mat-mdc-option:not(.mat-mdc-option-multiple){padding-left:32px}[dir=rtl] .mat-mdc-optgroup .mat-mdc-option:not(.mat-mdc-option-multiple){padding-left:16px;padding-right:32px}.mat-mdc-option .mat-icon,.mat-mdc-option .mat-pseudo-checkbox-full{margin-right:16px;flex-shrink:0}[dir=rtl] .mat-mdc-option .mat-icon,[dir=rtl] .mat-mdc-option .mat-pseudo-checkbox-full{margin-right:0;margin-left:16px}.mat-mdc-option .mat-pseudo-checkbox-minimal{margin-left:16px;flex-shrink:0}[dir=rtl] .mat-mdc-option .mat-pseudo-checkbox-minimal{margin-right:16px;margin-left:0}.mat-mdc-option .mat-mdc-option-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none}.mat-mdc-option .mdc-list-item__primary-text{white-space:normal;font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;font-family:inherit;text-decoration:inherit;text-transform:inherit;margin-right:auto}[dir=rtl] .mat-mdc-option .mdc-list-item__primary-text{margin-right:0;margin-left:auto}@media(forced-colors: active){.mat-mdc-option.mdc-list-item--selected:not(:has(.mat-mdc-option-pseudo-checkbox))::after{content:"";position:absolute;top:50%;right:16px;transform:translateY(-50%);width:10px;height:0;border-bottom:solid 10px;border-radius:10px}[dir=rtl] .mat-mdc-option.mdc-list-item--selected:not(:has(.mat-mdc-option-pseudo-checkbox))::after{right:auto;left:16px}}.mat-mdc-option-multiple{--mdc-list-list-item-selected-container-color:var(--mdc-list-list-item-container-color, transparent)}.mat-mdc-option-active .mat-focus-indicator::before{content:""}']
-    }]
-  }], () => [], {
-    value: [{
-      type: Input
-    }],
-    id: [{
-      type: Input
-    }],
-    disabled: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    onSelectionChange: [{
-      type: Output
-    }],
-    _text: [{
-      type: ViewChild,
-      args: ["text", {
-        static: true
-      }]
-    }]
-  });
+              styles: [
+                '.mat-mdc-option{-webkit-user-select:none;user-select:none;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:flex;position:relative;align-items:center;justify-content:flex-start;overflow:hidden;min-height:48px;padding:0 16px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);color:var(--mat-option-label-text-color, var(--mat-sys-on-surface));font-family:var(--mat-option-label-text-font, var(--mat-sys-label-large-font));line-height:var(--mat-option-label-text-line-height, var(--mat-sys-label-large-line-height));font-size:var(--mat-option-label-text-size, var(--mat-sys-body-large-size));letter-spacing:var(--mat-option-label-text-tracking, var(--mat-sys-label-large-tracking));font-weight:var(--mat-option-label-text-weight, var(--mat-sys-body-large-weight))}.mat-mdc-option:hover:not(.mdc-list-item--disabled){background-color:var(--mat-option-hover-state-layer-color, color-mix(in srgb, var(--mat-sys-on-surface) calc(var(--mat-sys-hover-state-layer-opacity) * 100%), transparent))}.mat-mdc-option:focus.mdc-list-item,.mat-mdc-option.mat-mdc-option-active.mdc-list-item{background-color:var(--mat-option-focus-state-layer-color, color-mix(in srgb, var(--mat-sys-on-surface) calc(var(--mat-sys-focus-state-layer-opacity) * 100%), transparent));outline:0}.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple){background-color:var(--mat-option-selected-state-layer-color, var(--mat-sys-secondary-container))}.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple) .mdc-list-item__primary-text{color:var(--mat-option-selected-state-label-text-color, var(--mat-sys-on-secondary-container))}.mat-mdc-option .mat-pseudo-checkbox{--mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--mat-option-selected-state-label-text-color, var(--mat-sys-on-secondary-container))}.mat-mdc-option.mdc-list-item{align-items:center;background:rgba(0,0,0,0)}.mat-mdc-option.mdc-list-item--disabled{cursor:default;pointer-events:none}.mat-mdc-option.mdc-list-item--disabled .mat-mdc-option-pseudo-checkbox,.mat-mdc-option.mdc-list-item--disabled .mdc-list-item__primary-text,.mat-mdc-option.mdc-list-item--disabled>mat-icon{opacity:.38}.mat-mdc-optgroup .mat-mdc-option:not(.mat-mdc-option-multiple){padding-left:32px}[dir=rtl] .mat-mdc-optgroup .mat-mdc-option:not(.mat-mdc-option-multiple){padding-left:16px;padding-right:32px}.mat-mdc-option .mat-icon,.mat-mdc-option .mat-pseudo-checkbox-full{margin-right:16px;flex-shrink:0}[dir=rtl] .mat-mdc-option .mat-icon,[dir=rtl] .mat-mdc-option .mat-pseudo-checkbox-full{margin-right:0;margin-left:16px}.mat-mdc-option .mat-pseudo-checkbox-minimal{margin-left:16px;flex-shrink:0}[dir=rtl] .mat-mdc-option .mat-pseudo-checkbox-minimal{margin-right:16px;margin-left:0}.mat-mdc-option .mat-mdc-option-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none}.mat-mdc-option .mdc-list-item__primary-text{white-space:normal;font-size:inherit;font-weight:inherit;letter-spacing:inherit;line-height:inherit;font-family:inherit;text-decoration:inherit;text-transform:inherit;margin-right:auto}[dir=rtl] .mat-mdc-option .mdc-list-item__primary-text{margin-right:0;margin-left:auto}@media(forced-colors: active){.mat-mdc-option.mdc-list-item--selected:not(:has(.mat-mdc-option-pseudo-checkbox))::after{content:"";position:absolute;top:50%;right:16px;transform:translateY(-50%);width:10px;height:0;border-bottom:solid 10px;border-radius:10px}[dir=rtl] .mat-mdc-option.mdc-list-item--selected:not(:has(.mat-mdc-option-pseudo-checkbox))::after{right:auto;left:16px}}.mat-mdc-option-multiple{--mdc-list-list-item-selected-container-color:var(--mdc-list-list-item-container-color, transparent)}.mat-mdc-option-active .mat-focus-indicator::before{content:""}',
+              ],
+            },
+          ],
+        },
+      ],
+      () => [],
+      {
+        value: [
+          {
+            type: Input,
+          },
+        ],
+        id: [
+          {
+            type: Input,
+          },
+        ],
+        disabled: [
+          {
+            type: Input,
+            args: [
+              {
+                transform: booleanAttribute,
+              },
+            ],
+          },
+        ],
+        onSelectionChange: [
+          {
+            type: Output,
+          },
+        ],
+        _text: [
+          {
+            type: ViewChild,
+            args: [
+              'text',
+              {
+                static: true,
+              },
+            ],
+          },
+        ],
+      },
+    );
 })();
 function _countGroupLabelsBeforeOption(optionIndex, options, optionGroups) {
   if (optionGroups.length) {
@@ -4953,38 +5575,48 @@ var MatOptionModule = class _MatOptionModule {
   static ɵmod = ɵɵdefineNgModule({
     type: _MatOptionModule,
     imports: [MatRippleModule, MatCommonModule, MatPseudoCheckboxModule, MatOption, MatOptgroup],
-    exports: [MatOption, MatOptgroup]
+    exports: [MatOption, MatOptgroup],
   });
   static ɵinj = ɵɵdefineInjector({
-    imports: [MatRippleModule, MatCommonModule, MatPseudoCheckboxModule]
+    imports: [MatRippleModule, MatCommonModule, MatPseudoCheckboxModule],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatOptionModule, [{
-    type: NgModule,
-    args: [{
-      imports: [MatRippleModule, MatCommonModule, MatPseudoCheckboxModule, MatOption, MatOptgroup],
-      exports: [MatOption, MatOptgroup]
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatOptionModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              imports: [MatRippleModule, MatCommonModule, MatPseudoCheckboxModule, MatOption, MatOptgroup],
+              exports: [MatOption, MatOptgroup],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var eventListenerOptions = {
-  capture: true
+  capture: true,
 };
-var rippleInteractionEvents = ["focus", "mousedown", "mouseenter", "touchstart"];
-var matRippleUninitialized = "mat-ripple-loader-uninitialized";
-var matRippleClassName = "mat-ripple-loader-class-name";
-var matRippleCentered = "mat-ripple-loader-centered";
-var matRippleDisabled = "mat-ripple-loader-disabled";
+var rippleInteractionEvents = ['focus', 'mousedown', 'mouseenter', 'touchstart'];
+var matRippleUninitialized = 'mat-ripple-loader-uninitialized';
+var matRippleClassName = 'mat-ripple-loader-class-name';
+var matRippleCentered = 'mat-ripple-loader-centered';
+var matRippleDisabled = 'mat-ripple-loader-disabled';
 var MatRippleLoader = class _MatRippleLoader {
   _document = inject(DOCUMENT, {
-    optional: true
+    optional: true,
   });
   _animationMode = inject(ANIMATION_MODULE_TYPE, {
-    optional: true
+    optional: true,
   });
   _globalRippleOptions = inject(MAT_RIPPLE_GLOBAL_OPTIONS, {
-    optional: true
+    optional: true,
   });
   _platform = inject(Platform);
   _ngZone = inject(NgZone);
@@ -5013,15 +5645,15 @@ var MatRippleLoader = class _MatRippleLoader {
    * element so that it can later be retrived & used when the ripple is actually created.
    */
   configureRipple(host, config) {
-    host.setAttribute(matRippleUninitialized, this._globalRippleOptions?.namespace ?? "");
+    host.setAttribute(matRippleUninitialized, this._globalRippleOptions?.namespace ?? '');
     if (config.className || !host.hasAttribute(matRippleClassName)) {
-      host.setAttribute(matRippleClassName, config.className || "");
+      host.setAttribute(matRippleClassName, config.className || '');
     }
     if (config.centered) {
-      host.setAttribute(matRippleCentered, "");
+      host.setAttribute(matRippleCentered, '');
     }
     if (config.disabled) {
-      host.setAttribute(matRippleDisabled, "");
+      host.setAttribute(matRippleDisabled, '');
     }
   }
   /** Sets the disabled state on the ripple instance corresponding to the given host element. */
@@ -5034,7 +5666,7 @@ var MatRippleLoader = class _MatRippleLoader {
         ripple.renderer.setupTriggerEvents(host);
       }
     } else if (disabled) {
-      host.setAttribute(matRippleDisabled, "");
+      host.setAttribute(matRippleDisabled, '');
     } else {
       host.removeAttribute(matRippleDisabled);
     }
@@ -5046,7 +5678,9 @@ var MatRippleLoader = class _MatRippleLoader {
   _onInteraction = (event) => {
     const eventTarget = _getEventTarget(event);
     if (eventTarget instanceof HTMLElement) {
-      const element = eventTarget.closest(`[${matRippleUninitialized}="${this._globalRippleOptions?.namespace ?? ""}"]`);
+      const element = eventTarget.closest(
+        `[${matRippleUninitialized}="${this._globalRippleOptions?.namespace ?? ''}"]`,
+      );
       if (element) {
         this._createRipple(element);
       }
@@ -5057,14 +5691,18 @@ var MatRippleLoader = class _MatRippleLoader {
     if (!this._document || this._hosts.has(host)) {
       return;
     }
-    host.querySelector(".mat-ripple")?.remove();
-    const rippleEl = this._document.createElement("span");
-    rippleEl.classList.add("mat-ripple", host.getAttribute(matRippleClassName));
+    host.querySelector('.mat-ripple')?.remove();
+    const rippleEl = this._document.createElement('span');
+    rippleEl.classList.add('mat-ripple', host.getAttribute(matRippleClassName));
     host.append(rippleEl);
-    const isNoopAnimations = this._animationMode === "NoopAnimations";
+    const isNoopAnimations = this._animationMode === 'NoopAnimations';
     const globalOptions = this._globalRippleOptions;
-    const enterDuration = isNoopAnimations ? 0 : globalOptions?.animation?.enterDuration ?? defaultRippleAnimationConfig.enterDuration;
-    const exitDuration = isNoopAnimations ? 0 : globalOptions?.animation?.exitDuration ?? defaultRippleAnimationConfig.exitDuration;
+    const enterDuration = isNoopAnimations
+      ? 0
+      : globalOptions?.animation?.enterDuration ?? defaultRippleAnimationConfig.enterDuration;
+    const exitDuration = isNoopAnimations
+      ? 0
+      : globalOptions?.animation?.exitDuration ?? defaultRippleAnimationConfig.exitDuration;
     const target = {
       rippleDisabled: isNoopAnimations || globalOptions?.disabled || host.hasAttribute(matRippleDisabled),
       rippleConfig: {
@@ -5072,9 +5710,9 @@ var MatRippleLoader = class _MatRippleLoader {
         terminateOnPointerUp: globalOptions?.terminateOnPointerUp,
         animation: {
           enterDuration,
-          exitDuration
-        }
-      }
+          exitDuration,
+        },
+      },
     };
     const renderer = new RippleRenderer(target, this._ngZone, rippleEl, this._platform, this._injector);
     const hasSetUpEvents = !target.rippleDisabled;
@@ -5084,7 +5722,7 @@ var MatRippleLoader = class _MatRippleLoader {
     this._hosts.set(host, {
       target,
       renderer,
-      hasSetUpEvents
+      hasSetUpEvents,
     });
     host.removeAttribute(matRippleUninitialized);
   }
@@ -5101,16 +5739,26 @@ var MatRippleLoader = class _MatRippleLoader {
   static ɵprov = ɵɵdefineInjectable({
     token: _MatRippleLoader,
     factory: _MatRippleLoader.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatRippleLoader, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      MatRippleLoader,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var _MatInternalFormField = class __MatInternalFormField {
   /** Position of the label relative to the content. */
@@ -5120,16 +5768,16 @@ var _MatInternalFormField = class __MatInternalFormField {
   };
   static ɵcmp = ɵɵdefineComponent({
     type: __MatInternalFormField,
-    selectors: [["div", "mat-internal-form-field", ""]],
-    hostAttrs: [1, "mdc-form-field", "mat-internal-form-field"],
+    selectors: [['div', 'mat-internal-form-field', '']],
+    hostAttrs: [1, 'mdc-form-field', 'mat-internal-form-field'],
     hostVars: 2,
     hostBindings: function _MatInternalFormField_HostBindings(rf, ctx) {
       if (rf & 2) {
-        ɵɵclassProp("mdc-form-field--align-end", ctx.labelPosition === "before");
+        ɵɵclassProp('mdc-form-field--align-end', ctx.labelPosition === 'before');
       }
     },
     inputs: {
-      labelPosition: "labelPosition"
+      labelPosition: 'labelPosition',
     },
     attrs: _c5,
     ngContentSelectors: _c6,
@@ -5141,33 +5789,51 @@ var _MatInternalFormField = class __MatInternalFormField {
         ɵɵprojection(0);
       }
     },
-    styles: [".mat-internal-form-field{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-flex;align-items:center;vertical-align:middle}.mat-internal-form-field>label{margin-left:0;margin-right:auto;padding-left:4px;padding-right:0;order:0}[dir=rtl] .mat-internal-form-field>label{margin-left:auto;margin-right:0;padding-left:0;padding-right:4px}.mdc-form-field--align-end>label{margin-left:auto;margin-right:0;padding-left:0;padding-right:4px;order:-1}[dir=rtl] .mdc-form-field--align-end .mdc-form-field--align-end label{margin-left:0;margin-right:auto;padding-left:4px;padding-right:0}"],
+    styles: [
+      '.mat-internal-form-field{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-flex;align-items:center;vertical-align:middle}.mat-internal-form-field>label{margin-left:0;margin-right:auto;padding-left:4px;padding-right:0;order:0}[dir=rtl] .mat-internal-form-field>label{margin-left:auto;margin-right:0;padding-left:0;padding-right:4px}.mdc-form-field--align-end>label{margin-left:auto;margin-right:0;padding-left:0;padding-right:4px;order:-1}[dir=rtl] .mdc-form-field--align-end .mdc-form-field--align-end label{margin-left:0;margin-right:auto;padding-left:4px;padding-right:0}',
+    ],
     encapsulation: 2,
-    changeDetection: 0
+    changeDetection: 0,
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(_MatInternalFormField, [{
-    type: Component,
-    args: [{
-      selector: "div[mat-internal-form-field]",
-      template: "<ng-content></ng-content>",
-      encapsulation: ViewEncapsulation.None,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      host: {
-        "class": "mdc-form-field mat-internal-form-field",
-        "[class.mdc-form-field--align-end]": 'labelPosition === "before"'
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      _MatInternalFormField,
+      [
+        {
+          type: Component,
+          args: [
+            {
+              selector: 'div[mat-internal-form-field]',
+              template: '<ng-content></ng-content>',
+              encapsulation: ViewEncapsulation.None,
+              changeDetection: ChangeDetectionStrategy.OnPush,
+              host: {
+                class: 'mdc-form-field mat-internal-form-field',
+                '[class.mdc-form-field--align-end]': 'labelPosition === "before"',
+              },
+              styles: [
+                '.mat-internal-form-field{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-flex;align-items:center;vertical-align:middle}.mat-internal-form-field>label{margin-left:0;margin-right:auto;padding-left:4px;padding-right:0;order:0}[dir=rtl] .mat-internal-form-field>label{margin-left:auto;margin-right:0;padding-left:0;padding-right:4px}.mdc-form-field--align-end>label{margin-left:auto;margin-right:0;padding-left:0;padding-right:4px;order:-1}[dir=rtl] .mdc-form-field--align-end .mdc-form-field--align-end label{margin-left:0;margin-right:auto;padding-left:4px;padding-right:0}',
+              ],
+            },
+          ],
+        },
+      ],
+      null,
+      {
+        labelPosition: [
+          {
+            type: Input,
+            args: [
+              {
+                required: true,
+              },
+            ],
+          },
+        ],
       },
-      styles: [".mat-internal-form-field{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;display:inline-flex;align-items:center;vertical-align:middle}.mat-internal-form-field>label{margin-left:0;margin-right:auto;padding-left:4px;padding-right:0;order:0}[dir=rtl] .mat-internal-form-field>label{margin-left:auto;margin-right:0;padding-left:0;padding-right:4px}.mdc-form-field--align-end>label{margin-left:auto;margin-right:0;padding-left:0;padding-right:4px;order:-1}[dir=rtl] .mdc-form-field--align-end .mdc-form-field--align-end label{margin-left:0;margin-right:auto;padding-left:4px;padding-right:0}"]
-    }]
-  }], null, {
-    labelPosition: [{
-      type: Input,
-      args: [{
-        required: true
-      }]
-    }]
-  });
+    );
 })();
 
 export {
@@ -5228,6 +5894,6 @@ export {
   _getOptionScrollPosition,
   MatOptionModule,
   MatRippleLoader,
-  _MatInternalFormField
+  _MatInternalFormField,
 };
 //# sourceMappingURL=chunk-H7FL5DP7.js.map

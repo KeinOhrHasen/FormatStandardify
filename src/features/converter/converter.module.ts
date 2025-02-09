@@ -20,7 +20,7 @@ import { ConverterComponent } from './converter.component';
     // MatSelectModule,
     // MatIconModule,
     // MatTooltipModule,
-    ConverterComponent
-  ]
+    ConverterComponent,
+  ],
 })
-export class ConverterModule { }
+export class ConverterModule {}

@@ -6,14 +6,13 @@ import {
   isObservable,
   of,
   setClassMetadata,
-  ɵɵdefineInjectable
-} from "./chunk-S5STJILQ.js";
+  ɵɵdefineInjectable,
+} from './chunk-S5STJILQ.js';
 
 // node_modules/@angular/cdk/fesm2022/collections.mjs
-var DataSource = class {
-};
+var DataSource = class {};
 function isDataSource(value) {
-  return value && typeof value.connect === "function" && !(value instanceof ConnectableObservable);
+  return value && typeof value.connect === 'function' && !(value instanceof ConnectableObservable);
 }
 var ArrayDataSource = class extends DataSource {
   _data;
@@ -24,17 +23,16 @@ var ArrayDataSource = class extends DataSource {
   connect() {
     return isObservable(this._data) ? this._data : of(this._data);
   }
-  disconnect() {
-  }
+  disconnect() {}
 };
 var _ViewRepeaterOperation;
-(function(_ViewRepeaterOperation2) {
-  _ViewRepeaterOperation2[_ViewRepeaterOperation2["REPLACED"] = 0] = "REPLACED";
-  _ViewRepeaterOperation2[_ViewRepeaterOperation2["INSERTED"] = 1] = "INSERTED";
-  _ViewRepeaterOperation2[_ViewRepeaterOperation2["MOVED"] = 2] = "MOVED";
-  _ViewRepeaterOperation2[_ViewRepeaterOperation2["REMOVED"] = 3] = "REMOVED";
+(function (_ViewRepeaterOperation2) {
+  _ViewRepeaterOperation2[(_ViewRepeaterOperation2['REPLACED'] = 0)] = 'REPLACED';
+  _ViewRepeaterOperation2[(_ViewRepeaterOperation2['INSERTED'] = 1)] = 'INSERTED';
+  _ViewRepeaterOperation2[(_ViewRepeaterOperation2['MOVED'] = 2)] = 'MOVED';
+  _ViewRepeaterOperation2[(_ViewRepeaterOperation2['REMOVED'] = 3)] = 'REMOVED';
 })(_ViewRepeaterOperation || (_ViewRepeaterOperation = {}));
-var _VIEW_REPEATER_STRATEGY = new InjectionToken("_ViewRepeater");
+var _VIEW_REPEATER_STRATEGY = new InjectionToken('_ViewRepeater');
 var _RecycleViewRepeaterStrategy = class {
   /**
    * The size of the cache used to store unused views.
@@ -69,7 +67,7 @@ var _RecycleViewRepeaterStrategy = class {
         itemViewChanged({
           context: view?.context,
           operation,
-          record
+          record,
         });
       }
     });
@@ -201,7 +199,9 @@ var SelectionModel = class {
     const oldValues = this.selected;
     const newSelectedSet = new Set(values);
     values.forEach((value) => this._markSelected(value));
-    oldValues.filter((value) => !newSelectedSet.has(this._getConcreteValue(value, newSelectedSet))).forEach((value) => this._unmarkSelected(value));
+    oldValues
+      .filter((value) => !newSelectedSet.has(this._getConcreteValue(value, newSelectedSet)))
+      .forEach((value) => this._unmarkSelected(value));
     const changed = this._hasQueuedChanges();
     this._emitChangeEvent();
     return changed;
@@ -269,7 +269,7 @@ var SelectionModel = class {
       this.changed.next({
         source: this,
         added: this._selectedToEmit,
-        removed: this._deselectedToEmit
+        removed: this._deselectedToEmit,
       });
       this._deselectedToEmit = [];
       this._selectedToEmit = [];
@@ -311,7 +311,7 @@ var SelectionModel = class {
    * including multiple values while the selection model is not supporting multiple values.
    */
   _verifyValueAssignment(values) {
-    if (values.length > 1 && !this._multiple && (typeof ngDevMode === "undefined" || ngDevMode)) {
+    if (values.length > 1 && !this._multiple && (typeof ngDevMode === 'undefined' || ngDevMode)) {
       throw getMultipleValuesInSingleSelectionError();
     }
   }
@@ -335,7 +335,7 @@ var SelectionModel = class {
   }
 };
 function getMultipleValuesInSingleSelectionError() {
-  return Error("Cannot pass multiple values into SelectionModel with single-value mode.");
+  return Error('Cannot pass multiple values into SelectionModel with single-value mode.');
 }
 var UniqueSelectionDispatcher = class _UniqueSelectionDispatcher {
   _listeners = [];
@@ -370,16 +370,26 @@ var UniqueSelectionDispatcher = class _UniqueSelectionDispatcher {
   static ɵprov = ɵɵdefineInjectable({
     token: _UniqueSelectionDispatcher,
     factory: _UniqueSelectionDispatcher.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(UniqueSelectionDispatcher, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      UniqueSelectionDispatcher,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 
 export {
@@ -388,6 +398,6 @@ export {
   _VIEW_REPEATER_STRATEGY,
   _RecycleViewRepeaterStrategy,
   SelectionModel,
-  UniqueSelectionDispatcher
+  UniqueSelectionDispatcher,
 };
 //# sourceMappingURL=chunk-6UTGIVSC.js.map

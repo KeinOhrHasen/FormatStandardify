@@ -1,6 +1,4 @@
-import {
-  isPlatformBrowser
-} from "./chunk-HKR3VAT5.js";
+import { isPlatformBrowser } from './chunk-HKR3VAT5.js';
 import {
   ElementRef,
   Injectable,
@@ -10,12 +8,12 @@ import {
   setClassMetadata,
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
-  ɵɵdefineNgModule
-} from "./chunk-S5STJILQ.js";
+  ɵɵdefineNgModule,
+} from './chunk-S5STJILQ.js';
 
 // node_modules/@angular/cdk/fesm2022/coercion.mjs
 function coerceBooleanProperty(value) {
-  return value != null && `${value}` !== "false";
+  return value != null && `${value}` !== 'false';
 }
 function coerceNumberProperty(value, fallbackValue = 0) {
   if (_isNumberValue(value)) {
@@ -31,9 +29,9 @@ function coerceArray(value) {
 }
 function coerceCssPixelValue(value) {
   if (value == null) {
-    return "";
+    return '';
   }
-  return typeof value === "string" ? value : `${value}px`;
+  return typeof value === 'string' ? value : `${value}px`;
 }
 function coerceElement(elementOrRef) {
   return elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
@@ -42,7 +40,7 @@ function coerceElement(elementOrRef) {
 // node_modules/@angular/cdk/fesm2022/platform.mjs
 var hasV8BreakIterator;
 try {
-  hasV8BreakIterator = typeof Intl !== "undefined" && Intl.v8BreakIterator;
+  hasV8BreakIterator = typeof Intl !== 'undefined' && Intl.v8BreakIterator;
 } catch {
   hasV8BreakIterator = false;
 }
@@ -52,20 +50,25 @@ var Platform = class _Platform {
   // without the navigator, the following checks will fail. This is preferred because
   // sometimes the Document may be shimmed without the user's knowledge or intention
   /** Whether the Angular application is being rendered in the browser. */
-  isBrowser = this._platformId ? isPlatformBrowser(this._platformId) : typeof document === "object" && !!document;
+  isBrowser = this._platformId ? isPlatformBrowser(this._platformId) : typeof document === 'object' && !!document;
   /** Whether the current browser is Microsoft Edge. */
   EDGE = this.isBrowser && /(edge)/i.test(navigator.userAgent);
   /** Whether the current rendering engine is Microsoft Trident. */
   TRIDENT = this.isBrowser && /(msie|trident)/i.test(navigator.userAgent);
   // EdgeHTML and Trident mock Blink specific things and need to be excluded from this check.
   /** Whether the current rendering engine is Blink. */
-  BLINK = this.isBrowser && !!(window.chrome || hasV8BreakIterator) && typeof CSS !== "undefined" && !this.EDGE && !this.TRIDENT;
+  BLINK =
+    this.isBrowser &&
+    !!(window.chrome || hasV8BreakIterator) &&
+    typeof CSS !== 'undefined' &&
+    !this.EDGE &&
+    !this.TRIDENT;
   // Webkit is part of the userAgent in EdgeHTML, Blink and Trident. Therefore we need to
   // ensure that Webkit runs standalone and is not used as another engine's base.
   /** Whether the current rendering engine is WebKit. */
   WEBKIT = this.isBrowser && /AppleWebKit/i.test(navigator.userAgent) && !this.BLINK && !this.EDGE && !this.TRIDENT;
   /** Whether the current platform is Apple iOS. */
-  IOS = this.isBrowser && /iPad|iPhone|iPod/.test(navigator.userAgent) && !("MSStream" in window);
+  IOS = this.isBrowser && /iPad|iPhone|iPod/.test(navigator.userAgent) && !('MSStream' in window);
   // It's difficult to detect the plain Gecko engine, because most of the browsers identify
   // them self as Gecko-like browsers and modify the userAgent's according to that.
   // Since we only cover one explicit Firefox case, we can simply check for Firefox
@@ -80,39 +83,56 @@ var Platform = class _Platform {
   // Safari browser should also use Webkit as its layout engine.
   /** Whether the current browser is Safari. */
   SAFARI = this.isBrowser && /safari/i.test(navigator.userAgent) && this.WEBKIT;
-  constructor() {
-  }
+  constructor() {}
   static ɵfac = function Platform_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _Platform)();
   };
   static ɵprov = ɵɵdefineInjectable({
     token: _Platform,
     factory: _Platform.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Platform, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      Platform,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var PlatformModule = class _PlatformModule {
   static ɵfac = function PlatformModule_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _PlatformModule)();
   };
   static ɵmod = ɵɵdefineNgModule({
-    type: _PlatformModule
+    type: _PlatformModule,
   });
   static ɵinj = ɵɵdefineInjector({});
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PlatformModule, [{
-    type: NgModule,
-    args: [{}]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      PlatformModule,
+      [
+        {
+          type: NgModule,
+          args: [{}],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 var supportedInputTypes;
 var candidateInputTypes = [
@@ -120,51 +140,57 @@ var candidateInputTypes = [
   // first changing it to something else:
   // The specified value "" does not conform to the required format.
   // The format is "#rrggbb" where rr, gg, bb are two-digit hexadecimal numbers.
-  "color",
-  "button",
-  "checkbox",
-  "date",
-  "datetime-local",
-  "email",
-  "file",
-  "hidden",
-  "image",
-  "month",
-  "number",
-  "password",
-  "radio",
-  "range",
-  "reset",
-  "search",
-  "submit",
-  "tel",
-  "text",
-  "time",
-  "url",
-  "week"
+  'color',
+  'button',
+  'checkbox',
+  'date',
+  'datetime-local',
+  'email',
+  'file',
+  'hidden',
+  'image',
+  'month',
+  'number',
+  'password',
+  'radio',
+  'range',
+  'reset',
+  'search',
+  'submit',
+  'tel',
+  'text',
+  'time',
+  'url',
+  'week',
 ];
 function getSupportedInputTypes() {
   if (supportedInputTypes) {
     return supportedInputTypes;
   }
-  if (typeof document !== "object" || !document) {
+  if (typeof document !== 'object' || !document) {
     supportedInputTypes = new Set(candidateInputTypes);
     return supportedInputTypes;
   }
-  let featureTestInput = document.createElement("input");
-  supportedInputTypes = new Set(candidateInputTypes.filter((value) => {
-    featureTestInput.setAttribute("type", value);
-    return featureTestInput.type === value;
-  }));
+  let featureTestInput = document.createElement('input');
+  supportedInputTypes = new Set(
+    candidateInputTypes.filter((value) => {
+      featureTestInput.setAttribute('type', value);
+      return featureTestInput.type === value;
+    }),
+  );
   return supportedInputTypes;
 }
 var supportsPassiveEvents;
 function supportsPassiveEventListeners() {
-  if (supportsPassiveEvents == null && typeof window !== "undefined") {
+  if (supportsPassiveEvents == null && typeof window !== 'undefined') {
     try {
-      window.addEventListener("test", null, Object.defineProperty({}, "passive", {
-        get: () => supportsPassiveEvents = true
-      }));
+      window.addEventListener(
+        'test',
+        null,
+        Object.defineProperty({}, 'passive', {
+          get: () => (supportsPassiveEvents = true),
+        }),
+      );
     } finally {
       supportsPassiveEvents = supportsPassiveEvents || false;
     }
@@ -175,20 +201,20 @@ function normalizePassiveListenerOptions(options) {
   return supportsPassiveEventListeners() ? options : !!options.capture;
 }
 var RtlScrollAxisType;
-(function(RtlScrollAxisType2) {
-  RtlScrollAxisType2[RtlScrollAxisType2["NORMAL"] = 0] = "NORMAL";
-  RtlScrollAxisType2[RtlScrollAxisType2["NEGATED"] = 1] = "NEGATED";
-  RtlScrollAxisType2[RtlScrollAxisType2["INVERTED"] = 2] = "INVERTED";
+(function (RtlScrollAxisType2) {
+  RtlScrollAxisType2[(RtlScrollAxisType2['NORMAL'] = 0)] = 'NORMAL';
+  RtlScrollAxisType2[(RtlScrollAxisType2['NEGATED'] = 1)] = 'NEGATED';
+  RtlScrollAxisType2[(RtlScrollAxisType2['INVERTED'] = 2)] = 'INVERTED';
 })(RtlScrollAxisType || (RtlScrollAxisType = {}));
 var rtlScrollAxisType;
 var scrollBehaviorSupported;
 function supportsScrollBehavior() {
   if (scrollBehaviorSupported == null) {
-    if (typeof document !== "object" || !document || typeof Element !== "function" || !Element) {
+    if (typeof document !== 'object' || !document || typeof Element !== 'function' || !Element) {
       scrollBehaviorSupported = false;
       return scrollBehaviorSupported;
     }
-    if ("scrollBehavior" in document.documentElement.style) {
+    if ('scrollBehavior' in document.documentElement.style) {
       scrollBehaviorSupported = true;
     } else {
       const scrollToFunction = Element.prototype.scrollTo;
@@ -202,22 +228,22 @@ function supportsScrollBehavior() {
   return scrollBehaviorSupported;
 }
 function getRtlScrollAxisType() {
-  if (typeof document !== "object" || !document) {
+  if (typeof document !== 'object' || !document) {
     return RtlScrollAxisType.NORMAL;
   }
   if (rtlScrollAxisType == null) {
-    const scrollContainer = document.createElement("div");
+    const scrollContainer = document.createElement('div');
     const containerStyle = scrollContainer.style;
-    scrollContainer.dir = "rtl";
-    containerStyle.width = "1px";
-    containerStyle.overflow = "auto";
-    containerStyle.visibility = "hidden";
-    containerStyle.pointerEvents = "none";
-    containerStyle.position = "absolute";
-    const content = document.createElement("div");
+    scrollContainer.dir = 'rtl';
+    containerStyle.width = '1px';
+    containerStyle.overflow = 'auto';
+    containerStyle.visibility = 'hidden';
+    containerStyle.pointerEvents = 'none';
+    containerStyle.position = 'absolute';
+    const content = document.createElement('div');
     const contentStyle = content.style;
-    contentStyle.width = "2px";
-    contentStyle.height = "1px";
+    contentStyle.width = '2px';
+    contentStyle.height = '1px';
     scrollContainer.appendChild(content);
     document.body.appendChild(scrollContainer);
     rtlScrollAxisType = RtlScrollAxisType.NORMAL;
@@ -232,7 +258,7 @@ function getRtlScrollAxisType() {
 var shadowDomIsSupported;
 function _supportsShadowDom() {
   if (shadowDomIsSupported == null) {
-    const head = typeof document !== "undefined" ? document.head : null;
+    const head = typeof document !== 'undefined' ? document.head : null;
     shadowDomIsSupported = !!(head && (head.createShadowRoot || head.attachShadow));
   }
   return shadowDomIsSupported;
@@ -240,14 +266,14 @@ function _supportsShadowDom() {
 function _getShadowRoot(element) {
   if (_supportsShadowDom()) {
     const rootNode = element.getRootNode ? element.getRootNode() : null;
-    if (typeof ShadowRoot !== "undefined" && ShadowRoot && rootNode instanceof ShadowRoot) {
+    if (typeof ShadowRoot !== 'undefined' && ShadowRoot && rootNode instanceof ShadowRoot) {
       return rootNode;
     }
   }
   return null;
 }
 function _getFocusedElementPierceShadowDom() {
-  let activeElement = typeof document !== "undefined" && document ? document.activeElement : null;
+  let activeElement = typeof document !== 'undefined' && document ? document.activeElement : null;
   while (activeElement && activeElement.shadowRoot) {
     const newActiveElement = activeElement.shadowRoot.activeElement;
     if (newActiveElement === activeElement) {
@@ -264,10 +290,10 @@ function _getEventTarget(event) {
 function _isTestEnvironment() {
   return (
     // @ts-ignore
-    typeof __karma__ !== "undefined" && !!__karma__ || // @ts-ignore
-    typeof jasmine !== "undefined" && !!jasmine || // @ts-ignore
-    typeof jest !== "undefined" && !!jest || // @ts-ignore
-    typeof Mocha !== "undefined" && !!Mocha
+    (typeof __karma__ !== 'undefined' && !!__karma__) || // @ts-ignore
+    (typeof jasmine !== 'undefined' && !!jasmine) || // @ts-ignore
+    (typeof jest !== 'undefined' && !!jest) || // @ts-ignore
+    (typeof Mocha !== 'undefined' && !!Mocha)
   );
 }
 
@@ -286,6 +312,6 @@ export {
   _getShadowRoot,
   _getFocusedElementPierceShadowDom,
   _getEventTarget,
-  _isTestEnvironment
+  _isTestEnvironment,
 };
 //# sourceMappingURL=chunk-QDQUQZPY.js.map

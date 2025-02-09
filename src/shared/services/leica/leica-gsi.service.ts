@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 
 import { CODES } from '../../constants/leica/codes';
-import { getAngle, getAutomaticIndex, getDate, getDistanceInMt_Ft, getInputMode, getTime, getUnitName, trimZeros } from '../../utils/common-functions/leica/transformations';
+import {
+  getAngle,
+  getAutomaticIndex,
+  getDate,
+  getDistanceInMt_Ft,
+  getInputMode,
+  getTime,
+  getUnitName,
+  trimZeros,
+} from '../../utils/common-functions/leica/transformations';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LeicaGsiService {
-
-  constructor() { }
+  constructor() {}
 
   private splitOnPoints(stringToParse: string): any {
     const pointsArray: any = [];
@@ -20,18 +28,18 @@ export class LeicaGsiService {
   }
 
   private parsePoints(pointsArr: string[]): any {
-
     const points: any = [];
-    pointsArr.forEach((point: any ) => {
+    pointsArr.forEach((point: any) => {
       const newPoint: any = {};
       point.forEach((word: string) => {
         let format_length = 8;
-        if (word.length === 23) { format_length = 16; }
+        if (word.length === 23) {
+          format_length = 16;
+        }
         newPoint['Format_name'] = 'GSI' + format_length;
         const wordCode = word.slice(0, 2);
 
         switch (wordCode) {
-
           case '11':
             newPoint[CODES[wordCode]] = trimZeros(word.slice(-format_length));
             newPoint['lineNumber'] = word.slice(2, 6);
@@ -57,7 +65,6 @@ export class LeicaGsiService {
             newPoint[CODES[wordCode]] = getTime(word, format_length);
             break;
 
-
           case '21':
             // Automatic_index_information
             newPoint['Automatic_index_information_HZ'] = getAutomaticIndex(word);
@@ -72,7 +79,6 @@ export class LeicaGsiService {
             newPoint[CODES[wordCode]] = getAngle(word, format_length);
 
             break;
-
 
           case '22':
             // Automatic_index_information
@@ -138,7 +144,7 @@ export class LeicaGsiService {
             break;
 
           case '51':
-            const ppmArr  = word.trim().split('').splice(6, 5);
+            const ppmArr = word.trim().split('').splice(6, 5);
             const prismConstArr = word.split('').splice(12, 5);
             const ppm = +ppmArr.join('');
             const prismConst = +prismConstArr.join('');
@@ -256,8 +262,7 @@ export class LeicaGsiService {
             // parse Sloping distance to meter or feets
             newPoint[CODES[wordCode]] = getDistanceInMt_Ft(word, format_length);
             break;
-      }
-
+        }
       });
       points.push(newPoint);
     });
@@ -269,5 +274,4 @@ export class LeicaGsiService {
     const pointArr = this.splitOnPoints(stringToParse);
     return this.parsePoints(pointArr);
   }
-
 }

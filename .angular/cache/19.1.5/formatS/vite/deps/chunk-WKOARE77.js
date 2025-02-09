@@ -1,6 +1,4 @@
-import {
-  DOCUMENT
-} from "./chunk-HKR3VAT5.js";
+import { DOCUMENT } from './chunk-HKR3VAT5.js';
 import {
   Directive,
   EventEmitter,
@@ -16,38 +14,39 @@ import {
   ɵɵdefineDirective,
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
-  ɵɵdefineNgModule
-} from "./chunk-S5STJILQ.js";
+  ɵɵdefineNgModule,
+} from './chunk-S5STJILQ.js';
 
 // node_modules/@angular/cdk/fesm2022/bidi.mjs
-var DIR_DOCUMENT = new InjectionToken("cdk-dir-doc", {
-  providedIn: "root",
-  factory: DIR_DOCUMENT_FACTORY
+var DIR_DOCUMENT = new InjectionToken('cdk-dir-doc', {
+  providedIn: 'root',
+  factory: DIR_DOCUMENT_FACTORY,
 });
 function DIR_DOCUMENT_FACTORY() {
   return inject(DOCUMENT);
 }
-var RTL_LOCALE_PATTERN = /^(ar|ckb|dv|he|iw|fa|nqo|ps|sd|ug|ur|yi|.*[-_](Adlm|Arab|Hebr|Nkoo|Rohg|Thaa))(?!.*[-_](Latn|Cyrl)($|-|_))($|-|_)/i;
+var RTL_LOCALE_PATTERN =
+  /^(ar|ckb|dv|he|iw|fa|nqo|ps|sd|ug|ur|yi|.*[-_](Adlm|Arab|Hebr|Nkoo|Rohg|Thaa))(?!.*[-_](Latn|Cyrl)($|-|_))($|-|_)/i;
 function _resolveDirectionality(rawValue) {
-  const value = rawValue?.toLowerCase() || "";
-  if (value === "auto" && typeof navigator !== "undefined" && navigator?.language) {
-    return RTL_LOCALE_PATTERN.test(navigator.language) ? "rtl" : "ltr";
+  const value = rawValue?.toLowerCase() || '';
+  if (value === 'auto' && typeof navigator !== 'undefined' && navigator?.language) {
+    return RTL_LOCALE_PATTERN.test(navigator.language) ? 'rtl' : 'ltr';
   }
-  return value === "rtl" ? "rtl" : "ltr";
+  return value === 'rtl' ? 'rtl' : 'ltr';
 }
 var Directionality = class _Directionality {
   /** The current 'ltr' or 'rtl' value. */
-  value = "ltr";
+  value = 'ltr';
   /** Stream that emits whenever the 'ltr' / 'rtl' state changes. */
   change = new EventEmitter();
   constructor() {
     const _document = inject(DIR_DOCUMENT, {
-      optional: true
+      optional: true,
     });
     if (_document) {
       const bodyDir = _document.body ? _document.body.dir : null;
       const htmlDir = _document.documentElement ? _document.documentElement.dir : null;
-      this.value = _resolveDirectionality(bodyDir || htmlDir || "ltr");
+      this.value = _resolveDirectionality(bodyDir || htmlDir || 'ltr');
     }
   }
   ngOnDestroy() {
@@ -59,20 +58,30 @@ var Directionality = class _Directionality {
   static ɵprov = ɵɵdefineInjectable({
     token: _Directionality,
     factory: _Directionality.ɵfac,
-    providedIn: "root"
+    providedIn: 'root',
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Directionality, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      Directionality,
+      [
+        {
+          type: Injectable,
+          args: [
+            {
+              providedIn: 'root',
+            },
+          ],
+        },
+      ],
+      () => [],
+      null,
+    );
 })();
 var Dir = class _Dir {
   /** Normalized direction that accounts for invalid/unsupported values. */
-  _dir = "ltr";
+  _dir = 'ltr';
   /** Whether the `value` has been set to its initial value. */
   _isInitialized = false;
   /** Direction as passed in by the consumer. */
@@ -107,49 +116,69 @@ var Dir = class _Dir {
   };
   static ɵdir = ɵɵdefineDirective({
     type: _Dir,
-    selectors: [["", "dir", ""]],
+    selectors: [['', 'dir', '']],
     hostVars: 1,
     hostBindings: function Dir_HostBindings(rf, ctx) {
       if (rf & 2) {
-        ɵɵattribute("dir", ctx._rawDir);
+        ɵɵattribute('dir', ctx._rawDir);
       }
     },
     inputs: {
-      dir: "dir"
+      dir: 'dir',
     },
     outputs: {
-      change: "dirChange"
+      change: 'dirChange',
     },
-    exportAs: ["dir"],
-    features: [ɵɵProvidersFeature([{
-      provide: Directionality,
-      useExisting: _Dir
-    }])]
+    exportAs: ['dir'],
+    features: [
+      ɵɵProvidersFeature([
+        {
+          provide: Directionality,
+          useExisting: _Dir,
+        },
+      ]),
+    ],
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Dir, [{
-    type: Directive,
-    args: [{
-      selector: "[dir]",
-      providers: [{
-        provide: Directionality,
-        useExisting: Dir
-      }],
-      host: {
-        "[attr.dir]": "_rawDir"
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      Dir,
+      [
+        {
+          type: Directive,
+          args: [
+            {
+              selector: '[dir]',
+              providers: [
+                {
+                  provide: Directionality,
+                  useExisting: Dir,
+                },
+              ],
+              host: {
+                '[attr.dir]': '_rawDir',
+              },
+              exportAs: 'dir',
+            },
+          ],
+        },
+      ],
+      null,
+      {
+        change: [
+          {
+            type: Output,
+            args: ['dirChange'],
+          },
+        ],
+        dir: [
+          {
+            type: Input,
+          },
+        ],
       },
-      exportAs: "dir"
-    }]
-  }], null, {
-    change: [{
-      type: Output,
-      args: ["dirChange"]
-    }],
-    dir: [{
-      type: Input
-    }]
-  });
+    );
 })();
 var BidiModule = class _BidiModule {
   static ɵfac = function BidiModule_Factory(__ngFactoryType__) {
@@ -158,24 +187,29 @@ var BidiModule = class _BidiModule {
   static ɵmod = ɵɵdefineNgModule({
     type: _BidiModule,
     imports: [Dir],
-    exports: [Dir]
+    exports: [Dir],
   });
   static ɵinj = ɵɵdefineInjector({});
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BidiModule, [{
-    type: NgModule,
-    args: [{
-      imports: [Dir],
-      exports: [Dir]
-    }]
-  }], null, null);
+  (typeof ngDevMode === 'undefined' || ngDevMode) &&
+    setClassMetadata(
+      BidiModule,
+      [
+        {
+          type: NgModule,
+          args: [
+            {
+              imports: [Dir],
+              exports: [Dir],
+            },
+          ],
+        },
+      ],
+      null,
+      null,
+    );
 })();
 
-export {
-  DIR_DOCUMENT,
-  Directionality,
-  Dir,
-  BidiModule
-};
+export { DIR_DOCUMENT, Directionality, Dir, BidiModule };
 //# sourceMappingURL=chunk-WKOARE77.js.map
