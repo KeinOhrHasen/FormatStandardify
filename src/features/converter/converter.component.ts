@@ -49,9 +49,7 @@ export class ConverterComponent implements OnInit {
   public all_formats: string[] = ALL_FORMATS;
   public readyToSaveExcel = false;
   public currentYear = new Date().getFullYear();
-  public idDashboard = false
-
-
+  public idDashboard = false;
 
   public formatForm: FormGroup = new FormGroup({
     file: new FormControl(null, [Validators.required]),
@@ -97,12 +95,6 @@ export class ConverterComponent implements OnInit {
     this.deselectFormatType();
   }
 
-  private deselectFormatType(): void {
-    this.formatForm.patchValue({
-      format: null,
-    });
-  }
-
   public onSubmit(): void {
     if (this.formatValue === '.gsi') {
       this.points = this.leicaGsiService.getParsedData(this.formatForm.value.file);
@@ -134,6 +126,10 @@ export class ConverterComponent implements OnInit {
     }
   }
 
+  public creeteXLSX(): void {
+    creeteXLSXfile(this.dataToExel(this.points));
+  }
+
   private stonexMiddleware(pointsObject: any): any {
     if (pointsObject.softName === 'SurvCE') {
       return dataToExel_Carlson(pointsObject.pointsArray);
@@ -142,7 +138,9 @@ export class ConverterComponent implements OnInit {
     }
   }
 
-  public creeteXLSX(): void {
-    creeteXLSXfile(this.dataToExel(this.points));
+  private deselectFormatType(): void {
+    this.formatForm.patchValue({
+      format: null,
+    });
   }
 }
