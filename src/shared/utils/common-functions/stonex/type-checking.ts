@@ -1,6 +1,9 @@
-export const validateValue = function(value: any): any {
-    if (value !== null && value !== undefined && value === value) {
-        return value;
-    }
+import isNil from 'lodash';
+
+export const validateValue = function (value: any): any {
+  if (isNil(value) || isNaN(value)) {
     return '';
+  }
+
+  return value;
 };
