@@ -1,7 +1,7 @@
 import isNil from 'lodash';
 
-export const validateValue = function (value: any): any {
-  if (isNil(value) || isNaN(value)) {
+export const validateValue = (value: number | string | undefined | null): number | string => {
+  if (value === undefined || value === null) {
     return '';
   }
 

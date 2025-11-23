@@ -11,18 +11,18 @@
 </section>
 
 <section class="form-wrapper">
-    <form [formGroup]="formatForm" novalidate (ngSubmit)="onSubmit()">
+    <form [formGroup]="formatForm" novalidate>
         <input type="file"name="file" id="file" class="inputfile" (change)="onFileChange($event)" required/>
         <label for="file" matTooltip="Choose file you want to convert">Upload file</label>
         <span class="filename">{{fileName}}</span>
         <mat-form-field class="selectFormat" matTooltip="Choose format of your file">
-            <mat-select formControlName="format" placeholder="Select a format" required> 
+            <mat-select formControlName="format" placeholder="Select a format" required>
                 <mat-option *ngFor="let format of all_formats" [value]="format">
                         {{format}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-button  type="submit" [disabled]="formatForm.invalid" class="control-botton">Submit</button>
+        <button mat-button  type="submit" [disabled]="formatForm.invalid" class="control-botton" (click)="onSubmit()">Submit</button>
         <button mat-button  type="button" [disabled]="!readyToSaveExcel" (click)="creeteXLSX()" class="control-botton">Save EXСEL file</button>
   </form>
 

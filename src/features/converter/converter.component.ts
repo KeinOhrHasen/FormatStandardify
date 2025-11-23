@@ -28,24 +28,23 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   templateUrl: './converter.component.html',
   styleUrls: ['./converter.component.css'],
   standalone: true,
-    imports: [
-      CommonModule,
-      ConverterRoutingModule,
-      ReactiveFormsModule,
-      FormsModule,
-        MatRadioModule,
+  imports: [
+    CommonModule,
+    ConverterRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatRadioModule,
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
     MatTooltipModule,
-    ]
+  ],
 })
 export class ConverterComponent implements OnInit {
-
   public points: any;
-//   public choosenFormat: string;
+  //   public choosenFormat: string;
   public fileName = '';
   public all_formats: string[] = ALL_FORMATS;
   public readyToSaveExcel = false;
@@ -53,64 +52,63 @@ export class ConverterComponent implements OnInit {
   public idDashboard = false;
 
   public formatForm: FormGroup = new FormGroup({
-      file: new FormControl(null, [Validators.required]),
-      format: new FormControl(null)
+    file: new FormControl(null, [Validators.required]),
+    format: new FormControl(null),
   });
 
-
   constructor(
-      private cd: ChangeDetectorRef,
-      private leicaGsiService: LeicaGsiService,
-      private topconService: TopconService,
-      private carlsonService: CarlsonService,
-      public router: Router,
+    private cd: ChangeDetectorRef,
+    private leicaGsiService: LeicaGsiService,
+    private topconService: TopconService,
+    private carlsonService: CarlsonService,
+    public router: Router,
   ) {}
 
   get formatValue(): string {
-    return (this.formatForm.get('format') as any).value
+    return (this.formatForm.get('format') as any).value;
   }
 
   ngOnInit(): void {
-     this.idDashboard = this.router.url.endsWith('converter');
+    this.idDashboard = this.router.url.endsWith('converter');
   }
 
   onFileChange(event: any): void {
-      const reader = new FileReader();
+    const reader = new FileReader();
 
-      if (event.target.files && event.target.files.length) {
-          const [file] = event.target.files;
-          reader.readAsText(file);
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsText(file);
 
-          this.fileName = file.name;
+      this.fileName = file.name;
 
-          reader.onload = () => {
-          this.formatForm.patchValue({
-              file: reader.result
-          });
+      reader.onload = () => {
+        this.formatForm.patchValue({
+          file: reader.result,
+        });
 
-          // need to run CD since file load runs outside of zone
-          this.cd.markForCheck();
-          };
-      }
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+      };
+    }
 
-      this.readyToSaveExcel = false;
-      this.deselectFormatType();
+    this.readyToSaveExcel = false;
+    this.deselectFormatType();
   }
 
   private deselectFormatType(): void {
-      this.formatForm.patchValue({
-          format: null
-      });
+    this.formatForm.patchValue({
+      format: null,
+    });
   }
 
   public onSubmit(): void {
-      if (this.formatValue === '.gsi') {
-          this.points = this.leicaGsiService.getParsedData(this.formatForm.value.file);
-      } else if (this.formatValue === '.rts-6') {
-          this.points = this.topconService.getParsedData(this.formatForm.value.file);
-      } else if (this.formatValue === '.rw-5') {
-          this.points = this.carlsonService.getParsedData(this.formatForm.value.file);
-      }
+    if (this.formatValue === '.gsi') {
+      this.points = this.leicaGsiService.getParsedData(this.formatForm.value.file);
+    } else if (this.formatValue === '.rts-6') {
+      this.points = this.topconService.getParsedData(this.formatForm.value.file);
+    } else if (this.formatValue === '.rw-5') {
+      this.points = this.carlsonService.getParsedData(this.formatForm.value.file);
+    }
 
     this.readyToSaveExcel = this.checkOnVadlidFormat(this.points);
   }
@@ -118,31 +116,31 @@ export class ConverterComponent implements OnInit {
   public checkOnVadlidFormat(pointsArray: any): boolean {
     // if points array invalid - it has only 1 row - table headers
     if (pointsArray.length < 2) {
-        alert('Choose valid format from dropdown menu or upload a correct file');
-        return false;
+      alert('Choose valid format from dropdown menu or upload a correct file');
+      return false;
     }
     return true;
   }
 
   public dataToExel(pointsArray: any): any {
-      if (this.formatValue === '.gsi') {
-          return dataToExel_Leica(pointsArray);
-      } else if (this.formatValue === '.rts-6') {
-          return dataToExel_Topcon(pointsArray);
-      } else if (this.formatValue === '.rw-5') {
-          return this.stonexMiddleware(pointsArray);
-      }
+    if (this.formatValue === '.gsi') {
+      return dataToExel_Leica(pointsArray);
+    } else if (this.formatValue === '.rts-6') {
+      return dataToExel_Topcon(pointsArray);
+    } else if (this.formatValue === '.rw-5') {
+      return this.stonexMiddleware(pointsArray);
+    }
   }
 
   private stonexMiddleware(pointsObject: any): any {
-      if (pointsObject.softName === 'SurvCE') {
-          return dataToExel_Carlson(pointsObject.pointsArray);
-      } else if (pointsObject.softName === 'Cube-A') {
-          return dataToExel_CubeA(pointsObject.pointsArray);
-      }
+    if (pointsObject.softName === 'SurvCE') {
+      return dataToExel_Carlson(pointsObject.pointsArray);
+    } else if (pointsObject.softName === 'Cube-A') {
+      return dataToExel_CubeA(pointsObject.pointsArray);
+    }
   }
 
   public creeteXLSX(): void {
-      creeteXLSXfile(this.dataToExel(this.points));
+    creeteXLSXfile(this.dataToExel(this.points));
   }
 }
