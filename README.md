@@ -54,6 +54,10 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## unificate units - meter/degrees for leica and topcon
+
+## Buid commands
+1. $ ng build --prod --base-href "https://KeinOhrHasen.github.io/FormatStandardify/"
+2. $ ngh --dir=dist/format-standardify
+3. and change branch on GitHub to gh-pages 
